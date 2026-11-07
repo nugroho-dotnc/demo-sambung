@@ -2,13 +2,13 @@ import { useState } from "react"
 import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
-import { Lock, ShieldCheck, ArrowLeft, UserX } from "lucide-react"
+import { ShieldCheck, UserX } from "lucide-react"
 
 interface AdminUsersPageProps {
-  onBack: () => void
+  onBack?: () => void
 }
 
-export function AdminUsersPage({ onBack }: AdminUsersPageProps) {
+export function AdminUsersPage({ onBack: _onBack }: AdminUsersPageProps) {
   const [closurePendingUsers, setClosurePendingUsers] = useState<string[]>([])
 
   const userList = [
@@ -63,40 +63,23 @@ export function AdminUsersPage({ onBack }: AdminUsersPageProps) {
   }
 
   return (
-    <div className="max-w-6xl mx-auto space-y-6 pb-12">
-      {/* Header */}
-      <div className="pt-2 border-b border-border/80 pb-4 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
-        <div>
-          <Button variant="ghost" size="sm" onClick={onBack} className="gap-2 mb-2 text-xs">
-            <ArrowLeft className="w-3.5 h-3.5" />
-            <span>Kembali ke Ringkasan Admin</span>
-          </Button>
-          <div className="flex items-center gap-1.5 text-xs font-semibold uppercase tracking-wider text-muted-foreground mb-1">
-            <span>SAMBUNG</span>
-            <span>/</span>
-            <span className="text-foreground">MANAJEMEN PENGGUNA</span>
-          </div>
-          <h1 className="text-2xl sm:text-3xl font-display font-bold text-foreground">
-            Daftar Pengguna & Perlindungan Privasi
-          </h1>
-          <p className="text-xs sm:text-sm text-muted-foreground mt-1">
-            Pengawasan profil pengguna dengan penyamaran nomor telepon wajib.
-          </p>
+    <div className="w-full space-y-6">
+      {/* 2. Breadcrumbs, Judul Halaman, Deskripsi Singkat */}
+      <div className="pt-1 border-b border-border/80 pb-4">
+        <div className="flex items-center gap-1.5 text-xs font-semibold uppercase tracking-wider text-muted-foreground mb-1">
+          <span>SAMBUNG</span>
+          <span>/</span>
+          <span className="text-foreground">MANAJEMEN PENGGUNA</span>
         </div>
+        <h1 className="text-2xl sm:text-3xl font-display font-bold text-foreground">
+          Daftar Pengguna & Perlindungan Privasi
+        </h1>
+        <p className="text-xs sm:text-sm text-muted-foreground mt-1">
+          Pengawasan profil pengguna dengan penyamaran nomor telepon wajib.
+        </p>
       </div>
 
-      {/* Privacy Notice Box */}
-      <div className="p-4 rounded-xl bg-card border border-border flex items-start gap-3 text-body-sm text-muted-foreground">
-        <Lock className="w-4 h-4 text-primary shrink-0 mt-0.5" />
-        <div className="space-y-1 text-xs leading-relaxed">
-          <p className="font-bold text-foreground">Kebijakan Privasi Nomor Telepon:</p>
-          <p>
-            Nomor telepon pengguna disajikan secara tersamar kepada Admin (contoh: <code>0812-****-7890</code>). Tidak ada tombol pembuka nomor lengkap. Data pribadi terlindungi penuh dari akses tidak berwenang.
-          </p>
-        </div>
-      </div>
-
-      {/* Users Table */}
+      {/* 4. Konten Utama Panel (Tabel Pengguna) */}
       <Card>
         <CardHeader className="pb-3 border-b border-border">
           <CardTitle className="text-base">Pengguna Terdaftar</CardTitle>

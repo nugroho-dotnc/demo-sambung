@@ -1,6 +1,12 @@
 {
   "version": 1,
   "skills": {
+    "antislop": {
+      "source": "aicodedecode/awesome-muse-skills",
+      "sourceType": "github",
+      "skillPath": "skills-imported/antislop/SKILL.md",
+      "computedHash": "de298d071ec9ec82828e22a38a6f853c3457f3acf2313b5825d204c527cae764"
+    },
     "ask-matt": {
       "source": "mattpocock/skills",
       "sourceType": "github",

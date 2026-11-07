@@ -191,7 +191,7 @@ export function PriceBoardPage() {
 
           <div className="pt-3 border-t border-border/80 space-y-2 text-[11px] text-muted-foreground leading-relaxed">
             <p>
-              Rp{retailPrice.toLocaleString("id-ID")} – Rp{farmerPrice.toLocaleString("id-ID")}. Ini bukan laba bersih; biaya pengolahan, logistik, susut, dan margin belum dipisahkan.
+              Rp{retailPrice.toLocaleString("id-ID")}  -  Rp{farmerPrice.toLocaleString("id-ID")}. Ini bukan laba bersih; biaya pengolahan, logistik, susut, dan margin belum dipisahkan.
             </p>
             <p className="font-mono pt-1 text-foreground/80">
               Bagian petani = Rp{farmerPrice.toLocaleString("id-ID")} ÷ Rp{retailPrice.toLocaleString("id-ID")}.

@@ -23,6 +23,7 @@ interface SambungState {
   currentRole: UserRole
   currentUser: UserProfile
   theme: "light" | "dark"
+  selectedRegion: string
   offers: TawaranPanen[]
   contracts: KontrakSimulasi[]
   observations: PriceObservation[]
@@ -36,7 +37,11 @@ function loadInitialState(): SambungState {
   const saved = localStorage.getItem(STORAGE_KEY)
   if (saved) {
     try {
-      return JSON.parse(saved)
+      const parsed = JSON.parse(saved)
+      return {
+        ...parsed,
+        selectedRegion: parsed.selectedRegion || "Jawa Timur"
+      }
     } catch {
       // Fallback
     }
@@ -45,6 +50,7 @@ function loadInitialState(): SambungState {
     currentRole: "public",
     currentUser: SEED_USERS.public,
     theme: "light",
+    selectedRegion: "Jawa Timur",
     offers: SEED_OFFERS,
     contracts: SEED_CONTRACTS,
     observations: SEED_OBSERVATIONS,
@@ -556,6 +562,13 @@ export function useSambungStore() {
     logAudit("Ubah Parameter", "Parameter", "global-config", `Admin memperbarui parameter operasional sistem.`)
   }
 
+  const setSelectedRegion = (region: string) => {
+    updateState((prev) => ({
+      ...prev,
+      selectedRegion: region
+    }))
+  }
+
   // Reset Demo Data
   const resetToSeedData = () => {
     localStorage.removeItem(STORAGE_KEY)
@@ -563,6 +576,7 @@ export function useSambungStore() {
       currentRole: "public",
       currentUser: SEED_USERS.public,
       theme: "light",
+      selectedRegion: "Jawa Timur",
       offers: SEED_OFFERS,
       contracts: SEED_CONTRACTS,
       observations: SEED_OBSERVATIONS,
@@ -585,6 +599,8 @@ export function useSambungStore() {
 
   return {
     ...state,
+    selectedRegion: state.selectedRegion || "Jawa Timur",
+    setSelectedRegion,
     setRole,
     toggleTheme,
     createOffer,

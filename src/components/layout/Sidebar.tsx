@@ -1,4 +1,7 @@
+import { useState, useEffect } from "react"
 import { useSambungStore } from "@/store/sambungStore"
+import { UserRole } from "@/types/domain"
+import { provinces, demoRoles } from "./Topbar"
 import {
   Home,
   FileText,
@@ -8,14 +11,20 @@ import {
   LayoutGrid,
   ShoppingBag,
   ShieldAlert,
+  BarChart3,
+  HelpCircle,
+  X,
+  Scale,
+  Database,
+  History,
+  Calendar,
   SlidersHorizontal,
   Users,
-  History,
   Cpu,
-  BarChart3,
-  ExternalLink,
-  HelpCircle,
-  X
+  ChevronDown,
+  MapPin,
+  Check,
+  RotateCcw
 } from "lucide-react"
 
 interface SidebarProps {
@@ -24,14 +33,60 @@ interface SidebarProps {
   onCloseMobile?: () => void
 }
 
-interface NavItem {
+interface SubNavItem {
   id: string
   label: string
   icon: typeof Home
 }
 
+interface NavItem {
+  id: string
+  label: string
+  icon: typeof Home
+  children?: SubNavItem[]
+}
+
 export function Sidebar({ activeTab, onNavigate, onCloseMobile }: SidebarProps) {
-  const { currentRole } = useSambungStore()
+  const { currentRole, setRole, resetToSeedData, selectedRegion, setSelectedRegion } = useSambungStore()
+  const [roleMenuOpen, setRoleMenuOpen] = useState(false)
+  const [regionMenuOpen, setRegionMenuOpen] = useState(false)
+
+  const currentRoleInfo = demoRoles.find((r) => r.id === currentRole) || demoRoles[0]
+  const CurrentRoleIcon = currentRoleInfo.icon
+
+  const handleSwitchRole = (newRole: UserRole) => {
+    setRole(newRole)
+    setRoleMenuOpen(false)
+    setRegionMenuOpen(false)
+    switch (newRole) {
+      case "petani":
+        onNavigate("petani-dashboard")
+        break
+      case "pembeli":
+        onNavigate("pembeli-dashboard")
+        break
+      case "admin":
+        onNavigate("admin-dashboard")
+        break
+      default:
+        onNavigate("public-home")
+        break
+    }
+    if (onCloseMobile) onCloseMobile()
+  }
+
+  const handleSelectRegion = (region: string) => {
+    setSelectedRegion(region)
+    setRegionMenuOpen(false)
+  }
+
+  const handleResetData = () => {
+    if (confirm("Reset seluruh data transaksi simulasi ke data awal?")) {
+      resetToSeedData()
+      setRoleMenuOpen(false)
+      alert("Data transaksi simulasi berhasil direset ke kondisi awal.")
+    }
+  }
 
   const getNavItems = (): NavItem[] => {
     switch (currentRole) {
@@ -39,32 +94,74 @@ export function Sidebar({ activeTab, onNavigate, onCloseMobile }: SidebarProps) 
         return [
           { id: "petani-dashboard", label: "Beranda Petani", icon: Home },
           { id: "my-offers", label: "Tawaran Saya", icon: FileText },
-          { id: "price-board", label: "Papan Harga 2 Sisi", icon: TrendingUp },
-          { id: "contracts", label: "Kontrak", icon: ScrollText },
-          { id: "price-map", label: "Peta Publik", icon: Map },
+          { id: "contracts", label: "Kontrak & Pesanan", icon: ScrollText },
+          {
+            id: "market-cluster",
+            label: "Acuan Harga & Pasar",
+            icon: Scale,
+            children: [
+              { id: "fair-price", label: "Acuan Wajar (PT-07)", icon: Scale },
+              { id: "price-board", label: "Papan Rantai Harga", icon: TrendingUp },
+              { id: "price-map", label: "Peta Disparitas", icon: Map },
+              { id: "forecast", label: "Prakiraan Pasar AI", icon: Calendar },
+            ],
+          },
         ]
       case "pembeli":
         return [
-          { id: "pembeli-dashboard", label: "Dasbor Produsen", icon: LayoutGrid },
+          { id: "pembeli-dashboard", label: "Dasbor Pembeli", icon: LayoutGrid },
           { id: "supply-catalog", label: "Katalog Pasokan", icon: ShoppingBag },
-          { id: "price-board", label: "Papan Harga 2 Sisi", icon: TrendingUp },
           { id: "contracts", label: "Kontrak & Pesanan", icon: ScrollText },
-          { id: "price-map", label: "Peta Publik", icon: Map },
+          {
+            id: "market-cluster",
+            label: "Acuan Harga & Pasar",
+            icon: Scale,
+            children: [
+              { id: "fair-price", label: "Acuan Wajar (PT-07)", icon: Scale },
+              { id: "price-board", label: "Papan Rantai Harga", icon: TrendingUp },
+              { id: "price-map", label: "Peta Disparitas", icon: Map },
+              { id: "forecast", label: "Prakiraan Pasar AI", icon: Calendar },
+            ],
+          },
         ]
       case "admin":
         return [
-          { id: "admin-dashboard", label: "Dasbor Admin", icon: BarChart3 },
+          { id: "admin-dashboard", label: "Dasbor Pengawasan", icon: BarChart3 },
+          {
+            id: "price-cluster",
+            label: "Data & Parameter Harga",
+            icon: Database,
+            children: [
+              { id: "admin-price-data", label: "Observasi Data Harga", icon: Database },
+              { id: "admin-parameters", label: "Parameter Toleransi & HPP", icon: SlidersHorizontal },
+            ],
+          },
           { id: "admin-moderation", label: "Moderasi Tawaran", icon: ShieldAlert },
-          { id: "admin-parameters", label: "Parameter Harga", icon: SlidersHorizontal },
-          { id: "admin-users", label: "Manajemen Pengguna", icon: Users },
-          { id: "admin-audit", label: "Log Audit Sistem", icon: History },
-          { id: "admin-model", label: "Evaluasi Model AI", icon: Cpu },
+          {
+            id: "governance-cluster",
+            label: "Tata Kelola & Audit",
+            icon: History,
+            children: [
+              { id: "admin-users", label: "Manajemen Pengguna", icon: Users },
+              { id: "admin-audit", label: "Log Audit Sistem", icon: History },
+              { id: "admin-model", label: "Evaluasi Model AI", icon: Cpu },
+            ],
+          },
         ]
       default:
         return [
           { id: "public-home", label: "Beranda", icon: Home },
-          { id: "price-board", label: "Papan Harga 2 Sisi", icon: TrendingUp },
-          { id: "price-map", label: "Peta Publik", icon: Map },
+          {
+            id: "market-cluster",
+            label: "Informasi Pasar Gabah",
+            icon: Scale,
+            children: [
+              { id: "fair-price", label: "Detail Acuan Wajar", icon: Scale },
+              { id: "price-board", label: "Papan Rantai Harga", icon: TrendingUp },
+              { id: "price-map", label: "Peta Disparitas", icon: Map },
+              { id: "forecast", label: "Prakiraan Pasar AI", icon: Calendar },
+            ],
+          },
           { id: "help", label: "Pusat Bantuan", icon: HelpCircle },
         ]
     }
@@ -72,14 +169,49 @@ export function Sidebar({ activeTab, onNavigate, onCloseMobile }: SidebarProps) 
 
   const items = getNavItems()
 
-  const handleItemClick = (id: string) => {
-    onNavigate(id)
+  // Track expanded cluster state
+  const [expandedClusters, setExpandedClusters] = useState<Record<string, boolean>>({
+    "market-cluster": true,
+    "price-cluster": true,
+    "governance-cluster": true,
+  })
+
+  // Whenever activeTab changes, auto-expand the cluster it belongs to
+  useEffect(() => {
+    items.forEach((item) => {
+      if (item.children?.some((child) => child.id === activeTab)) {
+        setExpandedClusters((prev) => ({ ...prev, [item.id]: true }))
+      }
+    })
+  }, [activeTab, items])
+
+  const handleParentClick = (item: NavItem) => {
+    if (item.children && item.children.length > 0) {
+      const isCurrentlyExpanded = !!expandedClusters[item.id]
+      setExpandedClusters((prev) => ({
+        ...prev,
+        [item.id]: !isCurrentlyExpanded,
+      }))
+      // If expanding and current activeTab is not in this cluster, navigate to first child
+      const isTabInCluster = item.children.some((c) => c.id === activeTab)
+      if (!isCurrentlyExpanded && !isTabInCluster) {
+        onNavigate(item.children[0].id)
+        if (onCloseMobile) onCloseMobile()
+      }
+    } else {
+      onNavigate(item.id)
+      if (onCloseMobile) onCloseMobile()
+    }
+  }
+
+  const handleChildClick = (childId: string) => {
+    onNavigate(childId)
     if (onCloseMobile) onCloseMobile()
   }
 
   return (
-    <div className="w-60 h-full flex flex-col justify-between overflow-hidden select-none bg-card/70 dark:bg-card/40">
-      <div className="p-4 space-y-5">
+    <div className="w-full lg:w-60 h-full flex flex-col justify-between overflow-y-auto select-none bg-card/70 dark:bg-card/40">
+      <div className="p-3.5 space-y-4">
         {/* Mobile close button header */}
         <div className="flex items-center justify-between lg:hidden pb-2 border-b border-border">
           <span className="text-xs font-bold text-foreground">Menu Navigasi</span>
@@ -91,6 +223,135 @@ export function Sidebar({ activeTab, onNavigate, onCloseMobile }: SidebarProps) 
           </button>
         </div>
 
+        {/* Mobile Simulation & Region Controls (relocated from Topbar on mobile) */}
+        <div className="lg:hidden pb-3 border-b border-border space-y-2">
+          <p className="px-1 text-[11px] font-bold tracking-wider uppercase text-muted-foreground">
+            Simulasi & Wilayah
+          </p>
+
+          <div className="space-y-1.5">
+            {/* Role Switcher Pill */}
+            <div>
+              <button
+                onClick={() => {
+                  setRoleMenuOpen(!roleMenuOpen)
+                  setRegionMenuOpen(false)
+                }}
+                className={`w-full flex items-center justify-between px-2.5 py-2 rounded-lg text-xs font-semibold border transition-colors cursor-pointer ${
+                  roleMenuOpen
+                    ? "bg-muted border-primary/40 text-foreground"
+                    : "bg-muted/80 text-foreground hover:bg-muted border-border/80"
+                }`}
+                title="Ganti Peran Simulasi"
+                aria-label="Pilih peran simulasi"
+              >
+                <div className="flex items-center gap-2 min-w-0">
+                  <CurrentRoleIcon className="w-3.5 h-3.5 text-primary shrink-0" />
+                  <span className="font-normal text-muted-foreground">Peran:</span>
+                  <span className="font-semibold truncate">{currentRoleInfo.title.split(" ")[0]}</span>
+                </div>
+                <ChevronDown
+                  className={`w-3.5 h-3.5 text-muted-foreground shrink-0 transition-transform duration-200 ${
+                    roleMenuOpen ? "rotate-180" : ""
+                  }`}
+                />
+              </button>
+
+              {/* Expandable Role Options */}
+              {roleMenuOpen && (
+                <div className="mt-1.5 p-1.5 rounded-lg border border-border bg-card shadow-sm space-y-1 animate-in fade-in slide-in-from-top-1 duration-150">
+                  {demoRoles.map((r) => {
+                    const isActive = currentRole === r.id
+                    const RoleIcon = r.icon
+                    return (
+                      <button
+                        key={r.id}
+                        onClick={() => handleSwitchRole(r.id)}
+                        className={`w-full flex items-center justify-between p-2 rounded-lg text-left transition-colors cursor-pointer min-h-[40px] ${
+                          isActive
+                            ? "bg-primary text-white dark:text-[#182117] font-semibold"
+                            : "text-foreground hover:bg-muted"
+                        }`}
+                      >
+                        <div className="flex items-center gap-2 min-w-0">
+                          <RoleIcon className="w-3.5 h-3.5 shrink-0" />
+                          <div className="truncate">
+                            <p className="font-medium text-xs truncate">{r.title}</p>
+                            <p
+                              className={`text-[10px] truncate ${
+                                isActive ? "text-white/80 dark:text-[#182117]/80" : "text-muted-foreground"
+                              }`}
+                            >
+                              {r.subtitle}
+                            </p>
+                          </div>
+                        </div>
+                        {isActive && <Check className="w-3.5 h-3.5 shrink-0 ml-1" />}
+                      </button>
+                    )
+                  })}
+
+                  <div className="pt-1.5 mt-1 border-t border-border">
+                    <button
+                      onClick={handleResetData}
+                      className="w-full flex items-center justify-center gap-1.5 py-1.5 rounded-md text-[11px] text-muted-foreground hover:text-foreground hover:bg-muted transition-colors cursor-pointer"
+                    >
+                      <RotateCcw className="w-3 h-3 text-muted-foreground" />
+                      <span>Reset Data Simulasi</span>
+                    </button>
+                  </div>
+                </div>
+              )}
+            </div>
+
+            {/* Region Selector Pill */}
+            <div>
+              <button
+                onClick={() => {
+                  setRegionMenuOpen(!regionMenuOpen)
+                  setRoleMenuOpen(false)
+                }}
+                className={`w-full flex items-center justify-between px-2.5 py-2 rounded-lg text-xs font-medium border transition-colors cursor-pointer ${
+                  regionMenuOpen
+                    ? "bg-muted border-primary/40 text-foreground"
+                    : "bg-muted/80 text-foreground hover:bg-muted border-border/80"
+                }`}
+                aria-label="Pilih wilayah acuan"
+              >
+                <div className="flex items-center gap-2 min-w-0">
+                  <MapPin className="w-3.5 h-3.5 text-primary shrink-0" />
+                  <span className="font-semibold truncate">{selectedRegion}</span>
+                </div>
+                <ChevronDown
+                  className={`w-3.5 h-3.5 text-muted-foreground shrink-0 transition-transform duration-200 ${
+                    regionMenuOpen ? "rotate-180" : ""
+                  }`}
+                />
+              </button>
+
+              {/* Expandable Region Options */}
+              {regionMenuOpen && (
+                <div className="mt-1.5 p-1 rounded-lg border border-border bg-card shadow-sm max-h-48 overflow-y-auto space-y-0.5 animate-in fade-in slide-in-from-top-1 duration-150">
+                  {provinces.map((prov) => (
+                    <button
+                      key={prov}
+                      onClick={() => handleSelectRegion(prov)}
+                      className={`w-full flex items-center justify-between px-2.5 py-1.5 rounded-md text-xs text-left transition-colors cursor-pointer ${
+                        selectedRegion === prov
+                          ? "bg-primary/10 text-primary font-semibold"
+                          : "text-foreground hover:bg-muted"
+                      }`}
+                    >
+                      <span>{prov}</span>
+                      {selectedRegion === prov && <Check className="w-3.5 h-3.5 text-primary" />}
+                    </button>
+                  ))}
+                </div>
+              )}
+            </div>
+          </div>
+        </div>
+
         {/* Workspace Title */}
         <div>
           <p className="px-3 text-[11px] font-bold tracking-wider uppercase text-muted-foreground">
@@ -100,43 +361,84 @@ export function Sidebar({ activeTab, onNavigate, onCloseMobile }: SidebarProps) 
           <nav className="mt-2 space-y-1">
             {items.map((item) => {
               const Icon = item.icon
-              const isActive =
-                activeTab === item.id ||
-                (item.id === "my-offers" && activeTab === "create-offer") ||
-                (item.id === "supply-catalog" && activeTab === "supply-detail")
+              const hasChildren = !!(item.children && item.children.length > 0)
+              const isExpanded = !!expandedClusters[item.id]
+
+              // Check if parent or one of its descendants is currently active
+              const isDirectActive = activeTab === item.id ||
+                (item.id === "my-offers" && (activeTab === "create-offer" || activeTab === "offer-detail")) ||
+                (item.id === "supply-catalog" && activeTab === "supply-detail") ||
+                (item.id === "contracts" && activeTab === "contract-detail")
+
+              const isChildActiveInCluster = hasChildren && item.children!.some((c) => c.id === activeTab)
+              const isParentActive = isDirectActive || isChildActiveInCluster
+
               return (
-                <button
-                  key={item.id}
-                  onClick={() => handleItemClick(item.id)}
-                  className={`w-full flex items-center gap-3 px-3 py-2 rounded-lg text-sm font-medium transition-all duration-150 text-left cursor-pointer ${
-                    isActive
-                      ? "bg-[#EAF1E7] text-[#2D4828] font-semibold dark:bg-primary/25 dark:text-primary-foreground shadow-2xs"
-                      : "text-muted-foreground hover:text-foreground hover:bg-muted/70"
-                  }`}
-                >
-                  <Icon className={`w-4.5 h-4.5 shrink-0 ${isActive ? "text-[#2D4828] dark:text-primary-foreground" : "text-muted-foreground"}`} />
-                  <span className="truncate">{item.label}</span>
-                </button>
+                <div key={item.id} className="relative">
+                  {/* Parent Item Button */}
+                  <button
+                    onClick={() => handleParentClick(item)}
+                    className={`w-full relative flex items-center justify-between px-3 py-2 rounded-lg text-sm transition-all duration-150 text-left cursor-pointer ${
+                      isParentActive
+                        ? "text-foreground font-bold bg-muted/40"
+                        : "text-muted-foreground hover:text-foreground hover:bg-muted/70 font-medium"
+                    }`}
+                  >
+                    {/* Active Accent Vertical Bar on the far left edge (matching video reference) */}
+                    {isParentActive && (
+                      <span className="absolute left-0 top-1.5 bottom-1.5 w-1 rounded-r-full bg-primary" />
+                    )}
+
+                    <div className="flex items-center gap-2.5 min-w-0">
+                      <Icon
+                        className={`w-4.5 h-4.5 shrink-0 ${
+                          isParentActive ? "text-primary" : "text-muted-foreground"
+                        }`}
+                      />
+                      <span className="truncate">{item.label}</span>
+                    </div>
+
+                    {hasChildren && (
+                      <ChevronDown
+                        className={`w-3.5 h-3.5 text-muted-foreground shrink-0 transition-transform duration-200 ${
+                          isExpanded ? "rotate-180 text-foreground" : ""
+                        }`}
+                      />
+                    )}
+                  </button>
+
+                  {/* Sub-menu (Clean Icon + Label, without SVG lines) */}
+                  {hasChildren && isExpanded && (
+                    <div className="pl-4 mt-1 space-y-0.5 animate-in fade-in slide-in-from-top-1 duration-150">
+                      {item.children!.map((sub) => {
+                        const SubIcon = sub.icon
+                        const isSubActive = activeTab === sub.id
+
+                        return (
+                          <button
+                            key={sub.id}
+                            onClick={() => handleChildClick(sub.id)}
+                            className={`flex items-center gap-2.5 px-3 py-2 rounded-lg text-xs w-full text-left transition-all duration-150 cursor-pointer min-h-[36px] ${
+                              isSubActive
+                                ? "bg-[#EAF1E7] text-[#2D4828] font-bold dark:bg-primary/20 dark:text-primary-foreground shadow-2xs"
+                                : "text-muted-foreground hover:text-foreground hover:bg-muted/60 font-medium"
+                            }`}
+                          >
+                            <SubIcon
+                              className={`w-4 h-4 shrink-0 ${
+                                isSubActive ? "text-[#2D4828] dark:text-primary-foreground" : "text-muted-foreground"
+                              }`}
+                            />
+                            <span className="truncate">{sub.label}</span>
+                          </button>
+                        )
+                      })}
+                    </div>
+                  )}
+                </div>
               )
             })}
           </nav>
-        </div>
-      </div>
-
-      {/* Bottom Help & Guide Box */}
-      <div className="p-4 border-t border-border/80 bg-card/30">
-        <div className="p-3 rounded-lg border border-border/70 bg-card space-y-1">
-          <p className="text-xs font-semibold text-foreground">Butuh panduan?</p>
-          <p className="text-[11px] text-muted-foreground leading-relaxed">
-            Pahami harga wajar dan langkah transaksi.
-          </p>
-          <button
-            onClick={() => handleItemClick("help")}
-            className="pt-1 flex items-center gap-1 text-xs font-medium text-foreground hover:text-primary transition-colors cursor-pointer"
-          >
-            <span>Buka pusat bantuan</span>
-            <ExternalLink className="w-3 h-3" />
-          </button>
         </div>
       </div>
     </div>

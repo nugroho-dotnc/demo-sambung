@@ -19,6 +19,9 @@ export function MyOffersPage({ onNavigate }: MyOffersPageProps) {
 
   // Filter only this farmer's offers (DEC-015a: farmer only sees their own offers)
   const myOffers = offers.filter((o) => o.farmerId === currentUser.id)
+  const totalVolume = myOffers.reduce((acc, o) => acc + o.totalVolume, 0)
+  const availableVolume = myOffers.reduce((acc, o) => acc + o.availableVolume, 0)
+  const reservedVolume = myOffers.reduce((acc, o) => acc + o.reservedVolume, 0)
 
   const handleConfirmWithdraw = () => {
     if (withdrawTargetId) {
@@ -58,6 +61,39 @@ export function MyOffersPage({ onNavigate }: MyOffersPageProps) {
           </Button>
         </div>
       </div>
+
+      {/* Quick Summary KPIs */}
+      {myOffers.length > 0 && (
+        <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+          <Card className="p-4 bg-card border border-border/80 space-y-1">
+            <span className="text-[11px] font-semibold text-muted-foreground uppercase tracking-wider">
+              Total Volume Ditawarkan
+            </span>
+            <p className="font-mono text-2xl font-bold text-foreground">
+              {totalVolume.toLocaleString("id-ID")} kg
+            </p>
+            <p className="text-[10px] text-muted-foreground">Dari {myOffers.length} publikasi panen Anda</p>
+          </Card>
+          <Card className="p-4 bg-card border border-border/80 space-y-1">
+            <span className="text-[11px] font-semibold text-muted-foreground uppercase tracking-wider">
+              Stok Siap Dipesan
+            </span>
+            <p className="font-mono text-2xl font-bold text-primary">
+              {availableVolume.toLocaleString("id-ID")} kg
+            </p>
+            <p className="text-[10px] text-muted-foreground">Tersedia untuk calon pembeli</p>
+          </Card>
+          <Card className="p-4 bg-card border border-border/80 space-y-1">
+            <span className="text-[11px] font-semibold text-muted-foreground uppercase tracking-wider">
+              Sedang Dipesan
+            </span>
+            <p className="font-mono text-2xl font-bold text-amber-700 dark:text-amber-400">
+              {reservedVolume.toLocaleString("id-ID")} kg
+            </p>
+            <p className="text-[10px] text-muted-foreground">Menunggu persetujuan kontrak</p>
+          </Card>
+        </div>
+      )}
 
       {/* Offers List */}
       <div className="space-y-6">
@@ -136,7 +172,7 @@ export function MyOffersPage({ onNavigate }: MyOffersPageProps) {
                         <span className="text-xs font-normal text-muted-foreground ml-1">/kg</span>
                       </p>
                       <p className="text-xs text-muted-foreground">
-                        Acuan pasar: {formatRupiah(estimate.lowerBound)} – {formatRupiah(estimate.upperBound)}
+                        Acuan pasar: {formatRupiah(estimate.lowerBound)}  -  {formatRupiah(estimate.upperBound)}
                       </p>
                     </div>
 
@@ -186,25 +222,36 @@ export function MyOffersPage({ onNavigate }: MyOffersPageProps) {
 
                   {/* Actions Bar */}
                   <div className="pt-4 border-t border-border flex flex-wrap items-center justify-between gap-4">
-                    <Button
-                      variant="outline"
-                      size="sm"
-                      onClick={() => onNavigate("contracts")}
-                      className="gap-2 font-semibold"
-                    >
-                      <Eye className="w-4 h-4 text-primary" />
-                      <span>Lihat Pesanan Masuk ({offer.reservedVolume > 0 ? "Ada Pesanan Aktif" : "Belum Ada"})</span>
-                    </Button>
+                    <div className="flex items-center gap-2">
+                      <Button
+                        variant="default"
+                        size="sm"
+                        onClick={() => onNavigate("offer-detail", offer.id)}
+                        className="gap-2 font-semibold text-xs"
+                      >
+                        <Eye className="w-3.5 h-3.5" />
+                        <span>Kelola Detail Tawaran</span>
+                      </Button>
+
+                      <Button
+                        variant="outline"
+                        size="sm"
+                        onClick={() => onNavigate("contracts")}
+                        className="gap-2 font-medium text-xs"
+                      >
+                        <span>Pesanan Terkait ({offer.reservedVolume > 0 ? "Ada Pesanan" : "Nol"})</span>
+                      </Button>
+                    </div>
 
                     {!isWithdrawn && (
                       <Button
                         variant="destructive"
                         size="sm"
                         onClick={() => setWithdrawTargetId(offer.id)}
-                        className="gap-1.5 font-semibold"
+                        className="gap-1.5 font-semibold text-xs"
                       >
-                        <Trash2 className="w-4 h-4" />
-                        <span>Tarik Tawaran (DEC-013b)</span>
+                        <Trash2 className="w-3.5 h-3.5" />
+                        <span>Tarik Tawaran</span>
                       </Button>
                     )}
                   </div>

@@ -5,15 +5,21 @@ import { formatRupiah } from "@/lib/utils"
 import { LeafletPriceMap } from "@/components/domain/LeafletPriceMap"
 import { Card } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
+import { Badge } from "@/components/ui/badge"
 import {
   Map as MapIcon,
   Table as TableIcon,
   ChevronDown,
   Info,
-  AlertTriangle
+  AlertTriangle,
+  Cpu
 } from "lucide-react"
 
-export function PriceMapPage() {
+interface PriceMapPageProps {
+  onNavigate?: (tab: string) => void
+}
+
+export function PriceMapPage({ onNavigate }: PriceMapPageProps) {
   const data: ProvincialPriceComparison[] = SEED_PROVINCIAL_COMPARISONS
   const [viewMode, setViewMode] = useState<"map" | "table">("map")
   const [selectedCommodity, setSelectedCommodity] = useState("Beras medium")
@@ -24,6 +30,8 @@ export function PriceMapPage() {
   const validData = data.filter((d: ProvincialPriceComparison) => d.isAvailable && d.price > 0)
   const minPriceItem = validData.reduce((prev: ProvincialPriceComparison, curr: ProvincialPriceComparison) => (curr.price < prev.price ? curr : prev), validData[0] || { province: "Sulawesi Selatan", price: 6400, medianPrice: 6700, percentageDiff: -4.48, isAvailable: true })
   const maxPriceItem = validData.reduce((prev: ProvincialPriceComparison, curr: ProvincialPriceComparison) => (curr.price > prev.price ? curr : prev), validData[0] || { province: "Bali", price: 7200, medianPrice: 6700, percentageDiff: 7.46, isAvailable: true })
+
+  const activeProvinceItem = data.find((d) => d.province === selectedProvince) || data[0]
 
   return (
     <div className="max-w-6xl mx-auto space-y-6 pb-12">
@@ -144,11 +152,11 @@ export function PriceMapPage() {
               </div>
               <div className="flex items-center gap-2">
                 <span className="w-3.5 h-3.5 rounded-xs bg-[#8A9A3A]" />
-                <span>B · 20–30%</span>
+                <span>B · 20 - 30%</span>
               </div>
               <div className="flex items-center gap-2">
                 <span className="w-3.5 h-3.5 rounded-xs bg-[#EAB308]" />
-                <span>C · 30–40%</span>
+                <span>C · 30 - 40%</span>
               </div>
               <div className="flex items-center gap-2">
                 <span className="w-3.5 h-3.5 rounded-xs bg-[#C86B3C]" />
@@ -238,6 +246,124 @@ export function PriceMapPage() {
             <p className="text-[11px] text-muted-foreground">
               Bandingkan komoditas dan waktu yang sama.
             </p>
+          </div>
+        </div>
+      </Card>
+
+      {/* PB-03b :  Detail Konteks Provinsi & Penjelasan SHAP Model */}
+      <Card className="p-6 space-y-5 border-2 border-primary/20 bg-card">
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-3 border-b border-border/70">
+          <div>
+            <div className="flex items-center gap-2">
+              <span className="text-[11px] font-bold uppercase tracking-wider text-muted-foreground">Detail Wilayah (PB-03b)</span>
+              <Badge variant="default" className="text-xs">{selectedProvince}</Badge>
+            </div>
+            <h3 className="font-display text-xl font-bold text-foreground mt-0.5">
+              Konteks Harga & Analisis Disparitas {selectedProvince}
+            </h3>
+          </div>
+
+          <div className="flex items-center gap-2 text-xs">
+            <span className="text-muted-foreground">Status Observasi:</span>
+            <span className="font-semibold text-emerald-700 dark:text-emerald-400">Tervalidasi Data Bapanas</span>
+          </div>
+        </div>
+
+        {/* 8:4 Grid: SHAP Table (8) | Metric Summary (4) */}
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
+          <div className="lg:col-span-8 space-y-4">
+            <div>
+              <h4 className="font-bold text-xs text-foreground flex items-center gap-1.5">
+                <Cpu className="w-3.5 h-3.5 text-primary" />
+                <span>Faktor Kontribusi Deviasi Model SHAP (v0.2)</span>
+              </h4>
+              <p className="text-[11px] text-muted-foreground mt-0.5">
+                Estimasi pengaruh variabel makro dan iklim terhadap selisih harga dari median nasional.
+              </p>
+            </div>
+
+            <div className="overflow-x-auto border border-border/80 rounded-xl">
+              <table className="w-full text-left text-xs">
+                <thead>
+                  <tr className="border-b border-border bg-muted/40 text-[10px] font-bold uppercase tracking-wider text-muted-foreground">
+                    <th className="p-2.5">Variabel Pengaruh</th>
+                    <th className="p-2.5">Nilai Pengamatan</th>
+                    <th className="p-2.5 text-right">Arah & Bobot Kontribusi</th>
+                  </tr>
+                </thead>
+                <tbody className="divide-y divide-border/60">
+                  <tr>
+                    <td className="p-2.5 font-medium text-foreground">Jarak & Biaya Logistik Distribusi</td>
+                    <td className="p-2.5 text-muted-foreground font-mono">Indeks 1.18</td>
+                    <td className="p-2.5 text-right font-mono font-bold text-[#C86B3C]">
+                      + Rp85/kg (Menaikkan harga)
+                    </td>
+                  </tr>
+                  <tr>
+                    <td className="p-2.5 font-medium text-foreground">Curah Hujan & Anomali Iklim BMKG</td>
+                    <td className="p-2.5 text-muted-foreground font-mono">145 mm / dasarian</td>
+                    <td className="p-2.5 text-right font-mono font-bold text-[#C86B3C]">
+                      + Rp45/kg (Menekan pasokan)
+                    </td>
+                  </tr>
+                  <tr>
+                    <td className="p-2.5 font-medium text-foreground">Volume Surplus Panen Regional</td>
+                    <td className="p-2.5 text-muted-foreground font-mono">Tinggi (Masa Panen Raya)</td>
+                    <td className="p-2.5 text-right font-mono font-bold text-[#246447] dark:text-[#A9D6B0]">
+                      - Rp95/kg (Menurunkan harga)
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+
+            <p className="text-[10px] text-muted-foreground italic">
+              * Faktor kontribusi SHAP menjelaskan bobot model statistik, bukan klaim penyebab hukum mutlak.
+            </p>
+          </div>
+
+          <div className="lg:col-span-4 space-y-3 p-4 rounded-xl bg-muted/50 border border-border/80">
+            <span className="text-[11px] font-bold uppercase tracking-wider text-muted-foreground">Ringkasan Wilayah</span>
+            <div className="space-y-2 text-xs">
+              <div className="flex justify-between py-1 border-b border-border/60">
+                <span className="text-muted-foreground">Harga Teramati:</span>
+                <span className="font-mono font-bold text-foreground">
+                  {activeProvinceItem.isAvailable && activeProvinceItem.price ? formatRupiah(activeProvinceItem.price) : "Belum cukup"}
+                </span>
+              </div>
+              <div className="flex justify-between py-1 border-b border-border/60">
+                <span className="text-muted-foreground">Median Pembanding:</span>
+                <span className="font-mono font-bold text-foreground">
+                  {formatRupiah(activeProvinceItem.medianPrice)}/kg
+                </span>
+              </div>
+              <div className="flex justify-between py-1">
+                <span className="text-muted-foreground">Selisih Relatif:</span>
+                <span className={`font-mono font-bold ${activeProvinceItem.percentageDiff < 0 ? "text-[#246447] dark:text-[#A9D6B0]" : "text-[#C86B3C]"}`}>
+                  {activeProvinceItem.percentageDiff > 0 ? `+${activeProvinceItem.percentageDiff.toFixed(1)}%` : `${activeProvinceItem.percentageDiff.toFixed(1)}%`}
+                </span>
+              </div>
+            </div>
+
+            {onNavigate && (
+              <div className="space-y-1.5 pt-2">
+                <Button
+                  size="sm"
+                  onClick={() => onNavigate("price-board")}
+                  className="w-full text-xs"
+                >
+                  Lihat Papan Rantai Harga
+                </Button>
+                <Button
+                  variant="outline"
+                  size="sm"
+                  onClick={() => onNavigate("forecast")}
+                  className="w-full text-xs"
+                >
+                  Buka Prakiraan Wilayah
+                </Button>
+              </div>
+            )}
           </div>
         </div>
       </Card>

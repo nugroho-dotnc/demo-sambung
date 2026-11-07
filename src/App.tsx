@@ -3,12 +3,13 @@ import { useSambungStore } from "@/store/sambungStore"
 import { UserRole } from "@/types/domain"
 import { Topbar } from "@/components/layout/Topbar"
 import { Sidebar } from "@/components/layout/Sidebar"
-import { RoleSwitcher } from "@/components/layout/RoleSwitcher"
 
 // Public & Auth Pages
 import { HomePage } from "@/pages/public/HomePage"
 import { PriceBoardPage } from "@/pages/public/PriceBoardPage"
 import { PriceMapPage } from "@/pages/public/PriceMapPage"
+import { ForecastPage } from "@/pages/public/ForecastPage"
+import { FairPriceDetailPage } from "@/pages/public/FairPriceDetailPage"
 import { HelpAndPrivacyPage } from "@/pages/public/HelpAndPrivacyPage"
 import { LoginPage } from "@/pages/auth/LoginPage"
 
@@ -16,22 +17,24 @@ import { LoginPage } from "@/pages/auth/LoginPage"
 import { PetaniDashboard } from "@/pages/petani/PetaniDashboard"
 import { CreateOfferPage } from "@/pages/petani/CreateOfferPage"
 import { MyOffersPage } from "@/pages/petani/MyOffersPage"
+import { PetaniOfferDetailPage } from "@/pages/petani/PetaniOfferDetailPage"
 import { PetaniContractsPage } from "@/pages/petani/PetaniContractsPage"
-import { PetaniContractDetailPage } from "@/pages/petani/PetaniContractDetailPage"
 
 // Pembeli Pages
 import { PembeliDashboard } from "@/pages/pembeli/PembeliDashboard"
 import { SupplyCatalogPage } from "@/pages/pembeli/SupplyCatalogPage"
 import { SupplyDetailPage } from "@/pages/pembeli/SupplyDetailPage"
 import { PembeliContractsPage } from "@/pages/pembeli/PembeliContractsPage"
-import { PembeliContractDetailPage } from "@/pages/pembeli/PembeliContractDetailPage"
 
 // Shared Pages
 import { ContractsListPage } from "@/pages/shared/ContractsListPage"
 import { ContractDetailPage } from "@/pages/shared/ContractDetailPage"
+import { NotificationsPage } from "@/pages/shared/NotificationsPage"
+import { ProfilePage } from "@/pages/shared/ProfilePage"
 
 // Admin Pages
 import { AdminDashboard } from "@/pages/admin/AdminDashboard"
+import { AdminPriceDataPage } from "@/pages/admin/AdminPriceDataPage"
 import { AdminParametersPage } from "@/pages/admin/AdminParametersPage"
 import { AdminModerationPage } from "@/pages/admin/AdminModerationPage"
 import { AdminUsersPage } from "@/pages/admin/AdminUsersPage"
@@ -40,15 +43,20 @@ import { AdminModelEvalPage } from "@/pages/admin/AdminModelEvalPage"
 
 // Strict RBAC Tab Whitelists for each role
 const ROLE_PERMITTED_TABS: Record<UserRole, string[]> = {
-  public: ["public-home", "auth-login"],
+  public: ["public-home", "price-board", "price-map", "forecast", "fair-price", "help", "auth-login"],
   petani: [
     "petani-dashboard",
     "create-offer",
     "my-offers",
+    "offer-detail",
     "contracts",
     "contract-detail",
+    "fair-price",
+    "forecast",
     "price-board",
     "price-map",
+    "notifications",
+    "profile",
     "help",
   ],
   pembeli: [
@@ -57,21 +65,31 @@ const ROLE_PERMITTED_TABS: Record<UserRole, string[]> = {
     "supply-detail",
     "contracts",
     "contract-detail",
+    "fair-price",
+    "forecast",
     "price-board",
     "price-map",
+    "notifications",
+    "profile",
     "help",
   ],
   admin: [
     "admin-dashboard",
+    "admin-price-data",
     "admin-parameters",
     "admin-moderation",
+    "admin-governance",
     "admin-users",
     "admin-audit",
     "admin-model",
     "contracts",
     "contract-detail",
+    "fair-price",
+    "forecast",
     "price-board",
     "price-map",
+    "notifications",
+    "profile",
     "help",
   ],
 }
@@ -151,62 +169,65 @@ export function App() {
 
   return (
     <div className="min-h-screen bg-background text-foreground flex flex-col font-sans selection:bg-primary/20">
-      {/* Top Header Bar */}
+      {/* Top Header Bar with Integrated Role Switcher */}
       <Topbar
         activeTab={activeTab}
         onNavigate={handleNavigate}
         sidebarOpen={sidebarOpen}
         onToggleSidebar={() => setSidebarOpen(!sidebarOpen)}
+        onRoleChanged={handleRoleChanged}
       />
 
       <div className="flex-1 flex min-h-[calc(100vh-3.75rem)]">
-        {/* Left Sidebar for internal roles & workspace pages: strictly non-scrollable */}
+        {/* Desktop persistent sidebar: fixed to viewport, NO scrollbar (internal roles only) */}
         {showSidebar && (
-          <>
-            {/* Desktop persistent sidebar: fixed to viewport, NO scrollbar */}
-            <aside className="hidden lg:block w-60 shrink-0 border-r border-border/80 bg-card/60 dark:bg-card/40 select-none">
-              <div className="sticky top-15 h-[calc(100vh-3.75rem)] overflow-hidden">
-                <Sidebar
-                  activeTab={activeTab}
-                  onNavigate={handleNavigate}
-                />
-              </div>
-            </aside>
+          <aside className="hidden lg:block w-60 shrink-0 border-r border-border/80 bg-card/60 dark:bg-card/40 select-none">
+            <div className="sticky top-15 h-[calc(100vh-3.75rem)] overflow-hidden">
+              <Sidebar
+                activeTab={activeTab}
+                onNavigate={handleNavigate}
+              />
+            </div>
+          </aside>
+        )}
 
-            {/* Mobile backdrop drawer */}
-            {sidebarOpen && (
-              <div
-                className="fixed inset-0 z-50 bg-black/60 backdrop-blur-xs lg:hidden animate-in fade-in duration-150"
-                onClick={() => setSidebarOpen(false)}
-              >
-                <div
-                  className="w-64 h-full bg-card shadow-xl overflow-hidden"
-                  onClick={(e) => e.stopPropagation()}
-                >
-                  <Sidebar
-                    activeTab={activeTab}
-                    onNavigate={handleNavigate}
-                    onCloseMobile={() => setSidebarOpen(false)}
-                  />
-                </div>
-              </div>
-            )}
-          </>
+        {/* Mobile backdrop drawer (accessible on mobile for all roles) */}
+        {sidebarOpen && (
+          <div
+            className="fixed inset-0 z-50 bg-black/60 backdrop-blur-xs lg:hidden animate-in fade-in duration-150"
+            onClick={() => setSidebarOpen(false)}
+          >
+            <div
+              className="w-64 h-full bg-card shadow-xl overflow-hidden"
+              onClick={(e) => e.stopPropagation()}
+            >
+              <Sidebar
+                activeTab={activeTab}
+                onNavigate={handleNavigate}
+                onCloseMobile={() => setSidebarOpen(false)}
+              />
+            </div>
+          </div>
         )}
 
         {/* Main Content Area + Integrated Footer for internal roles */}
         <div className="flex-1 flex flex-col min-w-0">
           <main
-            className={`flex-1 min-w-0 transition-colors ${
+            className={`flex-1 min-w-0 transition-colors p-4 sm:p-6 lg:p-8 ${
               showSidebar
-                ? "bg-[#F9FAFB] dark:bg-background/95 p-4 sm:p-6 lg:p-8"
-                : "bg-background py-6 sm:py-8"
+                ? "bg-[#F9FAFB] dark:bg-background/95"
+                : "bg-background"
             }`}
           >
             {/* PUBLIC FLOW (Only accessible by public visitors) */}
             {currentRole === "public" && (
               <>
                 {activeTab === "public-home" && <HomePage onNavigate={handleNavigate} />}
+                {activeTab === "price-board" && <PriceBoardPage />}
+                {activeTab === "price-map" && <PriceMapPage onNavigate={handleNavigate} />}
+                {activeTab === "forecast" && <ForecastPage />}
+                {activeTab === "fair-price" && <FairPriceDetailPage onNavigate={handleNavigate} />}
+                {activeTab === "help" && <HelpAndPrivacyPage />}
                 {activeTab === "auth-login" && (
                   <LoginPage
                     onLoginSuccess={(role) => {
@@ -237,17 +258,28 @@ export function App() {
                   <CreateOfferPage onSuccess={() => handleNavigate("my-offers")} />
                 )}
                 {activeTab === "my-offers" && <MyOffersPage onNavigate={handleNavigate} />}
+                {activeTab === "offer-detail" && (
+                  <PetaniOfferDetailPage
+                    offerId={targetId || "of-01"}
+                    onBack={() => handleNavigate("my-offers")}
+                    onNavigate={handleNavigate}
+                  />
+                )}
                 {activeTab === "contracts" && (
                   <PetaniContractsPage onNavigate={handleNavigate} />
                 )}
                 {activeTab === "contract-detail" && (
-                  <PetaniContractDetailPage
+                  <ContractDetailPage
                     contractId={targetId || "ctr-01"}
                     onBack={() => handleNavigate("contracts")}
                   />
                 )}
+                {activeTab === "fair-price" && <FairPriceDetailPage onNavigate={handleNavigate} />}
                 {activeTab === "price-board" && <PriceBoardPage />}
-                {activeTab === "price-map" && <PriceMapPage />}
+                {activeTab === "price-map" && <PriceMapPage onNavigate={handleNavigate} />}
+                {activeTab === "forecast" && <ForecastPage />}
+                {activeTab === "notifications" && <NotificationsPage onNavigate={handleNavigate} />}
+                {activeTab === "profile" && <ProfilePage onNavigate={handleNavigate} />}
                 {activeTab === "help" && <HelpAndPrivacyPage />}
               </>
             )}
@@ -268,13 +300,17 @@ export function App() {
                   <PembeliContractsPage onNavigate={handleNavigate} />
                 )}
                 {activeTab === "contract-detail" && (
-                  <PembeliContractDetailPage
+                  <ContractDetailPage
                     contractId={targetId || "ctr-01"}
                     onBack={() => handleNavigate("contracts")}
                   />
                 )}
+                {activeTab === "fair-price" && <FairPriceDetailPage onNavigate={handleNavigate} />}
                 {activeTab === "price-board" && <PriceBoardPage />}
-                {activeTab === "price-map" && <PriceMapPage />}
+                {activeTab === "price-map" && <PriceMapPage onNavigate={handleNavigate} />}
+                {activeTab === "forecast" && <ForecastPage />}
+                {activeTab === "notifications" && <NotificationsPage onNavigate={handleNavigate} />}
+                {activeTab === "profile" && <ProfilePage onNavigate={handleNavigate} />}
                 {activeTab === "help" && <HelpAndPrivacyPage />}
               </>
             )}
@@ -283,11 +319,17 @@ export function App() {
             {currentRole === "admin" && (
               <>
                 {activeTab === "admin-dashboard" && <AdminDashboard onNavigate={handleNavigate} />}
+                {activeTab === "admin-price-data" && (
+                  <AdminPriceDataPage onBack={() => handleNavigate("admin-dashboard")} />
+                )}
                 {activeTab === "admin-parameters" && (
                   <AdminParametersPage onBack={() => handleNavigate("admin-dashboard")} />
                 )}
                 {activeTab === "admin-moderation" && (
                   <AdminModerationPage onBack={() => handleNavigate("admin-dashboard")} />
+                )}
+                {activeTab === "admin-governance" && (
+                  <AdminUsersPage onBack={() => handleNavigate("admin-dashboard")} />
                 )}
                 {activeTab === "admin-users" && (
                   <AdminUsersPage onBack={() => handleNavigate("admin-dashboard")} />
@@ -307,8 +349,10 @@ export function App() {
                     onBack={() => handleNavigate("contracts")}
                   />
                 )}
+                {activeTab === "fair-price" && <FairPriceDetailPage onNavigate={handleNavigate} />}
                 {activeTab === "price-board" && <PriceBoardPage />}
-                {activeTab === "price-map" && <PriceMapPage />}
+                {activeTab === "price-map" && <PriceMapPage onNavigate={handleNavigate} />}
+                {activeTab === "forecast" && <ForecastPage />}
                 {activeTab === "help" && <HelpAndPrivacyPage />}
               </>
             )}
@@ -319,7 +363,7 @@ export function App() {
             <div className={`px-4 sm:px-6 lg:px-8 flex flex-col sm:flex-row items-center justify-between gap-4 text-center sm:text-left ${!showSidebar ? "max-w-6xl mx-auto w-full" : ""}`}>
               <div>
                 <p className="font-semibold text-foreground">
-                  SAMBUNG — Sistem Agrikultur Modern Berbasis Unggulan Nilai Gabah
+                  SAMBUNG : Sistem Agrikultur Modern Berbasis Unggulan Nilai Gabah
                 </p>
                 <p className="text-[11px] text-muted-foreground mt-0.5">
                   Pasar pertanian yang lebih adil · Transparansi rantai pasok dan simulasi kesepakatan gabah
@@ -352,9 +396,6 @@ export function App() {
           </footer>
         </div>
       </div>
-
-      {/* Floating Demo Role Switcher for seamless role switching */}
-      <RoleSwitcher onRoleChanged={handleRoleChanged} />
     </div>
   )
 }

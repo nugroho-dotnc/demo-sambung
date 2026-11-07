@@ -104,7 +104,7 @@ export function PembeliDashboard({ onNavigate }: PembeliDashboardProps) {
           </div>
 
           <p className="font-display text-2xl sm:text-3xl font-extrabold text-[#246447] dark:text-[#A9D6B0] tracking-tight">
-            Rp6.650–6.940
+            Rp6.650 - 6.940
           </p>
           <p className="text-xs text-muted-foreground">
             per kg · Jawa Timur

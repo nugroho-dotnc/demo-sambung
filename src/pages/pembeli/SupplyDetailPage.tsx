@@ -4,6 +4,7 @@ import { formatRupiah } from "@/lib/utils"
 import { calculateFairPrice, evaluatePriceLamp, validatePriceInput, validateVolumeInput } from "@/lib/priceEngine"
 import { PriceLampBadge } from "@/components/domain/PriceLampBadge"
 import { PriceRangeSlider } from "@/components/domain/PriceRangeSlider"
+import { PriceAcknowledgement } from "@/components/domain/PriceAcknowledgement"
 import { ConfirmationModal } from "@/components/domain/ConfirmationModal"
 import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
@@ -32,11 +33,12 @@ export function SupplyDetailPage({ offerId, onBack, onSuccess }: SupplyDetailPag
   const [orderVolume, setOrderVolume] = useState<number>(1000)
   const [proposedPrice, setProposedPrice] = useState<number>(offer ? offer.askingPrice : 6800)
   const [validationError, setValidationError] = useState("")
+  const [priceAcknowledged, setPriceAcknowledged] = useState(false)
   const [showRedPriceConfirm, setShowRedPriceConfirm] = useState(false)
 
   if (!offer) {
     return (
-      <div className="app-wrap py-12 text-center">
+      <div className="max-w-2xl mx-auto py-12 text-center space-y-4">
         <p className="text-muted-foreground">Tawaran pasokan tidak ditemukan.</p>
         <Button onClick={onBack} className="mt-4">Kembali ke Katalog</Button>
       </div>
@@ -94,7 +96,7 @@ export function SupplyDetailPage({ offerId, onBack, onSuccess }: SupplyDetailPag
   }
 
   return (
-    <div className="w-full space-y-6 pb-16">
+    <div className="max-w-6xl mx-auto space-y-6 pb-12">
       {/* Back Button */}
       <div className="pt-1 border-b border-border/80 pb-3">
         <Button variant="ghost" size="sm" onClick={onBack} className="gap-2 text-xs cursor-pointer">
@@ -259,6 +261,16 @@ export function SupplyDetailPage({ offerId, onBack, onSuccess }: SupplyDetailPag
                   label="Harga penawaran Anda"
                 />
 
+                {/* Red Price Acknowledgement */}
+                {lampEval.status === "MERAH" && (
+                  <PriceAcknowledgement
+                    checked={priceAcknowledged}
+                    onChange={setPriceAcknowledged}
+                    price={proposedPrice}
+                    lowerBound={estimate.lowerBound}
+                  />
+                )}
+
                 {/* Total Value Preview */}
                 <div className="p-4 rounded-xl bg-card border border-border space-y-2">
                   <div className="flex justify-between items-center text-xs text-muted-foreground">
@@ -273,7 +285,12 @@ export function SupplyDetailPage({ offerId, onBack, onSuccess }: SupplyDetailPag
                   </p>
                 </div>
 
-                <Button type="submit" size="default" className="w-full font-semibold gap-2 text-xs">
+                <Button
+                  type="submit"
+                  size="default"
+                  disabled={lampEval.status === "MERAH" && !priceAcknowledged}
+                  className="w-full font-semibold gap-2 text-xs"
+                >
                   <CheckCircle className="w-4 h-4" />
                   <span>Kirim Pesanan & Cadangkan Volume</span>
                 </Button>
@@ -287,7 +304,7 @@ export function SupplyDetailPage({ offerId, onBack, onSuccess }: SupplyDetailPag
       <ConfirmationModal
         isOpen={showRedPriceConfirm}
         title="Konfirmasi Pengajuan Harga di Bawah Wajar"
-        description={`Harga penawaran Anda (${formatRupiah(proposedPrice)}/kg) berada jauh di bawah rentang wajar acuan (${formatRupiah(estimate.lowerBound)} – ${formatRupiah(estimate.upperBound)}). Apakah Anda yakin ingin mengajukan harga penawaran ini ke petani?`}
+        description={`Harga penawaran Anda (${formatRupiah(proposedPrice)}/kg) berada jauh di bawah rentang wajar acuan (${formatRupiah(estimate.lowerBound)}  -  ${formatRupiah(estimate.upperBound)}). Apakah Anda yakin ingin mengajukan harga penawaran ini ke petani?`}
         confirmText="Tetap Ajukan Tawaran"
         cancelText="Ubah Harga"
         variant="warning"

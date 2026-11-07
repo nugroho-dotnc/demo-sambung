@@ -125,7 +125,7 @@ export function ForecastPage() {
                       <span className="text-sm font-normal text-muted-foreground ml-1">/kg Beras Produsen</span>
                     </p>
                     <span className="font-mono text-xs font-bold text-muted-foreground bg-muted px-2.5 py-1 rounded-md">
-                      Pita 80%: {formatRupiah(activeForecast.confidenceInterval80[0])} – {formatRupiah(activeForecast.confidenceInterval80[1])}
+                      Pita 80%: {formatRupiah(activeForecast.confidenceInterval80[0])}  -  {formatRupiah(activeForecast.confidenceInterval80[1])}
                     </span>
                   </div>
                 </div>
@@ -219,7 +219,7 @@ export function ForecastPage() {
       <div className="p-4 rounded-xl bg-card border border-border flex items-start gap-3 text-body-sm text-muted-foreground">
         <HelpCircle className="w-5 h-5 text-primary shrink-0 mt-0.5" />
         <p className="text-xs leading-relaxed">
-          <strong>Target Evaluasi Akurasi:</strong> Target akurasi proposal mensyaratkan MASE ≤ 0,9 terhadap baseline pekan lalu, dengan cakupan empiris pita 80% berada di rentang 75%–85%. Nilai prediksi tidak menjamin harga transaksi riil di masa depan.
+          <strong>Target Evaluasi Akurasi:</strong> Target akurasi proposal mensyaratkan MASE ≤ 0,9 terhadap baseline pekan lalu, dengan cakupan empiris pita 80% berada di rentang 75% - 85%. Nilai prediksi tidak menjamin harga transaksi riil di masa depan.
         </p>
       </div>
     </div>

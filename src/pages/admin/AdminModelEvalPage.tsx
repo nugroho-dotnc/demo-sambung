@@ -1,13 +1,12 @@
 import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card"
-import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
-import { Sparkles, ArrowLeft, ShieldAlert, CheckCircle2 } from "lucide-react"
+import { ShieldAlert, CheckCircle2 } from "lucide-react"
 
 interface AdminModelEvalPageProps {
-  onBack: () => void
+  onBack?: () => void
 }
 
-export function AdminModelEvalPage({ onBack }: AdminModelEvalPageProps) {
+export function AdminModelEvalPage({ onBack: _onBack }: AdminModelEvalPageProps) {
   const modelEvaluationRows = [
     {
       province: "Jawa Barat",
@@ -48,42 +47,23 @@ export function AdminModelEvalPage({ onBack }: AdminModelEvalPageProps) {
   ]
 
   return (
-    <div className="app-wrap space-y-8 pb-16">
-      {/* Header */}
-      <div className="pt-2 border-b border-border/80 pb-4 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
-        <div>
-          <Button variant="ghost" size="sm" onClick={onBack} className="gap-2 mb-2 text-xs">
-            <ArrowLeft className="w-3.5 h-3.5" />
-            <span>Kembali ke Ringkasan Admin</span>
-          </Button>
-          <div className="flex items-center gap-1.5 text-xs font-semibold uppercase tracking-wider text-muted-foreground mb-1">
-            <span>SAMBUNG</span>
-            <span>/</span>
-            <span className="text-foreground">EVALUASI MODEL AI</span>
-          </div>
-          <h1 className="text-2xl sm:text-3xl font-display font-bold text-foreground">
-            Laporan Evaluasi & Gerbang Publikasi Model AI
-          </h1>
-          <p className="text-xs sm:text-sm text-muted-foreground mt-1">
-            Penilaian performa model AI per unit wilayah dan horizon terhadap target akurasi proposal.
-          </p>
+    <div className="w-full space-y-6">
+      {/* 2. Breadcrumbs, Judul Halaman, Deskripsi Singkat */}
+      <div className="pt-1 border-b border-border/80 pb-4">
+        <div className="flex items-center gap-1.5 text-xs font-semibold uppercase tracking-wider text-muted-foreground mb-1">
+          <span>SAMBUNG</span>
+          <span>/</span>
+          <span className="text-foreground">EVALUASI MODEL AI</span>
         </div>
+        <h1 className="text-2xl sm:text-3xl font-display font-bold text-foreground">
+          Laporan Evaluasi & Gerbang Publikasi Model AI
+        </h1>
+        <p className="text-xs sm:text-sm text-muted-foreground mt-1">
+          Penilaian performa model AI per unit wilayah dan horizon terhadap target akurasi proposal.
+        </p>
       </div>
 
-      {/* Target Criteria Info */}
-      <div className="p-4 rounded-xl bg-card border border-border flex items-start gap-3 text-body-sm text-muted-foreground">
-        <Sparkles className="w-4 h-4 text-primary shrink-0 mt-0.5" />
-        <div className="space-y-1 text-xs leading-relaxed">
-          <p className="font-bold text-foreground">Kriteria Kelayakan Publikasi Model:</p>
-          <p>
-            1. <strong>MASE ≤ 0,9</strong> (dibandingkan baseline musiman).<br />
-            2. <strong>Cakupan Pita Keyakinan 80%</strong> berada di rentang 75%–85%.<br />
-            3. Unit provinsi yang <em>gagal memenuhi target</em> wajib beralih ke <strong>Prakiraan Baseline</strong> dengan label jujur; skor agregat tidak boleh dipakai meloloskan unit yang gagal.
-          </p>
-        </div>
-      </div>
-
-      {/* Evaluation Table */}
+      {/* 4. Konten Utama Panel (Tabel Evaluasi Model) */}
       <Card>
         <CardHeader className="pb-3 border-b border-border">
           <CardTitle className="text-base">Hasil Backtesting Walk-Forward per Unit Wilayah</CardTitle>

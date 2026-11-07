@@ -87,7 +87,7 @@ export function PembeliContractDetailPage({ contractId, onBack }: PembeliContrac
   }
 
   return (
-    <div className="w-full space-y-6 pb-16">
+    <div className="max-w-6xl mx-auto space-y-6 pb-12">
       {/* Back Button & Header */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <Button
@@ -195,7 +195,7 @@ export function PembeliContractDetailPage({ contractId, onBack }: PembeliContrac
             <PriceLampBadge status={lamp.status} size="sm" />
           </div>
           <p className="text-xs text-muted-foreground leading-relaxed">
-            Harga {formatRupiah(contract.activePrice)}/kg diperiksa terhadap acuan wajar ({formatRupiah(benchmark.lowerBound)} – {formatRupiah(benchmark.upperBound)}) berbasis konversi rendemen beras produsen Jawa Timur.
+            Harga {formatRupiah(contract.activePrice)}/kg diperiksa terhadap acuan wajar ({formatRupiah(benchmark.lowerBound)}  -  {formatRupiah(benchmark.upperBound)}) berbasis konversi rendemen beras produsen Jawa Timur.
           </p>
         </div>
 

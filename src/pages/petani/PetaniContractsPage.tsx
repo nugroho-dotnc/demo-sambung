@@ -44,7 +44,7 @@ export function PetaniContractsPage({ onNavigate }: PetaniContractsPageProps) {
   }
 
   return (
-    <div className="w-full space-y-6 pb-12">
+    <div className="max-w-6xl mx-auto space-y-6 pb-12">
       {/* Header & Breadcrumb */}
       <div>
         <div className="flex items-center gap-1.5 text-xs font-semibold uppercase tracking-wider text-muted-foreground">

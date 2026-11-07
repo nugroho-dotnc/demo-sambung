@@ -3,13 +3,13 @@ import { useSambungStore } from "@/store/sambungStore"
 import { Card, CardTitle } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
-import { Check, ArrowLeft, Info } from "lucide-react"
+import { Check } from "lucide-react"
 
 interface AdminParametersPageProps {
-  onBack: () => void
+  onBack?: () => void
 }
 
-export function AdminParametersPage({ onBack }: AdminParametersPageProps) {
+export function AdminParametersPage({ onBack: _onBack }: AdminParametersPageProps) {
   const { parameters, updateParameters } = useSambungStore()
 
   const [defaultDurationHours, setDefaultDurationHours] = useState(parameters.orderExpiryHours)
@@ -34,32 +34,23 @@ export function AdminParametersPage({ onBack }: AdminParametersPageProps) {
 
   return (
     <div className="w-full space-y-6 pb-12">
-      {/* Breadcrumb & Navigation */}
-      <div>
-        <div className="flex items-center gap-1.5 text-xs font-semibold uppercase tracking-wider text-muted-foreground">
+      {/* 2. Breadcrumbs, Judul Halaman, Deskripsi Singkat */}
+      <div className="pt-1 border-b border-border/80 pb-4">
+        <div className="flex items-center gap-1.5 text-xs font-semibold uppercase tracking-wider text-muted-foreground mb-1">
           <span>SAMBUNG</span>
           <span>/</span>
-          <button onClick={onBack} className="hover:text-foreground hover:underline">
-            ADMIN
-          </button>
+          <span>ADMIN</span>
           <span>/</span>
           <span className="text-foreground">PARAMETER HARGA</span>
         </div>
 
-        <div className="mt-2 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
-          <div>
-            <h1 className="font-display text-2xl sm:text-3xl font-bold tracking-tight text-foreground">
-              Pengaturan Parameter Operasional
-            </h1>
-            <p className="mt-1 text-sm text-muted-foreground">
-              Kelola nilai default batas waktu negosiasi, ambang toleransi lampu harga, dan rasio rendemen acuan.
-            </p>
-          </div>
-
-          <Button variant="ghost" size="sm" onClick={onBack} className="self-start sm:self-auto gap-2 text-xs">
-            <ArrowLeft className="w-3.5 h-3.5" />
-            <span>Kembali ke dasbor</span>
-          </Button>
+        <div className="mt-2">
+          <h1 className="font-display text-2xl sm:text-3xl font-bold tracking-tight text-foreground">
+            Pengaturan Parameter Operasional
+          </h1>
+          <p className="mt-1 text-sm text-muted-foreground">
+            Kelola nilai default batas waktu negosiasi, ambang toleransi lampu harga, dan rasio rendemen acuan.
+          </p>
         </div>
       </div>
 
@@ -177,24 +168,14 @@ export function AdminParametersPage({ onBack }: AdminParametersPageProps) {
           </p>
         </Card>
 
-        {/* Action Buttons: sleek & compact! */}
-        <div className="flex items-center justify-end gap-3 pt-2">
-          <Button type="button" variant="outline" size="default" onClick={onBack} className="text-xs">
-            Kembali
-          </Button>
-          <Button type="submit" size="default" className="text-xs gap-1.5 shadow-xs">
+        {/* Action Button */}
+        <div className="flex items-center justify-end pt-2">
+          <Button type="submit" size="default" className="text-xs gap-1.5 shadow-xs cursor-pointer">
             <Check className="w-3.5 h-3.5" />
             <span>Simpan Perubahan Parameter</span>
           </Button>
         </div>
       </form>
-
-      <div className="p-4 rounded-xl bg-muted/60 border border-border/80 flex items-start gap-3 text-xs text-muted-foreground">
-        <Info className="w-4 h-4 text-primary shrink-0 mt-0.5" />
-        <span>
-          Semua perubahan parameter dicatat secara permanen dengan stempel waktu dan identitas admin pada log audit sistem.
-        </span>
-      </div>
     </div>
   )
 }

@@ -125,7 +125,7 @@ export function evaluatePriceLamp(
     return {
       status: "HIJAU",
       message: "Dalam Rentang Wajar",
-      detailMessage: `Harga Rp${price.toLocaleString("id-ID")} berada dalam estimasi rentang wajar (Rp${lowerBound.toLocaleString("id-ID")} – Rp${upperBound.toLocaleString("id-ID")}).`,
+      detailMessage: `Harga Rp${price.toLocaleString("id-ID")} berada dalam estimasi rentang wajar (Rp${lowerBound.toLocaleString("id-ID")}  -  Rp${upperBound.toLocaleString("id-ID")}).`,
       needsConfirmation: false,
     }
   }

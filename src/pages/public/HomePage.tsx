@@ -183,7 +183,7 @@ export function HomePage({ onNavigate }: HomePageProps) {
   }
 
   return (
-    <div className="max-w-6xl mx-auto space-y-20 px-4 sm:px-6 lg:px-8 py-8 pb-20">
+    <div className="max-w-6xl mx-auto space-y-20 pb-20">
       {/* 1. Hero Section matching Main.dc.html (#beranda) */}
       <section id="beranda" className="flex flex-col lg:flex-row items-center gap-12 pt-2 scroll-mt-20">
         {/* Left Copy */}
@@ -272,12 +272,12 @@ export function HomePage({ onNavigate }: HomePageProps) {
             <div className="p-3 rounded-lg bg-muted/60 border border-border/50 space-y-1">
               <span className="text-[11px] font-medium text-muted-foreground">Prakiraan 2 pekan</span>
               <p className="text-lg font-bold text-foreground font-display">Rp7.150</p>
-              <span className="text-[10px] text-muted-foreground block">Rentang 80%: 6.950–7.350</span>
+              <span className="text-[10px] text-muted-foreground block">Rentang 80%: 6.950 - 7.350</span>
             </div>
             <div className="p-3 rounded-lg bg-muted/60 border border-border/50 space-y-1">
               <span className="text-[11px] font-medium text-muted-foreground">Prakiraan 4 pekan</span>
               <p className="text-lg font-bold text-foreground font-display">Rp7.300</p>
-              <span className="text-[10px] text-muted-foreground block">Rentang 80%: 6.900–7.700</span>
+              <span className="text-[10px] text-muted-foreground block">Rentang 80%: 6.900 - 7.700</span>
             </div>
           </div>
         </Card>
@@ -308,7 +308,7 @@ export function HomePage({ onNavigate }: HomePageProps) {
             73%
           </span>
           <p className="text-xs text-muted-foreground leading-relaxed">
-            Wilayah diprakirakan berhujan rendah pada November 2026–Januari 2027 akibat El Niño kuat (BMKG).
+            Wilayah diprakirakan berhujan rendah pada November 2026 - Januari 2027 akibat El Niño kuat (BMKG).
           </p>
         </Card>
       </section>

@@ -68,7 +68,7 @@ export function PetaniDashboard({ onNavigate }: PetaniDashboardProps) {
 
             <div className="flex items-baseline gap-2">
               <span className="font-display text-3xl sm:text-4xl font-extrabold text-[#246447] dark:text-[#A9D6B0] tracking-tight">
-                Rp6.650–6.940
+                Rp6.650 - 6.940
               </span>
               <span className="text-sm font-medium text-muted-foreground">/kg</span>
             </div>
@@ -106,7 +106,7 @@ export function PetaniDashboard({ onNavigate }: PetaniDashboardProps) {
           <div>
             <div className="flex items-start justify-between gap-4">
               <div>
-                <h3 className="font-bold text-base text-foreground">Prediksi 3–4 pekan</h3>
+                <h3 className="font-bold text-base text-foreground">Prediksi 3 - 4 pekan</h3>
                 <p className="text-xs text-muted-foreground mt-0.5">
                   Skema arah dari acuan · bukan proyeksi harga numerik
                 </p>

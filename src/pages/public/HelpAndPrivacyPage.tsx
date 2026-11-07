@@ -5,7 +5,7 @@ export function HelpAndPrivacyPage() {
   const glossary = [
     {
       term: "GKP (Gabah Kering Panen)",
-      definition: "Gabah hasil panen dengan kadar air berkisar 20%–25%. Memiliki acuan rendemen konversi standar 52% ke beras."
+      definition: "Gabah hasil panen dengan kadar air berkisar 20% - 25%. Memiliki acuan rendemen konversi standar 52% ke beras."
     },
     {
       term: "GKG (Gabah Kering Giling)",
@@ -30,7 +30,7 @@ export function HelpAndPrivacyPage() {
   ]
 
   return (
-    <div className="app-wrap space-y-8 pb-16">
+    <div className="max-w-6xl mx-auto space-y-6 pb-12">
       {/* Header */}
       <div className="pt-4 border-b border-border pb-6">
         <div className="inline-flex items-center gap-1.5 text-xs font-bold text-primary uppercase tracking-wider mb-1">

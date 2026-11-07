@@ -3,10 +3,10 @@ import { Card } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import {
   ShieldAlert,
-  SlidersHorizontal,
   Users,
   Cpu,
-  ArrowRight
+  ArrowRight,
+  Database
 } from "lucide-react"
 
 interface AdminDashboardProps {
@@ -40,12 +40,12 @@ export function AdminDashboard({ onNavigate }: AdminDashboardProps) {
           </div>
 
           <Button
-            onClick={() => onNavigate("admin-parameters")}
+            onClick={() => onNavigate("admin-price-data")}
             variant="outline"
             className="self-start sm:self-auto gap-2 text-xs"
           >
-            <SlidersHorizontal className="w-3.5 h-3.5" />
-            <span>Konfigurasi Parameter</span>
+            <Database className="w-3.5 h-3.5" />
+            <span>Data & Parameter Harga</span>
           </Button>
         </div>
       </div>
@@ -169,7 +169,7 @@ export function AdminDashboard({ onNavigate }: AdminDashboardProps) {
           <Button
             variant="ghost"
             size="sm"
-            onClick={() => onNavigate("admin-audit")}
+            onClick={() => onNavigate("admin-governance")}
             className="text-xs font-semibold text-primary"
           >
             Lihat Semua Log

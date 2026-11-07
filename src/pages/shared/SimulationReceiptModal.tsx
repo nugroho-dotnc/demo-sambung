@@ -33,10 +33,10 @@ export function SimulationReceiptModal({ isOpen, contract, onClose }: Simulation
           <AlertTriangle className="w-4 h-4 shrink-0 text-red-600" />
           <div>
             <p className="font-extrabold text-xs tracking-wider uppercase">
-              BUKTI SIMULASI DIGITAL RESMI — BUKAN BUKTI PEMBAYARAN NYATA
+              BUKTI SIMULASI DIGITAL RESMI : BUKAN BUKTI PEMBAYARAN NYATA
             </p>
             <p className="text-[10px] mt-0.5 opacity-90">
-              Sistem Informasi Harga & Transaksi Simulasi Gabah SAMBUNG
+              Dokumen kesepakatan harga gabah platform SAMBUNG (Simulasi)
             </p>
           </div>
           <AlertTriangle className="w-4 h-4 shrink-0 text-red-600" />
@@ -67,14 +67,14 @@ export function SimulationReceiptModal({ isOpen, contract, onClose }: Simulation
           {/* Parties */}
           <div className="grid grid-cols-2 gap-6 p-4 bg-zinc-50 rounded-xl border border-zinc-200 text-xs">
             <div>
-              <span className="text-zinc-500 uppercase font-bold tracking-wider">Pihak Penjual:</span>
+              <span className="text-zinc-500 uppercase font-bold tracking-wider">Pihak Penjual (Petani):</span>
               <p className="font-bold text-zinc-900 text-sm mt-1">{contract.farmerName}</p>
-              <p className="text-zinc-600 mt-0.5">Kontak: {contract.farmerPhone}</p>
+              <p className="text-zinc-500 text-[11px] mt-0.5">Wilayah: Kab. Ngawi, Jawa Timur</p>
             </div>
             <div className="border-l border-zinc-200 pl-4">
-              <span className="text-zinc-500 uppercase font-bold tracking-wider">Pihak Pembeli:</span>
+              <span className="text-zinc-500 uppercase font-bold tracking-wider">Pihak Pembeli (Penggilingan):</span>
               <p className="font-bold text-zinc-900 text-sm mt-1">{contract.buyerName}</p>
-              <p className="text-zinc-600 mt-0.5">Kontak: {contract.buyerPhone}</p>
+              <p className="text-zinc-500 text-[11px] mt-0.5">Wilayah: Kab. Madiun, Jawa Timur</p>
             </div>
           </div>
 

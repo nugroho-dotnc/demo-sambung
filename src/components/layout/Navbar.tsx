@@ -69,7 +69,7 @@ export function Navbar({ activeTab, setActiveTab }: NavbarProps) {
 
   return (
     <header className="sticky top-0 z-40 w-full border-b border-border bg-card/95 backdrop-blur-md transition-colors">
-      <div className="app-wrap flex min-h-20 items-center justify-between py-2">
+      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 flex min-h-20 items-center justify-between py-2">
         {/* Brand Logo */}
         <div className="flex items-center gap-3">
           <button

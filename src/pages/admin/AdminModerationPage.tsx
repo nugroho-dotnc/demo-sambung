@@ -4,13 +4,13 @@ import { formatRupiah } from "@/lib/utils"
 import { Card, CardContent } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
-import { AlertCircle, CheckCircle, ShieldAlert, ArrowLeft } from "lucide-react"
+import { AlertCircle, CheckCircle } from "lucide-react"
 
 interface AdminModerationPageProps {
-  onBack: () => void
+  onBack?: () => void
 }
 
-export function AdminModerationPage({ onBack }: AdminModerationPageProps) {
+export function AdminModerationPage({ onBack: _onBack }: AdminModerationPageProps) {
   const { offers, setOfferModeration } = useSambungStore()
   const [selectedOfferId, setSelectedOfferId] = useState<string | null>(null)
   const [issueNote, setIssueNote] = useState("")
@@ -32,40 +32,23 @@ export function AdminModerationPage({ onBack }: AdminModerationPageProps) {
   }
 
   return (
-    <div className="app-wrap space-y-8 pb-16">
-      {/* Header */}
-      <div className="pt-2 border-b border-border/80 pb-4 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
-        <div>
-          <Button variant="ghost" size="sm" onClick={onBack} className="gap-2 mb-2 text-xs">
-            <ArrowLeft className="w-3.5 h-3.5" />
-            <span>Kembali ke Ringkasan Admin</span>
-          </Button>
-          <div className="flex items-center gap-1.5 text-xs font-semibold uppercase tracking-wider text-muted-foreground mb-1">
-            <span>SAMBUNG</span>
-            <span>/</span>
-            <span className="text-foreground">MODERASI TAWARAN</span>
-          </div>
-          <h1 className="text-2xl sm:text-3xl font-display font-bold text-foreground">
-            Moderasi & Pengawasan Tawaran Panen
-          </h1>
-          <p className="text-xs sm:text-sm text-muted-foreground mt-1">
-            Beri catatan perbaikan informasi kepada petani tanpa menyembunyikan tawaran atau membatalkan pesanan.
-          </p>
+    <div className="max-w-6xl mx-auto space-y-6 pb-12">
+      {/* 2. Breadcrumbs, Judul Halaman, Deskripsi Singkat */}
+      <div className="pt-1 border-b border-border/80 pb-4">
+        <div className="flex items-center gap-1.5 text-xs font-semibold uppercase tracking-wider text-muted-foreground mb-1">
+          <span>SAMBUNG</span>
+          <span>/</span>
+          <span className="text-foreground">MODERASI TAWARAN</span>
         </div>
+        <h1 className="text-2xl sm:text-3xl font-display font-bold text-foreground">
+          Moderasi & Pengawasan Tawaran Panen
+        </h1>
+        <p className="text-xs sm:text-sm text-muted-foreground mt-1">
+          Beri catatan perbaikan informasi kepada petani tanpa menyembunyikan tawaran atau membatalkan pesanan.
+        </p>
       </div>
 
-      {/* Moderation Guidance Box */}
-      <div className="p-4 rounded-xl bg-card border border-border flex items-start gap-3 text-body-sm text-muted-foreground">
-        <ShieldAlert className="w-4 h-4 text-primary shrink-0 mt-0.5" />
-        <div className="space-y-1 text-xs leading-relaxed">
-          <p className="font-bold text-foreground">Panduan Pengawasan & Moderasi Non-Intervensi:</p>
-          <p>
-            Admin hanya menandai temuan dan meminta petani memperbaiki atau menarik tawaran. Moderasi <strong>tidak menyembunyikan tawaran</strong>, tidak memblokir pesanan baru, dan tidak membatalkan kontrak yang sedang berjalan. Pembeli akan melihat catatan ringkasan tanpa data pribadi.
-          </p>
-        </div>
-      </div>
-
-      {/* Offers Table for Moderation */}
+      {/* 4. Konten Utama Panel (Daftar Tawaran Moderasi) */}
       <div className="space-y-4">
         {offers.map((offer) => {
           const isFlagged = offer.moderationStatus === "Sedang diminta perbaikan"

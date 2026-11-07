@@ -92,7 +92,7 @@ export function PriceRangeSlider({
 
       <div className="mt-2 grid grid-cols-3 items-start text-[11px] leading-tight text-muted-foreground">
         <span>Rp{min.toLocaleString("id-ID")}</span>
-        <span className="text-center font-medium text-foreground/70">Acuan<br />Rp{lowerBound.toLocaleString("id-ID")}–{upperBound.toLocaleString("id-ID")}</span>
+        <span className="text-center font-medium text-foreground/70">Acuan<br />Rp{lowerBound.toLocaleString("id-ID")} - {upperBound.toLocaleString("id-ID")}</span>
         <span className="text-right">Rp{max.toLocaleString("id-ID")}</span>
       </div>
 

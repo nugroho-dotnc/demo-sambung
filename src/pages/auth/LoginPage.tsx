@@ -88,7 +88,7 @@ export function LoginPage({ onLoginSuccess }: LoginPageProps) {
   }
 
   return (
-    <div className="app-wrap max-w-lg mx-auto py-12 px-4">
+    <div className="w-full max-w-lg mx-auto py-12 px-4">
       {/* Mode Switch Tabs */}
       <div className="flex bg-muted p-1 rounded-xl mb-6 border border-border">
         <button

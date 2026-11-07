@@ -1,38 +1,32 @@
 import { useSambungStore } from "@/store/sambungStore"
 import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card"
-import { Button } from "@/components/ui/button"
-import { ArrowLeft, Shield } from "lucide-react"
+import { Shield } from "lucide-react"
 
 interface AdminAuditLogPageProps {
-  onBack: () => void
+  onBack?: () => void
 }
 
-export function AdminAuditLogPage({ onBack }: AdminAuditLogPageProps) {
+export function AdminAuditLogPage({ onBack: _onBack }: AdminAuditLogPageProps) {
   const { auditLogs } = useSambungStore()
 
   return (
-    <div className="app-wrap space-y-8 pb-16">
-      {/* Header */}
-      <div className="pt-2 border-b border-border/80 pb-4 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
-        <div>
-          <Button variant="ghost" size="sm" onClick={onBack} className="gap-2 mb-2 text-xs">
-            <ArrowLeft className="w-3.5 h-3.5" />
-            <span>Kembali ke Ringkasan Admin</span>
-          </Button>
-          <div className="flex items-center gap-1.5 text-xs font-semibold uppercase tracking-wider text-muted-foreground mb-1">
-            <span>SAMBUNG</span>
-            <span>/</span>
-            <span className="text-foreground">LOG AUDIT SISTEM</span>
-          </div>
-          <h1 className="text-2xl sm:text-3xl font-display font-bold text-foreground">
-            Log Audit Peristiwa Bisnis
-          </h1>
-          <p className="text-xs sm:text-sm text-muted-foreground mt-1">
-            Catatan kronologis mutasi status transaksi, perubahan parameter, dan aksi operasional pengguna.
-          </p>
+    <div className="w-full space-y-6">
+      {/* 2. Breadcrumbs, Judul Halaman, Deskripsi Singkat */}
+      <div className="pt-1 border-b border-border/80 pb-4">
+        <div className="flex items-center gap-1.5 text-xs font-semibold uppercase tracking-wider text-muted-foreground mb-1">
+          <span>SAMBUNG</span>
+          <span>/</span>
+          <span className="text-foreground">LOG AUDIT SISTEM</span>
         </div>
+        <h1 className="text-2xl sm:text-3xl font-display font-bold text-foreground">
+          Log Audit Peristiwa Bisnis
+        </h1>
+        <p className="text-xs sm:text-sm text-muted-foreground mt-1">
+          Catatan kronologis mutasi status transaksi, perubahan parameter, dan aksi operasional pengguna.
+        </p>
       </div>
 
+      {/* 4. Konten Utama Panel (Tabel Log Audit) */}
       <Card>
         <CardHeader className="pb-3 border-b border-border flex flex-row items-center justify-between">
           <CardTitle className="text-base">Daftar Aktivitas Sistem Terlacak ({auditLogs.length} Entri)</CardTitle>
