@@ -45,7 +45,7 @@ export function MarketHubPage({ initialTab = "fair-price", onNavigate }: MarketH
             }`}
           >
             <Scale className="w-3.5 h-3.5" />
-            <span>Acuan Wajar (PT-07)</span>
+            <span>Acuan Harga Wajar</span>
           </button>
 
           <button

@@ -20,11 +20,11 @@ export function ForecastPage() {
     <div className="max-w-6xl mx-auto space-y-6 pb-12">
       {/* Header */}
       <div>
-        <div className="flex items-center gap-1.5 text-xs font-semibold uppercase tracking-wider text-muted-foreground">
-          <span>SAMBUNG</span>
-          <span>/</span>
-          <span className="text-foreground">PRAKIRAAN PASAR</span>
-        </div>
+        <nav aria-label="Breadcrumb" className="flex items-center gap-1.5 text-xs text-muted-foreground mb-1">
+          <span className="font-medium">Sambung</span>
+          <span className="text-muted-foreground/60">/</span>
+          <span className="font-medium text-foreground">Prakiraan Pasar</span>
+        </nav>
 
         <div className="mt-2 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
           <div>
@@ -103,7 +103,7 @@ export function ForecastPage() {
                   <div className="p-3.5 rounded-lg bg-destructive/10 border border-destructive/20 flex items-start gap-3 text-xs text-destructive">
                     <ShieldAlert className="w-5 h-5 shrink-0 mt-0.5" />
                     <div>
-                      <p className="font-bold">Prakiraan Baseline Aktif (DEC-017a)</p>
+                      <p className="font-bold">Prakiraan Baseline Aktif</p>
                       <p className="mt-0.5">
                         Model machine learning pada unit wilayah ini belum mencapai batas ambang akurasi MASE ≤ 0,9. Sistem secara transparan beralih ke metode baseline terevaluasi demi menjaga keabsahan prediksi.
                       </p>

@@ -35,11 +35,11 @@ export function AdminModerationPage({ onBack: _onBack }: AdminModerationPageProp
     <div className="max-w-6xl mx-auto space-y-6 pb-12">
       {/* 2. Breadcrumbs, Judul Halaman, Deskripsi Singkat */}
       <div className="pt-1 border-b border-border/80 pb-4">
-        <div className="flex items-center gap-1.5 text-xs font-semibold uppercase tracking-wider text-muted-foreground mb-1">
-          <span>SAMBUNG</span>
-          <span>/</span>
-          <span className="text-foreground">MODERASI TAWARAN</span>
-        </div>
+        <nav aria-label="Breadcrumb" className="flex items-center gap-1.5 text-xs text-muted-foreground mb-1">
+          <span className="font-medium">Sambung</span>
+          <span className="text-muted-foreground/60">/</span>
+          <span className="font-medium text-foreground">Moderasi Tawaran</span>
+        </nav>
         <h1 className="text-2xl sm:text-3xl font-display font-bold text-foreground">
           Moderasi & Pengawasan Tawaran Panen
         </h1>

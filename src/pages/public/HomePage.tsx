@@ -188,7 +188,7 @@ export function HomePage({ onNavigate }: HomePageProps) {
       <section id="beranda" className="flex flex-col lg:flex-row items-center gap-12 pt-2 scroll-mt-20">
         {/* Left Copy */}
         <div className="flex-1 space-y-6 text-center lg:text-left">
-          <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full text-xs font-semibold bg-muted text-muted-foreground border border-border">
+          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full text-xs font-medium bg-primary/10 text-primary border border-primary/20 shadow-2xs">
             <Database className="w-3.5 h-3.5 text-primary" />
             <span>Data PIHPS dan BPS · Pembaruan mingguan</span>
           </div>
@@ -317,10 +317,6 @@ export function HomePage({ onNavigate }: HomePageProps) {
       <section id="papan-harga" className="space-y-6 pt-4 scroll-mt-20">
         <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4">
           <div className="space-y-2 max-w-2xl">
-            <div className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-md bg-muted text-[11px] font-semibold text-muted-foreground uppercase tracking-wider border border-border">
-              <TrendingUp className="w-3.5 h-3.5 text-primary" />
-              <span>Transparansi Rantai Pasok Beras</span>
-            </div>
             <h2 className="text-2xl sm:text-3xl font-display font-bold text-foreground tracking-tight">
               Papan Rantai Harga 2 Sisi
             </h2>
@@ -403,7 +399,7 @@ export function HomePage({ onNavigate }: HomePageProps) {
                 <span className="font-semibold text-foreground">Farmer's Share: 82,9% · Total Selisih Rantai Pasok: Rp2.620/kg (17,1%)</span>
                 <p className="text-[11px] text-muted-foreground">Harga gabah petani mencerminkan porsi yang sehat terhadap harga beras akhir di tingkat konsumen.</p>
               </div>
-              <span className="px-2.5 py-1 rounded-full text-[11px] font-semibold bg-[#EAF1E7] text-[#2D4828] dark:bg-primary/20 dark:text-primary-foreground border border-primary/20 shrink-0">
+              <span className="px-2.5 py-1 rounded-full text-[11px] font-semibold bg-primary/10 text-primary dark:bg-primary/20 dark:text-primary border border-primary/20 shrink-0">
                 Rentang Wajar
               </span>
             </div>
@@ -488,7 +484,7 @@ export function HomePage({ onNavigate }: HomePageProps) {
             {/* Farmer Share Highlight Banner */}
             <div className="p-5 rounded-xl border border-border/80 bg-card/60 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
               <div className="flex items-center gap-3">
-                <div className="w-10 h-10 rounded-lg bg-[#EAF1E7] text-[#2D4828] dark:bg-primary/20 dark:text-primary-foreground flex items-center justify-center shrink-0">
+                <div className="w-10 h-10 rounded-lg bg-primary/10 text-primary dark:bg-primary/20 dark:text-primary flex items-center justify-center shrink-0">
                   <CheckCircle2 className="w-5 h-5" />
                 </div>
                 <div>
@@ -500,7 +496,7 @@ export function HomePage({ onNavigate }: HomePageProps) {
                   </p>
                 </div>
               </div>
-              <span className="px-3 py-1 rounded-full text-xs font-semibold bg-[#EAF1E7] text-[#2D4828] dark:bg-primary/20 dark:text-primary-foreground border border-primary/20 shrink-0">
+              <span className="px-3 py-1 rounded-full text-xs font-semibold bg-primary/10 text-primary dark:bg-primary/20 dark:text-primary border border-primary/20 shrink-0">
                 Kondisi Sehat
               </span>
             </div>
@@ -512,10 +508,6 @@ export function HomePage({ onNavigate }: HomePageProps) {
       <section id="peta-disparitas" className="space-y-6 pt-4 scroll-mt-20">
         <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4">
           <div className="space-y-2 max-w-2xl">
-            <div className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-md bg-muted text-[11px] font-semibold text-muted-foreground uppercase tracking-wider border border-border">
-              <MapPin className="w-3.5 h-3.5 text-primary" />
-              <span>Peta Disparitas Regional</span>
-            </div>
             <h2 className="text-2xl sm:text-3xl font-display font-bold text-foreground tracking-tight">
               Peta Disparitas Harga Pangan Antardaerah
             </h2>
@@ -726,10 +718,6 @@ export function HomePage({ onNavigate }: HomePageProps) {
       {/* 5. Cara Membaca Lampu Harga matching Main.dc.html (#lampu) */}
       <section id="lampu" className="space-y-6 pt-4 scroll-mt-20">
         <div className="space-y-2 max-w-2xl">
-          <div className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-md bg-muted text-[11px] font-semibold text-muted-foreground uppercase tracking-wider border border-border">
-            <CheckCircle2 className="w-3.5 h-3.5 text-primary" />
-            <span>Transparansi Algoritma</span>
-          </div>
           <h2 className="text-2xl sm:text-3xl font-display font-bold text-foreground tracking-tight">
             Cara membaca lampu harga
           </h2>
@@ -741,7 +729,7 @@ export function HomePage({ onNavigate }: HomePageProps) {
         <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
           {/* Hijau: Wajar */}
           <Card className="p-6 bg-card border border-border/80 space-y-3">
-            <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-semibold bg-[#EAF1E7] text-[#2D4828] dark:bg-primary/20 dark:text-primary-foreground border border-primary/25">
+            <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-semibold bg-primary/10 text-primary dark:bg-primary/20 dark:text-primary border border-primary/25">
               <CheckCircle2 className="w-3.5 h-3.5" />
               <span>Wajar</span>
             </span>
@@ -781,10 +769,6 @@ export function HomePage({ onNavigate }: HomePageProps) {
       {/* 6. Alur 5 Langkah Transaksi matching Main.dc.html (#alur) */}
       <section id="alur" className="space-y-6 pt-4 scroll-mt-20">
         <div className="space-y-2 max-w-2xl">
-          <div className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-md bg-muted text-[11px] font-semibold text-muted-foreground uppercase tracking-wider border border-border">
-            <ArrowRight className="w-3.5 h-3.5 text-primary" />
-            <span>Alur Transaksi Mudah</span>
-          </div>
           <h2 className="text-2xl sm:text-3xl font-display font-bold text-foreground tracking-tight">
             Dari panen sampai kontrak, dalam 5 langkah
           </h2>
@@ -837,10 +821,6 @@ export function HomePage({ onNavigate }: HomePageProps) {
       {/* 7. SAMBUNG Untuk Siapa? matching Main.dc.html (#peran) */}
       <section id="peran" className="space-y-6 pt-4 scroll-mt-20">
         <div className="space-y-2 max-w-2xl">
-          <div className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-md bg-muted text-[11px] font-semibold text-muted-foreground uppercase tracking-wider border border-border">
-            <Globe2 className="w-3.5 h-3.5 text-primary" />
-            <span>Ekosistem Pangan Terpadu</span>
-          </div>
           <h2 className="text-2xl sm:text-3xl font-display font-bold text-foreground tracking-tight">
             SAMBUNG untuk siapa?
           </h2>
@@ -943,10 +923,6 @@ export function HomePage({ onNavigate }: HomePageProps) {
       {/* 8. Pusat Bantuan & Ketentuan (#bantuan) */}
       <section id="bantuan" className="space-y-8 pt-6 border-t border-border/80 scroll-mt-20">
         <div className="space-y-2 text-center max-w-2xl mx-auto">
-          <div className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-md bg-muted text-[11px] font-semibold text-muted-foreground uppercase tracking-wider border border-border">
-            <HelpCircle className="w-3.5 h-3.5 text-primary" />
-            <span>Pusat Bantuan & Panduan</span>
-          </div>
           <h2 className="text-2xl sm:text-3xl font-display font-bold text-foreground tracking-tight">
             Pertanyaan Umum & Bantuan
           </h2>

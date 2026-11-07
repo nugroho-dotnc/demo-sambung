@@ -128,13 +128,13 @@ export function AdminPriceDataPage({ onBack: _onBack }: AdminPriceDataPageProps)
     <div className="max-w-6xl mx-auto space-y-6 pb-12">
       {/* 2. Breadcrumbs, Judul Halaman, Deskripsi Singkat */}
       <div className="pt-1 border-b border-border/80 pb-4">
-        <div className="flex items-center gap-1.5 text-xs font-semibold uppercase tracking-wider text-muted-foreground mb-1">
-          <span>SAMBUNG</span>
-          <span>/</span>
-          <span>ADMIN</span>
-          <span>/</span>
-          <span className="text-foreground">DATA HARGA (AD-03)</span>
-        </div>
+        <nav aria-label="Breadcrumb" className="flex items-center gap-1.5 text-xs text-muted-foreground mb-1">
+          <span className="font-medium">Sambung</span>
+          <span className="text-muted-foreground/60">/</span>
+          <span className="font-medium">Admin</span>
+          <span className="text-muted-foreground/60">/</span>
+          <span className="font-medium text-foreground">Data Harga Observasi</span>
+        </nav>
 
         <div className="mt-2 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
           <div>

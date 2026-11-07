@@ -42,11 +42,11 @@ export function ProfilePage({ onNavigate }: ProfilePageProps) {
     <div className="max-w-6xl mx-auto space-y-6 pb-12">
       {/* Header */}
       <div>
-        <div className="flex items-center gap-1.5 text-xs font-semibold uppercase tracking-wider text-muted-foreground">
-          <span>SAMBUNG</span>
-          <span>/</span>
-          <span className="text-foreground">PROFIL & PENGATURAN (PT-10)</span>
-        </div>
+        <nav aria-label="Breadcrumb" className="flex items-center gap-1.5 text-xs text-muted-foreground mb-1">
+          <span className="font-medium">Sambung</span>
+          <span className="text-muted-foreground/60">/</span>
+          <span className="font-medium text-foreground">Profil & Pengaturan</span>
+        </nav>
 
         <div className="mt-2 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
           <div>

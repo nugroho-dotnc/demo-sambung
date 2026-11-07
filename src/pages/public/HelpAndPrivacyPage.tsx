@@ -33,10 +33,11 @@ export function HelpAndPrivacyPage() {
     <div className="max-w-6xl mx-auto space-y-6 pb-12">
       {/* Header */}
       <div className="pt-4 border-b border-border pb-6">
-        <div className="inline-flex items-center gap-1.5 text-xs font-bold text-primary uppercase tracking-wider mb-1">
-          <BookOpen className="w-4 h-4" />
-          <span>PB-05 · Pusat Bantuan & Ketentuan Privasi</span>
-        </div>
+        <nav aria-label="Breadcrumb" className="flex items-center gap-1.5 text-xs text-muted-foreground mb-2">
+          <span className="font-medium">Sambung</span>
+          <span className="text-muted-foreground/60">/</span>
+          <span className="font-medium text-foreground">Bantuan & Ketentuan Privasi</span>
+        </nav>
         <h1 className="text-display-lg font-display font-extrabold text-foreground">
           Bantuan Layanan, Glosarium & Kebijakan Data
         </h1>

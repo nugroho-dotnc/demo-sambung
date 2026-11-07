@@ -48,42 +48,44 @@ export function AdminModelEvalPage({ onBack: _onBack }: AdminModelEvalPageProps)
 
   return (
     <div className="w-full space-y-6">
-      {/* 2. Breadcrumbs, Judul Halaman, Deskripsi Singkat */}
+      {/* Breadcrumbs & Header */}
       <div className="pt-1 border-b border-border/80 pb-4">
-        <div className="flex items-center gap-1.5 text-xs font-semibold uppercase tracking-wider text-muted-foreground mb-1">
-          <span>SAMBUNG</span>
-          <span>/</span>
-          <span className="text-foreground">EVALUASI MODEL AI</span>
-        </div>
-        <h1 className="text-2xl sm:text-3xl font-display font-bold text-foreground">
+        <nav aria-label="Breadcrumb" className="flex items-center gap-1.5 text-xs text-muted-foreground mb-1">
+          <span className="font-medium">Sambung</span>
+          <span className="text-muted-foreground/60">/</span>
+          <span className="font-medium text-foreground">Evaluasi Model AI</span>
+        </nav>
+        <h1 className="text-2xl sm:text-3xl font-display font-bold text-foreground tracking-tight">
           Laporan Evaluasi & Gerbang Publikasi Model AI
         </h1>
-        <p className="text-xs sm:text-sm text-muted-foreground mt-1">
+        <p className="text-xs sm:text-sm text-muted-foreground mt-1 leading-relaxed">
           Penilaian performa model AI per unit wilayah dan horizon terhadap target akurasi proposal.
         </p>
       </div>
 
-      {/* 4. Konten Utama Panel (Tabel Evaluasi Model) */}
-      <Card>
-        <CardHeader className="pb-3 border-b border-border">
-          <CardTitle className="text-base">Hasil Backtesting Walk-Forward per Unit Wilayah</CardTitle>
+      {/* Main Table Card */}
+      <Card className="rounded-xl border border-border/80 overflow-hidden shadow-2xs">
+        <CardHeader className="py-4 px-5 sm:px-6 border-b border-border/80">
+          <CardTitle className="text-base font-bold text-foreground">
+            Hasil Backtesting Walk-Forward per Unit Wilayah
+          </CardTitle>
         </CardHeader>
         <CardContent className="p-0 overflow-x-auto">
-          <table className="w-full text-left border-collapse text-body-sm">
+          <table className="w-full text-left border-collapse text-xs tabular-nums">
             <thead>
-              <tr className="border-b border-border bg-muted/50 text-xs font-bold text-muted-foreground uppercase">
-                <th className="py-3 px-4">Provinsi</th>
-                <th className="py-3 px-4">Horizon</th>
-                <th className="py-3 px-4 font-mono text-right">Skor MASE</th>
-                <th className="py-3 px-4 font-mono text-right">Cakupan Pita 80%</th>
-                <th className="py-3 px-4">Status Evaluasi</th>
-                <th className="py-3 px-4">Metode yang Dipublikasikan</th>
+              <tr className="border-b border-border/80 bg-muted/40 text-[11px] font-semibold text-muted-foreground uppercase tracking-wider">
+                <th className="py-3 px-4 font-semibold">Provinsi</th>
+                <th className="py-3 px-4 font-semibold">Horizon</th>
+                <th className="py-3 px-4 font-mono text-right font-semibold">Skor MASE</th>
+                <th className="py-3 px-4 font-mono text-right font-semibold">Cakupan Pita 80%</th>
+                <th className="py-3 px-4 font-semibold">Status Evaluasi</th>
+                <th className="py-3 px-4 font-semibold">Metode yang Dipublikasikan</th>
               </tr>
             </thead>
-            <tbody className="divide-y divide-border">
+            <tbody className="divide-y divide-border/60">
               {modelEvaluationRows.map((row, idx) => (
-                <tr key={idx} className="hover:bg-accent/40 transition-colors">
-                  <td className="py-3.5 px-4 font-bold text-foreground">{row.province}</td>
+                <tr key={idx} className="hover:bg-muted/30 transition-colors">
+                  <td className="py-3.5 px-4 font-semibold text-foreground">{row.province}</td>
                   <td className="py-3.5 px-4 text-foreground">{row.horizon}</td>
                   <td className="py-3.5 px-4 font-mono font-bold text-right text-foreground">
                     <span className={row.mase <= 0.9 ? "text-price-within" : "text-destructive"}>
@@ -95,12 +97,12 @@ export function AdminModelEvalPage({ onBack: _onBack }: AdminModelEvalPageProps)
                   </td>
                   <td className="py-3.5 px-4">
                     {row.isFallback ? (
-                      <span className="inline-flex items-center gap-1 text-xs font-bold text-destructive">
+                      <span className="inline-flex items-center gap-1.5 text-xs font-semibold text-destructive">
                         <ShieldAlert className="w-3.5 h-3.5" />
                         <span>Gagal Target (Fallback)</span>
                       </span>
                     ) : (
-                      <span className="inline-flex items-center gap-1 text-xs font-bold text-price-within">
+                      <span className="inline-flex items-center gap-1.5 text-xs font-semibold text-price-within">
                         <CheckCircle2 className="w-3.5 h-3.5" />
                         <span>Lolos Ambang Target</span>
                       </span>

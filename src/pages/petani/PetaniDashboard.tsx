@@ -28,11 +28,11 @@ export function PetaniDashboard({ onNavigate }: PetaniDashboardProps) {
     <div className="max-w-6xl mx-auto space-y-6 pb-12">
       {/* Breadcrumb & Header Section */}
       <div>
-        <div className="flex items-center gap-1.5 text-xs font-semibold uppercase tracking-wider text-muted-foreground">
-          <span>SAMBUNG</span>
-          <span>/</span>
-          <span className="text-foreground">BERANDA PETANI</span>
-        </div>
+        <nav aria-label="Breadcrumb" className="flex items-center gap-1.5 text-xs text-muted-foreground mb-1">
+          <span className="font-medium">Sambung</span>
+          <span className="text-muted-foreground/60">/</span>
+          <span className="font-medium text-foreground">Beranda Petani</span>
+        </nav>
 
         <div className="mt-2 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
           <div>
@@ -61,13 +61,13 @@ export function PetaniDashboard({ onNavigate }: PetaniDashboardProps) {
           <div className="lg:col-span-7 space-y-2">
             <div className="flex items-center gap-2">
               <span className="text-sm font-semibold text-foreground">Harga wajar GKP</span>
-              <span className="px-2 py-0.5 rounded-full text-xs font-medium bg-[#EAF1E7] text-[#2D4828] dark:bg-primary/20 dark:text-primary-foreground border border-primary/20">
+              <span className="px-2 py-0.5 rounded-full text-xs font-medium bg-primary/10 text-primary dark:bg-primary/20 dark:text-primary border border-primary/20">
                 {currentUser.province || "Jawa Timur"}
               </span>
             </div>
 
             <div className="flex items-baseline gap-2">
-              <span className="font-display text-3xl sm:text-4xl font-extrabold text-[#246447] dark:text-[#A9D6B0] tracking-tight">
+              <span className="font-display text-3xl sm:text-4xl font-extrabold text-price-within tracking-tight">
                 Rp6.650 - 6.940
               </span>
               <span className="text-sm font-medium text-muted-foreground">/kg</span>

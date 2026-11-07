@@ -64,59 +64,59 @@ export function AdminUsersPage({ onBack: _onBack }: AdminUsersPageProps) {
 
   return (
     <div className="w-full space-y-6">
-      {/* 2. Breadcrumbs, Judul Halaman, Deskripsi Singkat */}
+      {/* Breadcrumb & Header */}
       <div className="pt-1 border-b border-border/80 pb-4">
-        <div className="flex items-center gap-1.5 text-xs font-semibold uppercase tracking-wider text-muted-foreground mb-1">
-          <span>SAMBUNG</span>
-          <span>/</span>
-          <span className="text-foreground">MANAJEMEN PENGGUNA</span>
-        </div>
-        <h1 className="text-2xl sm:text-3xl font-display font-bold text-foreground">
+        <nav aria-label="Breadcrumb" className="flex items-center gap-1.5 text-xs text-muted-foreground mb-1">
+          <span className="font-medium">Sambung</span>
+          <span className="text-muted-foreground/60">/</span>
+          <span className="font-medium text-foreground">Manajemen Pengguna</span>
+        </nav>
+        <h1 className="text-2xl sm:text-3xl font-display font-bold text-foreground tracking-tight">
           Daftar Pengguna & Perlindungan Privasi
         </h1>
-        <p className="text-xs sm:text-sm text-muted-foreground mt-1">
+        <p className="text-xs sm:text-sm text-muted-foreground mt-1 leading-relaxed">
           Pengawasan profil pengguna dengan penyamaran nomor telepon wajib.
         </p>
       </div>
 
-      {/* 4. Konten Utama Panel (Tabel Pengguna) */}
-      <Card>
-        <CardHeader className="pb-3 border-b border-border">
-          <CardTitle className="text-base">Pengguna Terdaftar</CardTitle>
+      {/* Main Table Card */}
+      <Card className="rounded-xl border border-border/80 overflow-hidden shadow-2xs">
+        <CardHeader className="py-4 px-5 sm:px-6 border-b border-border/80">
+          <CardTitle className="text-base font-bold text-foreground">Pengguna Terdaftar</CardTitle>
         </CardHeader>
         <CardContent className="p-0 overflow-x-auto">
-          <table className="w-full text-left border-collapse text-body-sm">
+          <table className="w-full text-left border-collapse text-xs">
             <thead>
-              <tr className="border-b border-border bg-muted/50 text-xs font-bold text-muted-foreground uppercase">
-                <th className="py-3 px-4">ID Pengguna</th>
-                <th className="py-3 px-4">Nama & Usaha</th>
-                <th className="py-3 px-4">Peran (Tetap)</th>
-                <th className="py-3 px-4 font-mono">Nomor HP Tersamar</th>
-                <th className="py-3 px-4">Wilayah Operasional</th>
-                <th className="py-3 px-4">Status Akun</th>
-                <th className="py-3 px-4 text-right">Aksi Penutupan</th>
+              <tr className="border-b border-border/80 bg-muted/40 text-[11px] font-semibold text-muted-foreground uppercase tracking-wider">
+                <th className="py-3 px-4 font-semibold">ID Pengguna</th>
+                <th className="py-3 px-4 font-semibold">Nama & Usaha</th>
+                <th className="py-3 px-4 font-semibold">Peran (Tetap)</th>
+                <th className="py-3 px-4 font-mono font-semibold">Nomor HP Tersamar</th>
+                <th className="py-3 px-4 font-semibold">Wilayah Operasional</th>
+                <th className="py-3 px-4 font-semibold">Status Akun</th>
+                <th className="py-3 px-4 text-right font-semibold">Aksi Penutupan</th>
               </tr>
             </thead>
-            <tbody className="divide-y divide-border">
+            <tbody className="divide-y divide-border/60">
               {userList.map((user) => {
                 const isPendingClosure = closurePendingUsers.includes(user.id)
                 const maskedPhone = user.phone.slice(0, 4) + "-****-" + user.phone.slice(-4)
 
                 return (
-                  <tr key={user.id} className="hover:bg-accent/40 transition-colors">
+                  <tr key={user.id} className="hover:bg-muted/30 transition-colors">
                     <td className="py-3.5 px-4 font-mono text-xs text-muted-foreground">
                       #{user.id}
                     </td>
                     <td className="py-3.5 px-4">
-                      <p className="font-bold text-foreground">{user.name}</p>
+                      <p className="font-semibold text-foreground">{user.name}</p>
                       <p className="text-xs text-muted-foreground">{user.business}</p>
                     </td>
                     <td className="py-3.5 px-4">
-                      <Badge variant="secondary" className="font-bold">
+                      <Badge variant="secondary" className="font-semibold">
                         {user.role}
                       </Badge>
                     </td>
-                    <td className="py-3.5 px-4 font-mono font-bold text-foreground">
+                    <td className="py-3.5 px-4 font-mono font-semibold text-foreground">
                       {maskedPhone}
                     </td>
                     <td className="py-3.5 px-4 text-xs text-muted-foreground">
@@ -124,12 +124,12 @@ export function AdminUsersPage({ onBack: _onBack }: AdminUsersPageProps) {
                     </td>
                     <td className="py-3.5 px-4">
                       {isPendingClosure ? (
-                        <span className="inline-flex items-center gap-1 text-xs font-bold text-amber-600 dark:text-amber-400">
+                        <span className="inline-flex items-center gap-1.5 text-xs font-semibold text-amber-600 dark:text-amber-400">
                           <UserX className="w-3.5 h-3.5" />
                           <span>Penutupan Tertunda</span>
                         </span>
                       ) : (
-                        <span className="inline-flex items-center gap-1 text-xs font-bold text-price-within">
+                        <span className="inline-flex items-center gap-1.5 text-xs font-semibold text-price-within">
                           <ShieldCheck className="w-3.5 h-3.5" />
                           <span>Aktif Normal</span>
                         </span>

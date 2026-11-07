@@ -1,5 +1,5 @@
 import { ContractStatus } from "@/types/domain"
-import { Clock, CheckCircle, Award, XCircle, Ban, AlertCircle } from "lucide-react"
+import { Clock, CheckCircle2, Award, XCircle, Ban, AlertCircle } from "lucide-react"
 import { cn } from "@/lib/utils"
 
 interface ContractStatusBadgeProps {
@@ -13,32 +13,32 @@ export function ContractStatusBadge({ status, confirmedCount, className }: Contr
     "Menunggu Kesepakatan": {
       label: "Menunggu Kesepakatan",
       icon: Clock,
-      className: "bg-amber-100 text-amber-800 border-amber-300 dark:bg-amber-950/60 dark:text-amber-200 dark:border-amber-800"
+      className: "bg-amber-50 text-amber-800 border-amber-300/80 dark:bg-amber-950/50 dark:text-amber-300 dark:border-amber-800/80"
     },
     Disetujui: {
       label: confirmedCount === 1 ? "Disetujui (1/2 Selesai)" : "Disetujui",
-      icon: CheckCircle,
-      className: "bg-emerald-100 text-emerald-800 border-emerald-300 dark:bg-emerald-950/60 dark:text-emerald-200 dark:border-emerald-800"
+      icon: CheckCircle2,
+      className: "bg-emerald-50 text-emerald-800 border-emerald-300/80 dark:bg-emerald-950/50 dark:text-emerald-300 dark:border-emerald-800/80"
     },
     Selesai: {
       label: "Selesai (2/2)",
       icon: Award,
-      className: "bg-primary/15 text-primary border-primary/30 font-bold"
+      className: "bg-primary/15 text-primary border-primary/30 font-bold dark:bg-primary/20 dark:text-primary"
     },
     Ditolak: {
       label: "Ditolak",
       icon: XCircle,
-      className: "bg-destructive/15 text-destructive border-destructive/30"
+      className: "bg-destructive/10 text-destructive border-destructive/30"
     },
     Dibatalkan: {
       label: "Dibatalkan",
       icon: Ban,
-      className: "bg-muted text-muted-foreground border-border"
+      className: "bg-muted/80 text-muted-foreground border-border/80"
     },
     Kedaluwarsa: {
       label: "Kedaluwarsa (24 Jam)",
       icon: AlertCircle,
-      className: "bg-muted text-muted-foreground border-border italic"
+      className: "bg-muted/80 text-muted-foreground border-border/80 italic"
     }
   }
 
@@ -48,7 +48,7 @@ export function ContractStatusBadge({ status, confirmedCount, className }: Contr
   return (
     <span
       className={cn(
-        "inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-semibold border",
+        "inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-semibold border shadow-2xs transition-colors",
         config.className,
         className
       )}

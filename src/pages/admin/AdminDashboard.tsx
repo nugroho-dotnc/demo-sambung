@@ -23,11 +23,11 @@ export function AdminDashboard({ onNavigate }: AdminDashboardProps) {
     <div className="max-w-6xl mx-auto space-y-6 pb-12">
       {/* Breadcrumb & Header */}
       <div>
-        <div className="flex items-center gap-1.5 text-xs font-semibold uppercase tracking-wider text-muted-foreground">
-          <span>SAMBUNG</span>
-          <span>/</span>
-          <span className="text-foreground">DASBOR ADMIN</span>
-        </div>
+        <nav aria-label="Breadcrumb" className="flex items-center gap-1.5 text-xs text-muted-foreground mb-1">
+          <span className="font-medium">Sambung</span>
+          <span className="text-muted-foreground/60">/</span>
+          <span className="font-medium text-foreground">Dasbor Pengawasan Admin</span>
+        </nav>
 
         <div className="mt-2 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
           <div>
@@ -62,7 +62,7 @@ export function AdminDashboard({ onNavigate }: AdminDashboardProps) {
 
         <Card className="p-5 space-y-2">
           <p className="text-xs font-semibold text-muted-foreground">Kontrak Berjalan</p>
-          <p className="font-display text-3xl font-extrabold text-[#246447] dark:text-[#A9D6B0]">{activeContracts.length}</p>
+          <p className="font-display text-3xl font-extrabold text-price-within">{activeContracts.length}</p>
           <p className="text-[11px] text-muted-foreground">
             Negosiasi & disetujui
           </p>
@@ -70,7 +70,7 @@ export function AdminDashboard({ onNavigate }: AdminDashboardProps) {
 
         <Card className="p-5 space-y-2">
           <p className="text-xs font-semibold text-muted-foreground">Temuan Moderasi</p>
-          <p className={`font-display text-3xl font-extrabold ${pendingModeration.length > 0 ? "text-[#C86B3C]" : "text-foreground"}`}>
+          <p className={`font-display text-3xl font-extrabold ${pendingModeration.length > 0 ? "text-amber-600 dark:text-amber-400" : "text-foreground"}`}>
             {pendingModeration.length}
           </p>
           <p className="text-[11px] text-muted-foreground">
@@ -93,7 +93,7 @@ export function AdminDashboard({ onNavigate }: AdminDashboardProps) {
         <Card className="p-6 flex flex-col justify-between space-y-4">
           <div className="space-y-2">
             <div className="flex items-center gap-2 text-foreground font-bold">
-              <ShieldAlert className="w-4.5 h-4.5 text-[#C86B3C]" />
+              <ShieldAlert className="w-4.5 h-4.5 text-amber-600 dark:text-amber-400" />
               <h3 className="text-sm">Moderasi Tawaran</h3>
             </div>
             <p className="text-xs text-muted-foreground leading-relaxed">

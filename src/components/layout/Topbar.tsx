@@ -330,7 +330,7 @@ export function Topbar({ onToggleSidebar, sidebarOpen, activeTab, onNavigate, on
                 title="Notifikasi"
               >
                 <Bell className="w-4 h-4" />
-                <span className="absolute top-1 right-1 flex h-4 w-4 items-center justify-center rounded-full bg-emerald-600 text-[9px] font-bold text-white">
+                <span className="absolute top-1 right-1 flex h-4 w-4 items-center justify-center rounded-full bg-primary text-[9px] font-bold text-primary-foreground shadow-2xs">
                   2
                 </span>
               </button>

@@ -64,15 +64,13 @@ export function PetaniOfferDetailPage({ offerId, onBack, onNavigate }: PetaniOff
       {/* Breadcrumb & Navigation */}
       <div>
         <div className="flex items-center justify-between">
-          <div className="flex items-center gap-1.5 text-xs font-semibold uppercase tracking-wider text-muted-foreground">
-            <span>SAMBUNG</span>
-            <span>/</span>
-            <button onClick={onBack} className="hover:text-foreground hover:underline cursor-pointer">
-              TAWARAN SAYA
-            </button>
-            <span>/</span>
-            <span className="text-foreground">#{offer.id}</span>
-          </div>
+          <nav aria-label="Breadcrumb" className="flex items-center gap-1.5 text-xs text-muted-foreground">
+            <span className="font-medium">Sambung</span>
+            <span className="text-muted-foreground/60">/</span>
+            <button onClick={onBack} className="font-medium hover:text-foreground hover:underline cursor-pointer">Tawaran Saya</button>
+            <span className="text-muted-foreground/60">/</span>
+            <span className="font-semibold text-foreground font-mono">#{offer.id}</span>
+          </nav>
 
           <button
             onClick={onBack}

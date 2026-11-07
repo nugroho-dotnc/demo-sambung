@@ -215,7 +215,7 @@ export function App() {
           <main
             className={`flex-1 min-w-0 transition-colors p-4 sm:p-6 lg:p-8 ${
               showSidebar
-                ? "bg-[#F9FAFB] dark:bg-background/95"
+                ? "bg-[#F8FAF8] dark:bg-background/95"
                 : "bg-background"
             }`}
           >

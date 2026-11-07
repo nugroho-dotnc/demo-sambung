@@ -36,13 +36,13 @@ export function AdminParametersPage({ onBack: _onBack }: AdminParametersPageProp
     <div className="w-full space-y-6 pb-12">
       {/* 2. Breadcrumbs, Judul Halaman, Deskripsi Singkat */}
       <div className="pt-1 border-b border-border/80 pb-4">
-        <div className="flex items-center gap-1.5 text-xs font-semibold uppercase tracking-wider text-muted-foreground mb-1">
-          <span>SAMBUNG</span>
-          <span>/</span>
-          <span>ADMIN</span>
-          <span>/</span>
-          <span className="text-foreground">PARAMETER HARGA</span>
-        </div>
+        <nav aria-label="Breadcrumb" className="flex items-center gap-1.5 text-xs text-muted-foreground mb-1">
+          <span className="font-medium">Sambung</span>
+          <span className="text-muted-foreground/60">/</span>
+          <span className="font-medium">Admin</span>
+          <span className="text-muted-foreground/60">/</span>
+          <span className="font-medium text-foreground">Parameter Operasional</span>
+        </nav>
 
         <div className="mt-2">
           <h1 className="font-display text-2xl sm:text-3xl font-bold tracking-tight text-foreground">

@@ -31,11 +31,11 @@ export function PembeliDashboard({ onNavigate }: PembeliDashboardProps) {
     <div className="max-w-6xl mx-auto space-y-6 pb-12">
       {/* Breadcrumb & Header */}
       <div>
-        <div className="flex items-center gap-1.5 text-xs font-semibold uppercase tracking-wider text-muted-foreground">
-          <span>SAMBUNG</span>
-          <span>/</span>
-          <span className="text-foreground">DASBOR PRODUSEN</span>
-        </div>
+        <nav aria-label="Breadcrumb" className="flex items-center gap-1.5 text-xs text-muted-foreground mb-1">
+          <span className="font-medium">Sambung</span>
+          <span className="text-muted-foreground/60">/</span>
+          <span className="font-medium text-foreground">Dasbor Produsen</span>
+        </nav>
 
         <div className="mt-2 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
           <div>

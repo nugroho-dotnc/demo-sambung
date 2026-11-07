@@ -100,7 +100,7 @@ export function Sidebar({ activeTab, onNavigate, onCloseMobile }: SidebarProps) 
             label: "Acuan Harga & Pasar",
             icon: Scale,
             children: [
-              { id: "fair-price", label: "Acuan Wajar (PT-07)", icon: Scale },
+              { id: "fair-price", label: "Acuan Harga Wajar", icon: Scale },
               { id: "price-board", label: "Papan Rantai Harga", icon: TrendingUp },
               { id: "price-map", label: "Peta Disparitas", icon: Map },
               { id: "forecast", label: "Prakiraan Pasar AI", icon: Calendar },
@@ -117,7 +117,7 @@ export function Sidebar({ activeTab, onNavigate, onCloseMobile }: SidebarProps) 
             label: "Acuan Harga & Pasar",
             icon: Scale,
             children: [
-              { id: "fair-price", label: "Acuan Wajar (PT-07)", icon: Scale },
+              { id: "fair-price", label: "Acuan Harga Wajar", icon: Scale },
               { id: "price-board", label: "Papan Rantai Harga", icon: TrendingUp },
               { id: "price-map", label: "Peta Disparitas", icon: Map },
               { id: "forecast", label: "Prakiraan Pasar AI", icon: Calendar },
@@ -420,13 +420,13 @@ export function Sidebar({ activeTab, onNavigate, onCloseMobile }: SidebarProps) 
                             onClick={() => handleChildClick(sub.id)}
                             className={`flex items-center gap-2.5 px-3 py-2 rounded-lg text-xs w-full text-left transition-all duration-150 cursor-pointer min-h-[36px] ${
                               isSubActive
-                                ? "bg-[#EAF1E7] text-[#2D4828] font-bold dark:bg-primary/20 dark:text-primary-foreground shadow-2xs"
+                                ? "bg-primary/10 text-primary font-semibold dark:bg-primary/20 dark:text-primary shadow-2xs"
                                 : "text-muted-foreground hover:text-foreground hover:bg-muted/60 font-medium"
                             }`}
                           >
                             <SubIcon
                               className={`w-4 h-4 shrink-0 ${
-                                isSubActive ? "text-[#2D4828] dark:text-primary-foreground" : "text-muted-foreground"
+                                isSubActive ? "text-primary dark:text-primary" : "text-muted-foreground"
                               }`}
                             />
                             <span className="truncate">{sub.label}</span>
