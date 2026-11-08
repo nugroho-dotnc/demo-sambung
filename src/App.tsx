@@ -178,11 +178,11 @@ export function App() {
         onRoleChanged={handleRoleChanged}
       />
 
-      <div className="flex-1 flex min-h-[calc(100vh-3.75rem)]">
+      <div className="flex-1 flex min-h-[calc(100vh-4rem)]">
         {/* Desktop persistent sidebar: fixed to viewport, NO scrollbar (internal roles only) */}
         {showSidebar && (
           <aside className="hidden lg:block w-60 shrink-0 border-r border-border/80 bg-card/60 dark:bg-card/40 select-none">
-            <div className="sticky top-15 h-[calc(100vh-3.75rem)] overflow-hidden">
+            <div className="sticky top-16 h-[calc(100vh-4rem)] overflow-hidden">
               <Sidebar
                 activeTab={activeTab}
                 onNavigate={handleNavigate}
@@ -215,7 +215,7 @@ export function App() {
           <main
             className={`flex-1 min-w-0 transition-colors p-4 sm:p-6 lg:p-8 ${
               showSidebar
-                ? "bg-[#F8FAF8] dark:bg-background/95"
+                ? "bg-slate-50/70 dark:bg-[#070D09]"
                 : "bg-background"
             }`}
           >

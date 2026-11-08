@@ -50,7 +50,7 @@ const INITIAL_NOTIFICATIONS: NotificationItem[] = [
   {
     id: "notif-03",
     title: "Pembaruan Acuan Harga Mingguan",
-    description: "Acuan harga gabah GKP Jawa Timur diperbarui ke rentang Rp6.650 - Rp6.940/kg.",
+    description: "Acuan harga gabah GKP Jawa Timur diperbarui ke rentang Rp6.650 – Rp6.940/kg.",
     timestamp: "Kemarin",
     isRead: true,
     targetTab: "price-board",
@@ -84,11 +84,9 @@ export function NotificationsPage({ onNavigate }: NotificationsPageProps) {
   }
 
   const handleOpenNotification = (notif: NotificationItem) => {
-    // Mark as read
     setNotifications((prev) =>
       prev.map((n) => (n.id === notif.id ? { ...n, isRead: true } : n))
     )
-    // Navigate
     onNavigate(notif.targetTab, notif.targetId)
   }
 
@@ -99,68 +97,71 @@ export function NotificationsPage({ onNavigate }: NotificationsPageProps) {
   const unreadCount = notifications.filter((n) => !n.isRead).length
 
   return (
-    <div className="max-w-6xl mx-auto space-y-6 pb-12">
+    <div className="max-w-6xl mx-auto space-y-7 pb-14">
       {/* Header */}
-      <div>
-        <div className="flex items-center gap-1.5 text-xs font-semibold uppercase tracking-wider text-muted-foreground">
-          <span>SAMBUNG</span>
-          <span>/</span>
-          <span className="text-foreground">NOTIFIKASI TRANSAKSI (PT-09)</span>
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-2 border-b border-border/70">
+        <div>
+          <nav aria-label="Breadcrumb" className="flex items-center gap-1.5 text-[11px] font-semibold uppercase tracking-wider text-muted-foreground mb-1">
+            <span>SAMBUNG</span>
+            <span className="text-muted-foreground/50">/</span>
+            <span className="text-foreground">NOTIFIKASI AKTIVITAS</span>
+          </nav>
+
+          <h1 className="font-display text-2xl sm:text-3xl font-bold tracking-tight text-foreground">
+            Notifikasi & Pemberitahuan
+          </h1>
+          <p className="mt-1 text-sm text-muted-foreground">
+            Pemberitahuan perubahan status transaksi, tawar-menawar harga, dan hasil moderasi pasokan.
+          </p>
         </div>
 
-        <div className="mt-2 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
-          <div>
-            <h1 className="font-display text-2xl sm:text-3xl font-bold tracking-tight text-foreground">
-              Notifikasi & Pemberitahuan
-            </h1>
-            <p className="mt-1 text-sm text-muted-foreground">
-              Pemberitahuan perubahan status pesanan, negosiasi harga, dan moderasi tawaran.
-            </p>
-          </div>
-
-          {unreadCount > 0 && (
-            <Button
-              variant="outline"
-              size="sm"
-              onClick={handleMarkAllAsRead}
-              className="self-start sm:self-auto gap-2 text-xs"
-            >
-              <Check className="w-3.5 h-3.5" />
-              <span>Tandai Semua Dibaca</span>
-            </Button>
-          )}
-        </div>
+        {unreadCount > 0 && (
+          <Button
+            variant="outline"
+            size="sm"
+            onClick={handleMarkAllAsRead}
+            className="self-start sm:self-auto gap-2 text-xs border-border/80"
+          >
+            <Check className="w-3.5 h-3.5 text-primary" />
+            <span>Tandai Semua Dibaca</span>
+          </Button>
+        )}
       </div>
 
       {/* Filter Tabs */}
-      <div className="flex items-center gap-2 border-b border-border/80 pb-2">
+      <div className="flex items-center gap-2 border-b border-border/70 pb-1">
         <button
           onClick={() => setFilter("all")}
-          className={`px-3 py-1.5 rounded-lg text-xs font-semibold transition-colors cursor-pointer ${
+          className={`px-3.5 py-1.5 rounded-lg text-xs font-semibold transition-all cursor-pointer ${
             filter === "all"
-              ? "bg-primary text-white dark:text-[#182117]"
-              : "text-muted-foreground hover:text-foreground"
+              ? "bg-primary text-white dark:text-[#182117] shadow-xs"
+              : "text-muted-foreground hover:text-foreground hover:bg-muted"
           }`}
         >
           Semua ({notifications.length})
         </button>
         <button
           onClick={() => setFilter("unread")}
-          className={`px-3 py-1.5 rounded-lg text-xs font-semibold transition-colors cursor-pointer ${
+          className={`px-3.5 py-1.5 rounded-lg text-xs font-semibold transition-all cursor-pointer flex items-center gap-1.5 ${
             filter === "unread"
-              ? "bg-primary text-white dark:text-[#182117]"
-              : "text-muted-foreground hover:text-foreground"
+              ? "bg-primary text-white dark:text-[#182117] shadow-xs"
+              : "text-muted-foreground hover:text-foreground hover:bg-muted"
           }`}
         >
-          Belum Dibaca ({unreadCount})
+          <span>Belum Dibaca</span>
+          {unreadCount > 0 && (
+            <span className="px-1.5 py-0.2 rounded-full text-[10px] bg-amber-400 text-black font-bold">
+              {unreadCount}
+            </span>
+          )}
         </button>
       </div>
 
       {/* Notifications List */}
       <div className="space-y-3">
         {filtered.length === 0 ? (
-          <Card className="p-12 text-center border-dashed">
-            <Bell className="w-10 h-10 text-muted-foreground mx-auto mb-3 opacity-60" />
+          <Card className="p-12 text-center border-dashed border-2 bg-card rounded-2xl shadow-xs">
+            <Bell className="w-10 h-10 text-muted-foreground/50 mx-auto mb-3" />
             <p className="font-bold text-foreground">Tidak Ada Notifikasi</p>
             <p className="text-xs text-muted-foreground mt-1">
               {filter === "unread" ? "Semua notifikasi telah dibaca." : "Belum ada riwayat pemberitahuan."}
@@ -179,17 +180,17 @@ export function NotificationsPage({ onNavigate }: NotificationsPageProps) {
               <Card
                 key={notif.id}
                 onClick={() => handleOpenNotification(notif)}
-                className={`p-4 border transition-colors cursor-pointer flex items-start justify-between gap-4 ${
+                className={`p-4 sm:p-5 border transition-all cursor-pointer rounded-2xl flex items-start justify-between gap-4 ${
                   !notif.isRead
-                    ? "bg-primary/5 border-primary/30 hover:border-primary/60"
-                    : "bg-card border-border/80 hover:bg-muted/40"
+                    ? "bg-primary/5 border-primary/30 hover:border-primary/60 shadow-xs"
+                    : "bg-card border-border/80 hover:bg-muted/30 shadow-2xs"
                 }`}
               >
                 <div className="flex items-start gap-3.5 min-w-0">
                   <div
-                    className={`p-2 rounded-xl shrink-0 mt-0.5 ${
+                    className={`p-2.5 rounded-xl shrink-0 mt-0.5 ${
                       !notif.isRead
-                        ? "bg-primary text-white dark:text-[#182117]"
+                        ? "bg-primary text-white dark:text-[#182117] shadow-2xs"
                         : "bg-muted text-muted-foreground"
                     }`}
                   >
@@ -209,7 +210,7 @@ export function NotificationsPage({ onNavigate }: NotificationsPageProps) {
                       {notif.description}
                     </p>
                     <div className="flex items-center gap-1.5 text-[11px] text-muted-foreground pt-1">
-                      <Clock className="w-3 h-3" />
+                      <Clock className="w-3 h-3 text-muted-foreground/70" />
                       <span>{notif.timestamp}</span>
                     </div>
                   </div>
@@ -221,7 +222,7 @@ export function NotificationsPage({ onNavigate }: NotificationsPageProps) {
                       variant="ghost"
                       size="sm"
                       onClick={(e) => handleMarkAsRead(notif.id, e)}
-                      className="text-xs text-muted-foreground hover:text-foreground h-8"
+                      className="text-xs text-muted-foreground hover:text-foreground h-8 w-8 p-0"
                       title="Tandai dibaca"
                     >
                       <Check className="w-3.5 h-3.5" />

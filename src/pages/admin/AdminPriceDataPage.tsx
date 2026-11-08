@@ -125,84 +125,88 @@ export function AdminPriceDataPage({ onBack: _onBack }: AdminPriceDataPageProps)
   })
 
   return (
-    <div className="max-w-6xl mx-auto space-y-6 pb-12">
-      {/* 2. Breadcrumbs, Judul Halaman, Deskripsi Singkat */}
-      <div className="pt-1 border-b border-border/80 pb-4">
-        <nav aria-label="Breadcrumb" className="flex items-center gap-1.5 text-xs text-muted-foreground mb-1">
-          <span className="font-medium">Sambung</span>
-          <span className="text-muted-foreground/60">/</span>
-          <span className="font-medium">Admin</span>
-          <span className="text-muted-foreground/60">/</span>
-          <span className="font-medium text-foreground">Data Harga Observasi</span>
-        </nav>
+    <div className="max-w-6xl mx-auto space-y-7 pb-14">
+      {/* Breadcrumbs & Header */}
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-2 border-b border-border/70">
+        <div>
+          <nav aria-label="Breadcrumb" className="flex items-center gap-1.5 text-[11px] font-semibold uppercase tracking-wider text-muted-foreground mb-1">
+            <span>SAMBUNG</span>
+            <span className="text-muted-foreground/50">/</span>
+            <span className="text-primary font-bold">ADMIN</span>
+            <span className="text-muted-foreground/50">/</span>
+            <span className="text-foreground">DATA HARGA OBSERVASI</span>
+          </nav>
 
-        <div className="mt-2 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
-          <div>
-            <h1 className="font-display text-2xl sm:text-3xl font-bold tracking-tight text-foreground">
-              Manajemen Data Harga Observasi
-            </h1>
-            <p className="mt-1 text-sm text-muted-foreground">
-              Ingest sumber, periksa anomali dan duplikasi, lalu publikasikan snapshot tervalidasi.
-            </p>
-          </div>
-
-          <Badge variant="outline" className="font-mono text-xs self-start sm:self-auto">
-            {publishedVersion}
-          </Badge>
+          <h1 className="font-display text-2xl sm:text-3xl font-bold tracking-tight text-foreground">
+            Manajemen Data Harga Observasi
+          </h1>
+          <p className="mt-1 text-sm text-muted-foreground">
+            Ingest sumber resmi (Bapanas, PIHPS, BPS), periksa anomali dan duplikasi, lalu terbitkan snapshot tervalidasi.
+          </p>
         </div>
+
+        <Badge variant="outline" className="font-mono text-xs self-start sm:self-auto px-3 py-1 border-border/80">
+          {publishedVersion}
+        </Badge>
       </div>
 
       {/* Snapshot Info & Control Bar */}
       <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
-        <Card className="p-4 bg-card border border-border/80 flex items-center justify-between">
+        <Card className="p-5 bg-card border-border/80 shadow-xs flex items-center justify-between rounded-2xl">
           <div>
-            <span className="text-[10px] font-bold uppercase tracking-wider text-muted-foreground">Total Rekaman</span>
-            <p className="font-mono text-2xl font-bold text-foreground mt-0.5">{records.length} Baris</p>
+            <span className="text-[10px] font-bold uppercase tracking-wider text-muted-foreground">Total Rekaman Observasi</span>
+            <p className="font-mono text-2xl font-bold text-foreground mt-0.5 tabular-nums">{records.length} Baris</p>
           </div>
-          <Database className="w-6 h-6 text-primary opacity-60" />
+          <div className="w-10 h-10 rounded-xl bg-primary/10 text-primary flex items-center justify-center">
+            <Database className="w-5 h-5" />
+          </div>
         </Card>
 
-        <Card className="p-4 bg-emerald-50 dark:bg-emerald-950/30 border border-emerald-200 dark:border-emerald-800 flex items-center justify-between">
+        <Card className="p-5 bg-emerald-500/10 border-emerald-500/20 shadow-xs flex items-center justify-between rounded-2xl">
           <div>
-            <span className="text-[10px] font-bold uppercase tracking-wider text-emerald-800 dark:text-emerald-300">Lolos Validasi</span>
-            <p className="font-mono text-2xl font-bold text-emerald-800 dark:text-emerald-300 mt-0.5">{validCount} Baris</p>
+            <span className="text-[10px] font-bold uppercase tracking-wider text-emerald-800 dark:text-emerald-300">Lolos Uji Validasi</span>
+            <p className="font-mono text-2xl font-bold text-emerald-800 dark:text-emerald-300 mt-0.5 tabular-nums">{validCount} Baris</p>
           </div>
-          <CheckCircle2 className="w-6 h-6 text-emerald-600 dark:text-emerald-400 opacity-80" />
+          <div className="w-10 h-10 rounded-xl bg-emerald-500/20 text-emerald-800 dark:text-emerald-300 flex items-center justify-center">
+            <CheckCircle2 className="w-5 h-5" />
+          </div>
         </Card>
 
-        <Card className="p-4 bg-destructive/10 border border-destructive/30 flex items-center justify-between">
+        <Card className="p-5 bg-destructive/10 border-destructive/20 shadow-xs flex items-center justify-between rounded-2xl">
           <div>
             <span className="text-[10px] font-bold uppercase tracking-wider text-destructive">Anomali & Ditolak</span>
-            <p className="font-mono text-2xl font-bold text-destructive mt-0.5">{issueCount} Baris</p>
+            <p className="font-mono text-2xl font-bold text-destructive mt-0.5 tabular-nums">{issueCount} Baris</p>
           </div>
-          <AlertOctagon className="w-6 h-6 text-destructive opacity-80" />
+          <div className="w-10 h-10 rounded-xl bg-destructive/20 text-destructive flex items-center justify-center">
+            <AlertOctagon className="w-5 h-5" />
+          </div>
         </Card>
       </div>
 
       {/* Table Actions & Filters */}
-      <Card className="p-6 space-y-4">
-        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+      <Card className="p-6 bg-card border-border/80 shadow-xs space-y-4 rounded-2xl">
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-2 border-b border-border/70">
           <div className="flex items-center gap-2">
             <button
               onClick={() => setFilter("all")}
-              className={`px-3 py-1.5 rounded-lg text-xs font-semibold cursor-pointer ${
-                filter === "all" ? "bg-primary text-white dark:text-[#182117]" : "text-muted-foreground hover:bg-muted"
+              className={`px-3.5 py-1.5 rounded-lg text-xs font-semibold cursor-pointer transition-all ${
+                filter === "all" ? "bg-primary text-white dark:text-[#182117] shadow-xs" : "text-muted-foreground hover:bg-muted"
               }`}
             >
               Semua Baris ({records.length})
             </button>
             <button
               onClick={() => setFilter("valid")}
-              className={`px-3 py-1.5 rounded-lg text-xs font-semibold cursor-pointer ${
-                filter === "valid" ? "bg-primary text-white dark:text-[#182117]" : "text-muted-foreground hover:bg-muted"
+              className={`px-3.5 py-1.5 rounded-lg text-xs font-semibold cursor-pointer transition-all ${
+                filter === "valid" ? "bg-primary text-white dark:text-[#182117] shadow-xs" : "text-muted-foreground hover:bg-muted"
               }`}
             >
               Valid ({validCount})
             </button>
             <button
               onClick={() => setFilter("issue")}
-              className={`px-3 py-1.5 rounded-lg text-xs font-semibold cursor-pointer ${
-                filter === "issue" ? "bg-primary text-white dark:text-[#182117]" : "text-muted-foreground hover:bg-muted"
+              className={`px-3.5 py-1.5 rounded-lg text-xs font-semibold cursor-pointer transition-all ${
+                filter === "issue" ? "bg-primary text-white dark:text-[#182117] shadow-xs" : "text-muted-foreground hover:bg-muted"
               }`}
             >
               Perlu Atensi ({issueCount})
@@ -215,9 +219,9 @@ export function AdminPriceDataPage({ onBack: _onBack }: AdminPriceDataPageProps)
               size="sm"
               disabled={isValidating}
               onClick={handleValidate}
-              className="gap-1.5 text-xs"
+              className="gap-1.5 text-xs border-border/80"
             >
-              <RefreshCw className={`w-3.5 h-3.5 ${isValidating ? "animate-spin" : ""}`} />
+              <RefreshCw className={`w-3.5 h-3.5 text-primary ${isValidating ? "animate-spin" : ""}`} />
               <span>{isValidating ? "Memvalidasi..." : "Validasi Data"}</span>
             </Button>
 
@@ -225,7 +229,7 @@ export function AdminPriceDataPage({ onBack: _onBack }: AdminPriceDataPageProps)
               size="sm"
               disabled={isPublishing}
               onClick={handlePublish}
-              className="gap-1.5 text-xs shadow-xs"
+              className="gap-1.5 text-xs font-semibold shadow-xs"
             >
               <CheckCircle2 className="w-3.5 h-3.5" />
               <span>{isPublishing ? "Menerbitkan..." : "Publikasikan Snapshot"}</span>
@@ -237,7 +241,7 @@ export function AdminPriceDataPage({ onBack: _onBack }: AdminPriceDataPageProps)
         <div className="overflow-x-auto border border-border/80 rounded-xl">
           <table className="w-full text-left text-xs">
             <thead>
-              <tr className="border-b border-border bg-muted/40 text-[11px] font-bold uppercase tracking-wider text-muted-foreground">
+              <tr className="border-b border-border/80 bg-muted/40 text-[11px] font-bold uppercase tracking-wider text-muted-foreground">
                 <th className="p-3">ID</th>
                 <th className="p-3">Provinsi</th>
                 <th className="p-3">Komoditas</th>
@@ -253,12 +257,12 @@ export function AdminPriceDataPage({ onBack: _onBack }: AdminPriceDataPageProps)
                   <td className="p-3 font-mono font-bold text-foreground">{r.id}</td>
                   <td className="p-3 font-semibold text-foreground">{r.province}</td>
                   <td className="p-3 text-muted-foreground">{r.commodity}</td>
-                  <td className="p-3 text-right font-mono font-bold">
+                  <td className="p-3 text-right font-mono font-bold tabular-nums">
                     {r.price > 0 ? formatRupiah(r.price) : `${r.price} (Non-positif)`}
                   </td>
                   <td className="p-3 text-muted-foreground">
                     <span className="block font-medium text-foreground">{r.source}</span>
-                    <span className="text-[10px]">{r.period}</span>
+                    <span className="text-[10px] font-mono">{r.period}</span>
                   </td>
                   <td className="p-3">
                     <Badge
@@ -269,6 +273,7 @@ export function AdminPriceDataPage({ onBack: _onBack }: AdminPriceDataPageProps)
                           ? "secondary"
                           : "destructive"
                       }
+                      className="text-[10px]"
                     >
                       {r.status}
                     </Badge>

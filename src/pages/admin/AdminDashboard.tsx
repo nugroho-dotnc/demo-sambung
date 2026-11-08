@@ -6,7 +6,10 @@ import {
   Users,
   Cpu,
   ArrowRight,
-  Database
+  Database,
+  Layers,
+  TrendingUp,
+  FileText
 } from "lucide-react"
 
 interface AdminDashboardProps {
@@ -20,69 +23,89 @@ export function AdminDashboard({ onNavigate }: AdminDashboardProps) {
   const activeContracts = contracts.filter((c) => c.status === "Menunggu Kesepakatan" || c.status === "Disetujui")
 
   return (
-    <div className="max-w-6xl mx-auto space-y-6 pb-12">
+    <div className="max-w-6xl mx-auto space-y-7 pb-14">
       {/* Breadcrumb & Header */}
-      <div>
-        <nav aria-label="Breadcrumb" className="flex items-center gap-1.5 text-xs text-muted-foreground mb-1">
-          <span className="font-medium">Sambung</span>
-          <span className="text-muted-foreground/60">/</span>
-          <span className="font-medium text-foreground">Dasbor Pengawasan Admin</span>
-        </nav>
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-2 border-b border-border/70">
+        <div>
+          <nav aria-label="Breadcrumb" className="flex items-center gap-1.5 text-[11px] font-semibold uppercase tracking-wider text-muted-foreground mb-1">
+            <span>SAMBUNG</span>
+            <span className="text-muted-foreground/50">/</span>
+            <span className="text-primary font-bold">PORTAL SUPERVISI</span>
+            <span className="text-muted-foreground/50">/</span>
+            <span className="text-foreground">PENGAWASAN SISTEM</span>
+          </nav>
 
-        <div className="mt-2 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
-          <div>
-            <h1 className="font-display text-2xl sm:text-3xl font-bold tracking-tight text-foreground">
-              Ringkasan Pengawasan Sistem
-            </h1>
-            <p className="mt-1 text-sm text-muted-foreground">
-              Pusat pemantauan integritas transaksi simulasi, konfigurasi parameter, dan moderasi tawaran panen.
-            </p>
-          </div>
-
-          <Button
-            onClick={() => onNavigate("admin-price-data")}
-            variant="outline"
-            className="self-start sm:self-auto gap-2 text-xs"
-          >
-            <Database className="w-3.5 h-3.5" />
-            <span>Data & Parameter Harga</span>
-          </Button>
+          <h1 className="font-display text-2xl sm:text-3xl font-bold tracking-tight text-foreground">
+            Pusat Pengawasan & Tata Kelola
+          </h1>
+          <p className="mt-1 text-sm text-muted-foreground">
+            Pemantauan integritas transaksi simulasi, konfigurasi parameter harga, dan supervisi kualitas tawaran panen.
+          </p>
         </div>
+
+        <Button
+          onClick={() => onNavigate("admin-price-data")}
+          variant="outline"
+          className="self-start sm:self-auto gap-2 text-xs font-semibold border-border/80 shadow-2xs"
+        >
+          <Database className="w-3.5 h-3.5 text-primary" />
+          <span>Data Observasi & Parameter</span>
+        </Button>
       </div>
 
       {/* 4 Summary Metrics Cards */}
-      <div className="grid grid-cols-1 sm:grid-cols-4 gap-4">
-        <Card className="p-5 space-y-2">
-          <p className="text-xs font-semibold text-muted-foreground">Total Tawaran Panen</p>
-          <p className="font-display text-3xl font-extrabold text-foreground">{offers.length}</p>
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+        <Card className="p-5 bg-card border-border/80 shadow-xs space-y-2 rounded-2xl">
+          <div className="flex items-center justify-between text-muted-foreground">
+            <span className="text-[11px] font-bold uppercase tracking-wider">Tawaran Panen</span>
+            <div className="w-7 h-7 rounded-lg bg-primary/10 text-primary flex items-center justify-center">
+              <Layers className="w-3.5 h-3.5" />
+            </div>
+          </div>
+          <p className="font-display font-mono text-3xl font-bold text-foreground tabular-nums">{offers.length}</p>
           <p className="text-[11px] text-muted-foreground">
-            {offers.filter((o) => o.publicationStatus === "Terbit").length} penawaran aktif
+            {offers.filter((o) => o.publicationStatus === "Terbit").length} pasokan aktif di katalog
           </p>
         </Card>
 
-        <Card className="p-5 space-y-2">
-          <p className="text-xs font-semibold text-muted-foreground">Kontrak Berjalan</p>
-          <p className="font-display text-3xl font-extrabold text-price-within">{activeContracts.length}</p>
+        <Card className="p-5 bg-card border-border/80 shadow-xs space-y-2 rounded-2xl">
+          <div className="flex items-center justify-between text-muted-foreground">
+            <span className="text-[11px] font-bold uppercase tracking-wider text-emerald-800 dark:text-emerald-300">Kontrak Berjalan</span>
+            <div className="w-7 h-7 rounded-lg bg-emerald-500/10 text-emerald-700 dark:text-emerald-400 flex items-center justify-center">
+              <TrendingUp className="w-3.5 h-3.5" />
+            </div>
+          </div>
+          <p className="font-display font-mono text-3xl font-bold text-primary tabular-nums">{activeContracts.length}</p>
           <p className="text-[11px] text-muted-foreground">
-            Negosiasi & disetujui
+            Dalam tahap tawar atau disetujui
           </p>
         </Card>
 
-        <Card className="p-5 space-y-2">
-          <p className="text-xs font-semibold text-muted-foreground">Temuan Moderasi</p>
-          <p className={`font-display text-3xl font-extrabold ${pendingModeration.length > 0 ? "text-amber-600 dark:text-amber-400" : "text-foreground"}`}>
+        <Card className="p-5 bg-card border-border/80 shadow-xs space-y-2 rounded-2xl">
+          <div className="flex items-center justify-between text-muted-foreground">
+            <span className="text-[11px] font-bold uppercase tracking-wider text-amber-800 dark:text-amber-300">Temuan Moderasi</span>
+            <div className="w-7 h-7 rounded-lg bg-amber-500/10 text-amber-700 dark:text-amber-400 flex items-center justify-center">
+              <ShieldAlert className="w-3.5 h-3.5" />
+            </div>
+          </div>
+          <p className={`font-display font-mono text-3xl font-bold tabular-nums ${pendingModeration.length > 0 ? "text-amber-600 dark:text-amber-400" : "text-foreground"}`}>
             {pendingModeration.length}
           </p>
           <p className="text-[11px] text-muted-foreground">
-            {pendingModeration.length > 0 ? "Perlu tindak lanjut" : "Semua bersih"}
+            {pendingModeration.length > 0 ? "Perlu tindak lanjut supervisi" : "Seluruh data tawaran bersih"}
           </p>
         </Card>
 
-        <Card className="p-5 space-y-2">
-          <p className="text-xs font-semibold text-muted-foreground">Log Audit Aktivitas</p>
-          <p className="font-display text-3xl font-extrabold text-foreground">{auditLogs.length}</p>
+        <Card className="p-5 bg-card border-border/80 shadow-xs space-y-2 rounded-2xl">
+          <div className="flex items-center justify-between text-muted-foreground">
+            <span className="text-[11px] font-bold uppercase tracking-wider text-foreground">Log Audit Aktivitas</span>
+            <div className="w-7 h-7 rounded-lg bg-muted text-foreground flex items-center justify-center">
+              <FileText className="w-3.5 h-3.5 text-primary" />
+            </div>
+          </div>
+          <p className="font-display font-mono text-3xl font-bold text-foreground tabular-nums">{auditLogs.length}</p>
           <p className="text-[11px] text-muted-foreground">
-            Peristiwa bisnis terekam
+            Peristiwa bisnis terekam aman
           </p>
         </Card>
       </div>
@@ -90,14 +113,14 @@ export function AdminDashboard({ onNavigate }: AdminDashboardProps) {
       {/* Navigation Quick Panels */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
         {/* Moderasi */}
-        <Card className="p-6 flex flex-col justify-between space-y-4">
-          <div className="space-y-2">
+        <Card className="p-6 bg-card border-border/80 shadow-xs rounded-2xl flex flex-col justify-between space-y-4">
+          <div className="space-y-2.5">
             <div className="flex items-center gap-2 text-foreground font-bold">
-              <ShieldAlert className="w-4.5 h-4.5 text-amber-600 dark:text-amber-400" />
-              <h3 className="text-sm">Moderasi Tawaran</h3>
+              <ShieldAlert className="w-5 h-5 text-amber-600 dark:text-amber-400" />
+              <h3 className="text-base font-bold">Moderasi Tawaran</h3>
             </div>
             <p className="text-xs text-muted-foreground leading-relaxed">
-              Tinjau tawaran harga anomali atau data mencurigakan. Petani diberi catatan tanpa memblokir akses secara sepihak.
+              Tinjau tawaran harga anomali atau data mencurigakan. Petani diberi catatan perbaikan tanpa memblokir akses secara sepihak.
             </p>
           </div>
 
@@ -105,22 +128,22 @@ export function AdminDashboard({ onNavigate }: AdminDashboardProps) {
             variant="outline"
             size="sm"
             onClick={() => onNavigate("admin-moderation")}
-            className="w-full justify-between text-xs font-semibold"
+            className="w-full justify-between text-xs font-semibold border-border/80"
           >
-            <span>Buka Moderasi</span>
+            <span>Buka Meja Moderasi</span>
             <ArrowRight className="w-3.5 h-3.5" />
           </Button>
         </Card>
 
         {/* Manajemen Pengguna */}
-        <Card className="p-6 flex flex-col justify-between space-y-4">
-          <div className="space-y-2">
+        <Card className="p-6 bg-card border-border/80 shadow-xs rounded-2xl flex flex-col justify-between space-y-4">
+          <div className="space-y-2.5">
             <div className="flex items-center gap-2 text-foreground font-bold">
-              <Users className="w-4.5 h-4.5 text-primary" />
-              <h3 className="text-sm">Manajemen Pengguna</h3>
+              <Users className="w-5 h-5 text-primary" />
+              <h3 className="text-base font-bold">Manajemen Pengguna</h3>
             </div>
             <p className="text-xs text-muted-foreground leading-relaxed">
-              Daftar akun petani dan pembeli. Nomor telepon tetap tersamar demi privasi sesuai tata kelola platform.
+              Daftar akun petani dan pembeli. Nomor telepon tetap tersamar demi privasi sesuai tata kelola privasi platform.
             </p>
           </div>
 
@@ -128,19 +151,19 @@ export function AdminDashboard({ onNavigate }: AdminDashboardProps) {
             variant="outline"
             size="sm"
             onClick={() => onNavigate("admin-users")}
-            className="w-full justify-between text-xs font-semibold"
+            className="w-full justify-between text-xs font-semibold border-border/80"
           >
-            <span>Kelola Pengguna</span>
+            <span>Kelola Daftar Pengguna</span>
             <ArrowRight className="w-3.5 h-3.5" />
           </Button>
         </Card>
 
         {/* Evaluasi Model AI */}
-        <Card className="p-6 flex flex-col justify-between space-y-4">
-          <div className="space-y-2">
+        <Card className="p-6 bg-card border-border/80 shadow-xs rounded-2xl flex flex-col justify-between space-y-4">
+          <div className="space-y-2.5">
             <div className="flex items-center gap-2 text-foreground font-bold">
-              <Cpu className="w-4.5 h-4.5 text-primary" />
-              <h3 className="text-sm">Evaluasi Model AI</h3>
+              <Cpu className="w-5 h-5 text-primary" />
+              <h3 className="text-base font-bold">Evaluasi Model AI</h3>
             </div>
             <p className="text-xs text-muted-foreground leading-relaxed">
               Periksa metrik walk-forward MASE, horizon 2 & 4 pekan, dan status kelayakan publikasi model peramalan harga.
@@ -151,7 +174,7 @@ export function AdminDashboard({ onNavigate }: AdminDashboardProps) {
             variant="outline"
             size="sm"
             onClick={() => onNavigate("admin-model")}
-            className="w-full justify-between text-xs font-semibold"
+            className="w-full justify-between text-xs font-semibold border-border/80"
           >
             <span>Lihat Evaluasi Model</span>
             <ArrowRight className="w-3.5 h-3.5" />
@@ -160,8 +183,8 @@ export function AdminDashboard({ onNavigate }: AdminDashboardProps) {
       </div>
 
       {/* Recent Audit Logs Table */}
-      <Card className="p-6 space-y-4">
-        <div className="flex items-center justify-between">
+      <Card className="p-6 bg-card border-border/80 shadow-xs rounded-2xl space-y-4">
+        <div className="flex items-center justify-between pb-2 border-b border-border/70">
           <div>
             <h3 className="font-bold text-base text-foreground">Aktivitas Sistem Terkini</h3>
             <p className="text-xs text-muted-foreground mt-0.5">Jejak mutasi transaksi dan parameter operasional</p>
@@ -176,27 +199,27 @@ export function AdminDashboard({ onNavigate }: AdminDashboardProps) {
           </Button>
         </div>
 
-        <div className="overflow-x-auto">
+        <div className="overflow-x-auto border border-border/80 rounded-xl">
           <table className="w-full text-left text-xs">
             <thead>
-              <tr className="border-b border-border/80 text-[11px] font-bold uppercase tracking-wider text-muted-foreground">
-                <th className="py-2.5">Waktu</th>
-                <th className="py-2.5">Aktor</th>
-                <th className="py-2.5">Aksi / Mutasi</th>
-                <th className="py-2.5">Detail</th>
+              <tr className="border-b border-border/80 bg-muted/40 text-[11px] font-bold uppercase tracking-wider text-muted-foreground">
+                <th className="p-3">Waktu</th>
+                <th className="p-3">Aktor</th>
+                <th className="p-3">Aksi / Mutasi</th>
+                <th className="p-3">Detail Peristiwa</th>
               </tr>
             </thead>
             <tbody className="divide-y divide-border/60">
               {auditLogs.slice(0, 5).map((log) => (
-                <tr key={log.id} className="hover:bg-muted/40 transition-colors">
-                  <td className="py-3 text-muted-foreground font-mono text-[11px]">{log.timestamp}</td>
-                  <td className="py-3 font-semibold text-foreground">{log.actorName}</td>
-                  <td className="py-3">
-                    <span className="px-2 py-0.5 rounded text-[10px] font-semibold bg-muted text-foreground">
+                <tr key={log.id} className="hover:bg-muted/30 transition-colors">
+                  <td className="p-3 text-muted-foreground font-mono text-[11px] whitespace-nowrap">{log.timestamp}</td>
+                  <td className="p-3 font-semibold text-foreground whitespace-nowrap">{log.actorName}</td>
+                  <td className="p-3">
+                    <span className="px-2 py-0.5 rounded text-[10px] font-semibold bg-muted text-foreground border border-border">
                       {log.action}
                     </span>
                   </td>
-                  <td className="py-3 text-muted-foreground truncate max-w-xs">{log.details}</td>
+                  <td className="p-3 text-muted-foreground truncate max-w-xs">{log.details}</td>
                 </tr>
               ))}
             </tbody>

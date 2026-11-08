@@ -9,7 +9,8 @@ import {
   ScrollText,
   Sprout,
   ChevronRight,
-  Check
+  Check,
+  ShieldCheck
 } from "lucide-react"
 
 interface PembeliContractsPageProps {
@@ -34,38 +35,38 @@ export function PembeliContractsPage({ onNavigate }: PembeliContractsPageProps) 
   const activeCount = myContracts.filter((c) => c.status === "Disetujui").length
 
   return (
-    <div className="max-w-6xl mx-auto space-y-6 pb-12">
+    <div className="max-w-6xl mx-auto space-y-7 pb-14">
       {/* Header & Breadcrumb */}
-      <div>
-        <div className="flex items-center gap-1.5 text-xs font-semibold uppercase tracking-wider text-muted-foreground">
-          <span>RUANG PRODUSEN</span>
-          <span>/</span>
-          <span className="text-foreground">PESANAN & KONTRAK</span>
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-2 border-b border-border/70">
+        <div>
+          <nav aria-label="Breadcrumb" className="flex items-center gap-1.5 text-[11px] font-semibold uppercase tracking-wider text-muted-foreground mb-1">
+            <span>Sambung</span>
+            <span className="text-muted-foreground/50">/</span>
+            <span className="text-primary font-bold">Ruang Pembeli</span>
+            <span className="text-muted-foreground/50">/</span>
+            <span className="text-foreground">Pesanan & Kontrak</span>
+          </nav>
+
+          <h1 className="font-display text-2xl sm:text-3xl font-bold tracking-tight text-foreground">
+            Pesanan dan Kontrak Pembeli
+          </h1>
+          <p className="mt-1 text-sm text-muted-foreground">
+            Pantau status setiap pesanan pasokan sampai kontrak ditandatangani dan transaksi selesai.
+          </p>
         </div>
 
-        <div className="mt-2 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
-          <div>
-            <h1 className="font-display text-2xl sm:text-3xl font-bold tracking-tight text-foreground">
-              Pesanan dan kontrak produsen
-            </h1>
-            <p className="mt-1 text-sm text-muted-foreground">
-              Pantau status setiap pesanan pasokan sampai kontrak ditandatangani dan selesai.
-            </p>
-          </div>
-
-          <div className="flex items-center gap-2">
-            <span className="px-3 py-1.5 rounded-lg text-xs font-semibold bg-primary/10 text-primary border border-primary/20">
-              {myContracts.length} Total Pesanan Aktif
-            </span>
-          </div>
+        <div className="flex items-center gap-2">
+          <span className="px-3 py-1.5 rounded-lg text-xs font-semibold bg-primary/10 text-primary border border-primary/20">
+            {myContracts.length} Total Pesanan Terdaftar
+          </span>
         </div>
       </div>
 
-      {/* Filter Tabs matching Produsen.dc.html */}
-      <div className="flex items-center gap-2 overflow-x-auto pb-1 border-b border-border/80">
+      {/* Filter Tabs */}
+      <div className="flex items-center gap-2 overflow-x-auto pb-1 border-b border-border/70">
         <button
           onClick={() => setFilterTab("semua")}
-          className={`px-3 py-1.5 rounded-lg text-xs font-semibold transition-all cursor-pointer ${
+          className={`px-3.5 py-1.5 rounded-lg text-xs font-semibold transition-all cursor-pointer ${
             filterTab === "semua"
               ? "bg-primary text-white dark:text-[#182117] shadow-xs"
               : "text-muted-foreground hover:text-foreground hover:bg-muted"
@@ -75,17 +76,22 @@ export function PembeliContractsPage({ onNavigate }: PembeliContractsPageProps) 
         </button>
         <button
           onClick={() => setFilterTab("menunggu")}
-          className={`px-3 py-1.5 rounded-lg text-xs font-semibold transition-all cursor-pointer ${
+          className={`px-3.5 py-1.5 rounded-lg text-xs font-semibold transition-all cursor-pointer flex items-center gap-1.5 ${
             filterTab === "menunggu"
               ? "bg-primary text-white dark:text-[#182117] shadow-xs"
               : "text-muted-foreground hover:text-foreground hover:bg-muted"
           }`}
         >
-          Menunggu Respon Petani ({pendingCount})
+          <span>Menunggu Respon</span>
+          {pendingCount > 0 && (
+            <span className="px-1.5 py-0.2 rounded-full text-[10px] bg-amber-400 text-black font-bold">
+              {pendingCount}
+            </span>
+          )}
         </button>
         <button
           onClick={() => setFilterTab("disetujui")}
-          className={`px-3 py-1.5 rounded-lg text-xs font-semibold transition-all cursor-pointer ${
+          className={`px-3.5 py-1.5 rounded-lg text-xs font-semibold transition-all cursor-pointer ${
             filterTab === "disetujui"
               ? "bg-primary text-white dark:text-[#182117] shadow-xs"
               : "text-muted-foreground hover:text-foreground hover:bg-muted"
@@ -95,7 +101,7 @@ export function PembeliContractsPage({ onNavigate }: PembeliContractsPageProps) 
         </button>
         <button
           onClick={() => setFilterTab("selesai")}
-          className={`px-3 py-1.5 rounded-lg text-xs font-semibold transition-all cursor-pointer ${
+          className={`px-3.5 py-1.5 rounded-lg text-xs font-semibold transition-all cursor-pointer ${
             filterTab === "selesai"
               ? "bg-primary text-white dark:text-[#182117] shadow-xs"
               : "text-muted-foreground hover:text-foreground hover:bg-muted"
@@ -108,11 +114,11 @@ export function PembeliContractsPage({ onNavigate }: PembeliContractsPageProps) 
       {/* Orders List */}
       <div className="space-y-4">
         {filteredContracts.length === 0 ? (
-          <Card className="p-10 text-center space-y-3 bg-card border border-border/80">
-            <ScrollText className="w-10 h-10 text-muted-foreground mx-auto stroke-1" />
+          <Card className="p-12 text-center space-y-3 bg-card border border-border/80 rounded-2xl shadow-xs">
+            <ScrollText className="w-10 h-10 text-muted-foreground/60 mx-auto stroke-1" />
             <h3 className="text-base font-bold text-foreground">Belum ada pesanan pada kategori ini</h3>
             <p className="text-xs text-muted-foreground max-w-md mx-auto">
-              Kunjungi katalog pasokan untuk mencari gabah panen dari petani dan mengajukan pesanan baru.
+              Kunjungi katalog pasokan untuk mencari gabah panen dari kelompok tani dan mengajukan pesanan baru.
             </p>
             <Button
               size="sm"
@@ -127,7 +133,7 @@ export function PembeliContractsPage({ onNavigate }: PembeliContractsPageProps) 
             const isFarmerCountered = contract.status === "Menunggu Kesepakatan" && contract.activeProposedBy === "petani"
             const totalVal = contract.volume * contract.activePrice
 
-            // 4-step progress mapping from Produsen.dc.html
+            // 4-step progress mapping
             const stepIndex =
               contract.status === "Selesai"
                 ? 4
@@ -140,48 +146,49 @@ export function PembeliContractsPage({ onNavigate }: PembeliContractsPageProps) 
             return (
               <Card
                 key={contract.id}
-                className="p-5 sm:p-6 bg-card border border-border/80 hover:border-primary/40 transition-colors space-y-4"
+                className="p-5 sm:p-6 bg-card border-border/80 hover:border-primary/40 transition-all rounded-2xl shadow-xs space-y-4"
               >
                 {/* Header row */}
                 <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
-                  <div className="flex items-center gap-2.5">
-                    <div className="w-9 h-9 rounded-lg bg-primary/10 text-primary flex items-center justify-center shrink-0">
-                      <Sprout className="w-4.5 h-4.5" />
+                  <div className="flex items-center gap-3">
+                    <div className="w-10 h-10 rounded-xl bg-primary/10 text-primary flex items-center justify-center shrink-0">
+                      <Sprout className="w-5 h-5" />
                     </div>
                     <div>
                       <div className="flex items-center gap-2">
                         <strong className="text-sm font-bold text-foreground">
                           {contract.farmerName}
                         </strong>
-                        <span className="px-1.5 py-0.5 rounded text-[10px] font-semibold bg-muted text-muted-foreground border border-border">
-                          Petani Terverifikasi
+                        <span className="px-2 py-0.5 rounded text-[10px] font-semibold bg-muted text-muted-foreground border border-border flex items-center gap-1">
+                          <ShieldCheck className="w-3 h-3 text-primary" />
+                          <span>Petani Terverifikasi</span>
                         </span>
                       </div>
-                      <p className="text-xs text-muted-foreground mt-0.5">
+                      <p className="text-xs text-muted-foreground mt-0.5 font-mono">
                         Kontrak #{contract.id} · ID Pasokan {contract.offerId}
                       </p>
                     </div>
                   </div>
 
                   <span
-                    className={`px-2.5 py-1 rounded-md text-xs font-semibold self-start sm:self-auto ${
+                    className={`px-3 py-1 rounded-md text-xs font-semibold self-start sm:self-auto ${
                       contract.status === "Disetujui"
-                        ? "bg-emerald-50 text-emerald-800 dark:bg-emerald-950/40 dark:text-emerald-300 border border-emerald-200"
+                        ? "bg-emerald-500/10 text-emerald-800 dark:text-emerald-300 border border-emerald-500/30"
                         : contract.status === "Menunggu Kesepakatan"
-                        ? "bg-amber-50 text-amber-800 dark:bg-amber-950/40 dark:text-amber-300 border border-amber-200"
+                        ? "bg-amber-500/10 text-amber-800 dark:text-amber-300 border border-amber-500/30"
                         : contract.status === "Selesai"
                         ? "bg-muted text-muted-foreground border border-border"
-                        : "bg-rose-50 text-rose-800 dark:bg-rose-950/40 text-xs"
+                        : "bg-rose-500/10 text-rose-800 dark:text-rose-300"
                     }`}
                   >
                     {isFarmerCountered ? "Petani Mengajukan Tawar Balik" : contract.status}
                   </span>
                 </div>
 
-                {/* 4-step visual stepper matching Produsen.dc.html line 180 */}
+                {/* 4-step visual stepper */}
                 <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 pt-1 text-[11px]">
                   <div className="flex items-center gap-1.5 font-medium text-emerald-700 dark:text-emerald-400">
-                    <span className="w-4 h-4 rounded-full bg-emerald-100 text-emerald-800 text-[10px] font-bold flex items-center justify-center">
+                    <span className="w-4 h-4 rounded-full bg-emerald-100 text-emerald-800 dark:bg-emerald-950 dark:text-emerald-300 text-[10px] font-bold flex items-center justify-center">
                       <Check className="w-2.5 h-2.5" />
                     </span>
                     <span>1. Dipesan</span>
@@ -193,7 +200,7 @@ export function PembeliContractsPage({ onNavigate }: PembeliContractsPageProps) 
                   >
                     <span
                       className={`w-4 h-4 rounded-full text-[10px] font-bold flex items-center justify-center ${
-                        stepIndex >= 2 ? "bg-emerald-100 text-emerald-800" : "bg-muted text-muted-foreground"
+                        stepIndex >= 2 ? "bg-emerald-100 text-emerald-800 dark:bg-emerald-950 dark:text-emerald-300" : "bg-muted text-muted-foreground"
                       }`}
                     >
                       {stepIndex >= 2 ? <Check className="w-2.5 h-2.5" /> : "2"}
@@ -207,7 +214,7 @@ export function PembeliContractsPage({ onNavigate }: PembeliContractsPageProps) 
                   >
                     <span
                       className={`w-4 h-4 rounded-full text-[10px] font-bold flex items-center justify-center ${
-                        stepIndex >= 3 ? "bg-emerald-100 text-emerald-800" : "bg-muted text-muted-foreground"
+                        stepIndex >= 3 ? "bg-emerald-100 text-emerald-800 dark:bg-emerald-950 dark:text-emerald-300" : "bg-muted text-muted-foreground"
                       }`}
                     >
                       {stepIndex >= 3 ? <Check className="w-2.5 h-2.5" /> : "3"}
@@ -221,7 +228,7 @@ export function PembeliContractsPage({ onNavigate }: PembeliContractsPageProps) 
                   >
                     <span
                       className={`w-4 h-4 rounded-full text-[10px] font-bold flex items-center justify-center ${
-                        stepIndex >= 4 ? "bg-emerald-100 text-emerald-800" : "bg-muted text-muted-foreground"
+                        stepIndex >= 4 ? "bg-emerald-100 text-emerald-800 dark:bg-emerald-950 dark:text-emerald-300" : "bg-muted text-muted-foreground"
                       }`}
                     >
                       {stepIndex >= 4 ? <Check className="w-2.5 h-2.5" /> : "4"}
@@ -231,28 +238,28 @@ export function PembeliContractsPage({ onNavigate }: PembeliContractsPageProps) 
                 </div>
 
                 {/* Details row */}
-                <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 py-3 border-y border-border/60 text-xs">
+                <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 py-3.5 border-y border-border/70 text-xs">
                   <div>
-                    <span className="text-muted-foreground block text-[11px]">Volume Dipesan</span>
-                    <strong className="font-semibold text-foreground text-sm">
-                      {contract.volume.toLocaleString("id-ID")} kg ({contract.grainType})
+                    <span className="text-muted-foreground block text-[11px] font-medium">Volume Dipesan</span>
+                    <strong className="font-semibold text-foreground text-sm font-mono mt-0.5 block">
+                      {contract.volume.toLocaleString("id-ID")} kg <span className="font-sans text-xs text-muted-foreground">({contract.grainType})</span>
                     </strong>
                   </div>
                   <div>
-                    <span className="text-muted-foreground block text-[11px]">Harga Tawar Aktif</span>
-                    <strong className="font-semibold text-foreground text-sm font-mono text-primary">
+                    <span className="text-muted-foreground block text-[11px] font-medium">Harga Tawar Aktif</span>
+                    <strong className="font-semibold text-primary text-sm font-mono mt-0.5 block">
                       {formatRupiah(contract.activePrice)}/kg
                     </strong>
                   </div>
                   <div>
-                    <span className="text-muted-foreground block text-[11px]">Total Nilai Pesanan</span>
-                    <strong className="font-bold text-foreground text-sm font-mono">
+                    <span className="text-muted-foreground block text-[11px] font-medium">Total Nilai Pesanan</span>
+                    <strong className="font-bold text-foreground text-sm font-mono mt-0.5 block">
                       {formatRupiah(totalVal)}
                     </strong>
                   </div>
                   <div>
-                    <span className="text-muted-foreground block text-[11px]">Lampu Kewajaran</span>
-                    <div className="mt-0.5">
+                    <span className="text-muted-foreground block text-[11px] font-medium">Lampu Kewajaran</span>
+                    <div className="mt-1">
                       {(() => {
                         const rend = contract.grainType === "GKP" ? 0.5338 : 0.63
                         const bench = calculateFairPrice(contract.grainType, "Jawa Timur", 13500, rend)
@@ -271,7 +278,7 @@ export function PembeliContractsPage({ onNavigate }: PembeliContractsPageProps) 
                         Petani mengajukan harga baru. Buka detail untuk menyetujui atau menawar balik.
                       </span>
                     ) : (
-                      <span>Pembayaran dan pengiriman diatur langsung dengan petani tanpa komisi platform.</span>
+                      <span>Pembayaran dan pengiriman diatur langsung dengan petani tanpa potongan komisi platform.</span>
                     )}
                   </div>
 
@@ -279,7 +286,7 @@ export function PembeliContractsPage({ onNavigate }: PembeliContractsPageProps) 
                     size="sm"
                     variant={isFarmerCountered ? "default" : "outline"}
                     onClick={() => onNavigate("contract-detail", contract.id)}
-                    className="text-xs gap-1.5 shadow-xs"
+                    className="text-xs gap-1.5 shadow-xs border-border/80"
                   >
                     <span>{isFarmerCountered ? "Tinjau Tawar Balik" : "Lihat Kontrak & Detail"}</span>
                     <ChevronRight className="w-3.5 h-3.5" />

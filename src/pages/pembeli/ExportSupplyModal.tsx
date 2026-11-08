@@ -72,60 +72,60 @@ export function ExportSupplyModal({ isOpen, onClose }: ExportSupplyModalProps) {
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-xs animate-in fade-in duration-150">
-      <div className="relative w-full max-w-xl bg-card text-card-foreground border border-border rounded-xl shadow-xl overflow-hidden p-6 sm:p-7">
+      <div className="relative w-full max-w-xl bg-card text-card-foreground border border-border/80 rounded-2xl shadow-xl overflow-hidden p-6 sm:p-7">
         <button
           onClick={onClose}
-          className="absolute top-4 right-4 p-2 text-muted-foreground hover:text-foreground rounded-md"
+          className="absolute top-4 right-4 p-2 text-muted-foreground hover:text-foreground rounded-lg hover:bg-muted transition-colors cursor-pointer"
           aria-label="Tutup dialog"
         >
           <X className="w-5 h-5" />
         </button>
 
-        <div className="flex items-start gap-3 mb-4">
-          <div className="p-3 rounded-full bg-primary/10 text-primary shrink-0">
+        <div className="flex items-start gap-3.5 mb-4">
+          <div className="p-3 rounded-xl bg-primary/10 text-primary shrink-0">
             <FileSpreadsheet className="w-6 h-6" />
           </div>
           <div>
-            <h3 className="text-display-sm font-bold text-foreground">
+            <h3 className="text-xl font-bold font-display text-foreground">
               Ekspor Data Agregasi Pasokan
             </h3>
-            <p className="text-body-sm text-muted-foreground mt-1">
-              Unduh rekapitulasi jumlah pasokan gabah per wilayah sesuai prinsip perlindungan privasi.
+            <p className="text-xs text-muted-foreground mt-1">
+              Unduh rekapitulasi pasokan gabah per wilayah sesuai prinsip perlindungan privasi dan anonimitas petani.
             </p>
           </div>
         </div>
 
-        <div className="p-4 rounded-xl bg-muted/60 border border-border space-y-2 text-xs text-muted-foreground">
+        <div className="p-4 rounded-xl bg-muted/40 border border-border/70 space-y-1.5 text-xs text-muted-foreground leading-relaxed">
           <div className="flex items-center gap-2 font-bold text-foreground">
             <ShieldCheck className="w-4 h-4 text-primary" />
-            <span>Kepatuhan Privasi Data</span>
+            <span>Kepatuhan Privasi Data Platform</span>
           </div>
           <p>
-            Berkas CSV ini hanya memuat ringkasan agregasi per jenis gabah dan provinsi: jumlah tawaran unik, total volume tersedia, dan rentang harga minta. Berkas <strong>TIDAK memuat</strong> identitas petani, nomor telepon, atau data baris transaksi individu.
+            Berkas CSV ini hanya memuat ringkasan agregasi per jenis gabah dan provinsi: jumlah tawaran unik, total volume tersedia, dan rentang harga minta. Berkas <strong>TIDAK memuat</strong> identitas perorangan, nomor kontak, atau rincian transaksi individu.
           </p>
         </div>
 
         {/* Preview of Aggregated Data */}
-        <div className="mt-4 border border-border rounded-lg overflow-x-auto">
+        <div className="mt-4 border border-border/80 rounded-xl overflow-x-auto shadow-2xs">
           <table className="w-full text-left text-xs border-collapse">
             <thead>
-              <tr className="bg-muted/80 text-muted-foreground uppercase font-bold border-b border-border">
-                <th className="p-2.5">Jenis</th>
-                <th className="p-2.5">Provinsi</th>
-                <th className="p-2.5 text-right">Tawaran</th>
-                <th className="p-2.5 text-right">Tersedia (kg)</th>
-                <th className="p-2.5 text-right">Rentang Harga</th>
+              <tr className="bg-muted/60 text-muted-foreground uppercase text-[10px] font-bold tracking-wider border-b border-border/80">
+                <th className="p-3 font-semibold">Komoditas</th>
+                <th className="p-3 font-semibold">Provinsi</th>
+                <th className="p-3 text-right font-semibold">Tawaran</th>
+                <th className="p-3 text-right font-semibold">Volume (kg)</th>
+                <th className="p-3 text-right font-semibold">Rentang Harga</th>
               </tr>
             </thead>
-            <tbody className="divide-y divide-border font-mono">
+            <tbody className="divide-y divide-border/60 font-mono">
               {aggregatedList.map((g, i) => (
-                <tr key={i} className="hover:bg-accent/40">
-                  <td className="p-2.5 font-sans font-bold text-foreground">{g.grainType}</td>
-                  <td className="p-2.5 font-sans text-foreground">{g.province}</td>
-                  <td className="p-2.5 text-right">{g.count}</td>
-                  <td className="p-2.5 text-right">{g.totalAvailableVolume.toLocaleString("id-ID")}</td>
-                  <td className="p-2.5 text-right">
-                    Rp{g.minPrice.toLocaleString("id-ID")}  -  Rp{g.maxPrice.toLocaleString("id-ID")}
+                <tr key={i} className="hover:bg-muted/20 transition-colors">
+                  <td className="p-3 font-sans font-bold text-foreground">{g.grainType}</td>
+                  <td className="p-3 font-sans text-foreground">{g.province}</td>
+                  <td className="p-3 text-right tabular-nums text-foreground">{g.count}</td>
+                  <td className="p-3 text-right tabular-nums text-foreground">{g.totalAvailableVolume.toLocaleString("id-ID")}</td>
+                  <td className="p-3 text-right tabular-nums text-primary font-bold">
+                    Rp{g.minPrice.toLocaleString("id-ID")} – Rp{g.maxPrice.toLocaleString("id-ID")}
                   </td>
                 </tr>
               ))}
@@ -133,11 +133,11 @@ export function ExportSupplyModal({ isOpen, onClose }: ExportSupplyModalProps) {
           </table>
         </div>
 
-        <div className="flex justify-end gap-3 mt-6 pt-4 border-t border-border">
-          <Button variant="outline" onClick={onClose}>
+        <div className="flex justify-end gap-3 mt-6 pt-4 border-t border-border/70">
+          <Button variant="outline" size="sm" onClick={onClose} className="border-border/80 text-xs">
             Batal
           </Button>
-          <Button onClick={handleDownload} className="font-bold gap-2">
+          <Button size="sm" onClick={handleDownload} className="font-bold gap-2 text-xs shadow-xs">
             <Download className="w-4 h-4" />
             <span>Unduh Berkas CSV</span>
           </Button>

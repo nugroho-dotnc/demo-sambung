@@ -20,7 +20,6 @@ import {
   Store,
   MapPin,
   ChevronRight,
-  HelpCircle,
   Percent,
   Check,
   Table,
@@ -39,9 +38,9 @@ const PROVINCE_PREVIEWS = [
     diff: "-4,5% dari acuan nasional",
     status: "Sentra Produksi Utama",
     factors: [
-      { label: "Dekat sentra produksi padi", impact: "Menurunkan harga", width: "65%", type: "down" },
-      { label: "Serapan gudang Bulog tinggi", impact: "Menstabilkan harga", width: "40%", type: "down" },
-      { label: "Permintaan kota metropolitan", impact: "Menaikkan harga", width: "35%", type: "up" },
+      { label: "Surplus produksi beras wilayah Ngawi-Bojonegoro", impact: "Menurunkan harga", width: "65%", type: "down" },
+      { label: "Ketersediaan stok penggilingan lokal", impact: "Menurunkan harga", width: "50%", type: "down" },
+      { label: "Permintaan pasar luar provinsi", impact: "Menaikkan harga", width: "35%", type: "up" },
     ]
   },
   {
@@ -183,159 +182,205 @@ export function HomePage({ onNavigate }: HomePageProps) {
   }
 
   return (
-    <div className="max-w-6xl mx-auto space-y-20 pb-20">
+    <div className="max-w-6xl mx-auto space-y-24 pb-24">
       {/* 1. Hero Section matching Main.dc.html (#beranda) */}
-      <section id="beranda" className="flex flex-col lg:flex-row items-center gap-12 pt-2 scroll-mt-20">
+      <section id="beranda" className="flex flex-col lg:flex-row items-center gap-12 lg:gap-16 pt-4 scroll-mt-24">
         {/* Left Copy */}
         <div className="flex-1 space-y-6 text-center lg:text-left">
-          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full text-xs font-medium bg-primary/10 text-primary border border-primary/20 shadow-2xs">
-            <Database className="w-3.5 h-3.5 text-primary" />
-            <span>Data PIHPS dan BPS · Pembaruan mingguan</span>
+          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full text-xs font-semibold bg-emerald-50 text-emerald-800 dark:bg-emerald-950/60 dark:text-emerald-300 border border-emerald-200 dark:border-emerald-800/80 shadow-2xs">
+            <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
+            <Database className="w-3.5 h-3.5 text-emerald-700 dark:text-emerald-400" />
+            <span>Data PIHPS & BPS Nasional · Pembaruan Mingguan</span>
           </div>
 
-          <h1 className="text-display-lg sm:text-display-xl font-display font-extrabold text-foreground tracking-tight leading-tight">
-            Harga gabah yang wajar, terbuka untuk semua.
+          <h1 className="text-4xl sm:text-5xl lg:text-6xl font-display font-black text-foreground tracking-tight leading-[1.12]">
+            Harga gabah yang wajar,{" "}
+            <span className="text-emerald-800 dark:text-emerald-400">terbuka untuk semua.</span>
           </h1>
 
-          <p className="text-base sm:text-lg text-muted-foreground max-w-xl mx-auto lg:mx-0 leading-relaxed">
-            SAMBUNG menyambungkan petani dengan pembeli penggilingan, lalu menunjukkan rentang harga wajar, acuan pasar, dan alasan di balik selisih harga antardaerah.
+          <p className="text-base sm:text-lg text-muted-foreground max-w-xl mx-auto lg:mx-0 leading-relaxed font-normal">
+            SAMBUNG menyambungkan petani dengan pembeli penggilingan beras, lalu menampilkan rentang harga wajar, acuan pasar, dan alasan faktual di balik selisih harga antardaerah.
           </p>
 
-          <div className="flex flex-wrap gap-3 justify-center lg:justify-start pt-2">
+          <div className="flex flex-wrap gap-3.5 justify-center lg:justify-start pt-2">
             <Button
-              size="default"
+              size="lg"
               onClick={() => scrollToSection("papan-harga")}
-              className="gap-2 shadow-xs cursor-pointer text-xs"
+              className="gap-2.5 shadow-sm cursor-pointer text-sm font-bold"
             >
-              <TrendingUp className="w-4 h-4" />
-              <span>Lihat harga hari ini</span>
+              <TrendingUp className="w-4.5 h-4.5" />
+              <span>Lihat Harga Hari Ini</span>
             </Button>
             <Button
-              size="default"
+              size="lg"
               variant="outline"
               onClick={() => onNavigate("auth-login")}
-              className="gap-2 cursor-pointer text-xs"
+              className="gap-2.5 cursor-pointer text-sm font-semibold"
             >
-              <LogIn className="w-4 h-4" />
-              <span>Masuk petani & produsen</span>
+              <LogIn className="w-4.5 h-4.5 text-primary" />
+              <span>Masuk Petani & Pembeli</span>
             </Button>
           </div>
 
-          <p className="text-xs text-muted-foreground">
-            Gratis untuk petani · Tanpa komisi transaksi · Harga wajar adalah estimasi, bukan jaminan
-          </p>
+          <div className="pt-1 flex items-center justify-center lg:justify-start gap-4 text-xs text-muted-foreground font-medium">
+            <span className="flex items-center gap-1.5">
+              <CheckCircle2 className="w-3.5 h-3.5 text-emerald-600 shrink-0" />
+              100% Gratis Petani
+            </span>
+            <span>·</span>
+            <span className="flex items-center gap-1.5">
+              <CheckCircle2 className="w-3.5 h-3.5 text-emerald-600 shrink-0" />
+              Tanpa Potongan Komisi
+            </span>
+            <span>·</span>
+            <span className="text-muted-foreground/80">Acuan Berbasis Data</span>
+          </div>
         </div>
 
-        {/* Right Benchmark Card matching Main.dc.html */}
-        <Card className="w-full lg:w-[440px] p-6 sm:p-7 space-y-5 bg-card border border-border/80 shadow-sm">
+        {/* Right Benchmark Card */}
+        <Card className="w-full lg:w-[450px] p-7 sm:p-8 space-y-6 bg-gradient-to-b from-card via-card to-emerald-50/20 dark:to-emerald-950/20 border border-border shadow-md rounded-3xl relative overflow-hidden">
+          <div className="absolute top-0 right-0 w-36 h-36 bg-emerald-500/10 rounded-full blur-2xl pointer-events-none" />
+
           <div className="flex items-center justify-between gap-2">
             <span className="text-xs font-bold uppercase tracking-wider text-muted-foreground">
-              Harga acuan gabah (GKP) · Nasional
+              Harga Acuan Gabah (GKP) · Nasional
             </span>
-            <span className="px-2 py-0.5 rounded-md text-[11px] font-semibold bg-primary/10 text-primary border border-primary/20">
-              Data acuan resmi
+            <span className="px-2.5 py-1 rounded-lg text-[11px] font-bold bg-emerald-100 text-emerald-900 dark:bg-emerald-950 dark:text-emerald-300 border border-emerald-300/60 dark:border-emerald-800">
+              Data Resmi Bapanas
             </span>
           </div>
 
           <div className="flex items-end justify-between gap-4">
-            <div className="flex items-baseline gap-2">
-              <span className="font-display text-4xl sm:text-5xl font-extrabold text-foreground tracking-tight">
-                Rp7.000
-              </span>
-              <span className="text-sm text-muted-foreground">/kg</span>
+            <div>
+              <div className="flex items-baseline gap-2">
+                <span className="font-display text-5xl font-black text-foreground tracking-tight tabular-nums">
+                  Rp7.000
+                </span>
+                <span className="text-sm font-semibold text-muted-foreground">/kg</span>
+              </div>
+              <p className="text-xs text-emerald-700 dark:text-emerald-400 font-semibold mt-1 flex items-center gap-1">
+                <span>+Rp500 di atas HPP resmi (Rp6.500)</span>
+              </p>
             </div>
 
-            {/* Sparkline trend matching mockup */}
-            <div className="w-28 h-10 flex flex-col justify-end">
-              <svg width="112" height="36" viewBox="0 0 120 40" className="overflow-visible" aria-label="Tren harga naik dalam 8 pekan terakhir">
+            {/* Sparkline trend */}
+            <div className="w-32 h-12 flex flex-col justify-end">
+              <svg width="128" height="42" viewBox="0 0 120 40" className="overflow-visible" aria-label="Tren harga naik dalam 8 pekan terakhir">
+                <defs>
+                  <linearGradient id="sparklineGrad" x1="0" y1="0" x2="0" y2="1">
+                    <stop offset="0%" stopColor="#15803D" stopOpacity="0.25" />
+                    <stop offset="100%" stopColor="#15803D" stopOpacity="0" />
+                  </linearGradient>
+                </defs>
+                <polygon
+                  points="0,28 17,24.4 34,22 51,17.2 68,14.8 85,12.4 102,8.8 119,10 119,40 0,40"
+                  fill="url(#sparklineGrad)"
+                />
                 <polyline
                   points="0,28 17,24.4 34,22 51,17.2 68,14.8 85,12.4 102,8.8 119,10"
                   fill="none"
-                  stroke="currentColor"
-                  strokeWidth="2.5"
+                  stroke="#15803D"
+                  strokeWidth="3"
                   strokeLinecap="round"
                   strokeLinejoin="round"
-                  className="text-primary"
                 />
               </svg>
             </div>
           </div>
 
           <p className="text-xs text-muted-foreground leading-relaxed">
-            Di atas HPP gabah Rp6.500/kg. Harga naik bertahap dalam 8 pekan terakhir.
+            Harga rata-rata nasional stabil di atas batas bawah jaminan pemerintah, dengan kenaikan bertahap 8 pekan terakhir.
           </p>
 
-          <div className="h-px bg-border/80" />
+          <div className="h-px bg-border" />
 
           {/* Quick Horizon Pills */}
-          <div className="grid grid-cols-2 gap-3">
-            <div className="p-3 rounded-lg bg-muted/60 border border-border/50 space-y-1">
-              <span className="text-[11px] font-medium text-muted-foreground">Prakiraan 2 pekan</span>
-              <p className="text-lg font-bold text-foreground font-display">Rp7.150</p>
-              <span className="text-[10px] text-muted-foreground block">Rentang 80%: 6.950 - 7.350</span>
+          <div className="grid grid-cols-2 gap-3.5">
+            <div className="p-3.5 rounded-2xl bg-muted/50 border border-border/80 space-y-1">
+              <span className="text-[11px] font-semibold text-muted-foreground uppercase tracking-wider">Prakiraan 2 Pekan</span>
+              <p className="text-xl font-black text-foreground font-display tabular-nums">Rp7.150</p>
+              <span className="text-[11px] text-muted-foreground block font-mono">Rentang 80%: 6.950 – 7.350</span>
             </div>
-            <div className="p-3 rounded-lg bg-muted/60 border border-border/50 space-y-1">
-              <span className="text-[11px] font-medium text-muted-foreground">Prakiraan 4 pekan</span>
-              <p className="text-lg font-bold text-foreground font-display">Rp7.300</p>
-              <span className="text-[10px] text-muted-foreground block">Rentang 80%: 6.900 - 7.700</span>
+            <div className="p-3.5 rounded-2xl bg-muted/50 border border-border/80 space-y-1">
+              <span className="text-[11px] font-semibold text-muted-foreground uppercase tracking-wider">Prakiraan 4 Pekan</span>
+              <p className="text-xl font-black text-foreground font-display tabular-nums">Rp7.300</p>
+              <span className="text-[11px] text-muted-foreground block font-mono">Rentang 80%: 6.900 – 7.700</span>
             </div>
           </div>
         </Card>
       </section>
 
-      {/* 2. Three Contextual Fact Cards matching Main.dc.html */}
-      <section className="grid grid-cols-1 md:grid-cols-3 gap-5">
-        <Card className="p-6 bg-card border border-border/80 space-y-2">
-          <span className="font-display text-3xl sm:text-4xl font-extrabold text-foreground">
+      {/* 2. Three Contextual Fact Cards */}
+      <section className="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <Card className="p-6 bg-card border border-border shadow-xs hover:border-slate-300 dark:hover:border-slate-700 transition-all rounded-2xl space-y-3">
+          <div className="flex items-center justify-between">
+            <span className="text-xs font-bold uppercase tracking-wider text-muted-foreground">Disparitas Antarprovinsi</span>
+            <span className="p-1.5 rounded-lg bg-amber-50 text-amber-700 dark:bg-amber-950 dark:text-amber-300">
+              <TrendingUp className="w-4 h-4" />
+            </span>
+          </div>
+          <span className="font-display text-4xl font-black text-foreground tracking-tight tabular-nums block">
             45%
           </span>
           <p className="text-xs text-muted-foreground leading-relaxed">
-            Selisih harga beras antara provinsi termahal dan termurah pada pekan Oktober 2026 (PIHPS).
+            Selisih harga beras antara provinsi sentra produksi terendah dan provinsi kepulauan konsumen tertinggi pekan Oktober 2026 (PIHPS).
           </p>
         </Card>
 
-        <Card className="p-6 bg-card border border-border/80 space-y-2">
-          <span className="font-display text-3xl sm:text-4xl font-extrabold text-foreground">
+        <Card className="p-6 bg-card border border-border shadow-xs hover:border-slate-300 dark:hover:border-slate-700 transition-all rounded-2xl space-y-3">
+          <div className="flex items-center justify-between">
+            <span className="text-xs font-bold uppercase tracking-wider text-muted-foreground">Jaminan HPP Gabah</span>
+            <span className="p-1.5 rounded-lg bg-emerald-50 text-emerald-700 dark:bg-emerald-950 dark:text-emerald-300">
+              <ShieldCheck className="w-4 h-4" />
+            </span>
+          </div>
+          <span className="font-display text-4xl font-black text-foreground tracking-tight tabular-nums block">
             Rp6.500
           </span>
           <p className="text-xs text-muted-foreground leading-relaxed">
-            HPP gabah per kg, sementara harga gabah 2026 sudah sekitar Rp7.000 dan di beberapa daerah menembus Rp8.000.
+            HPP resmi gabah GKP per kg yang ditetapkan pemerintah, sementara transaksi riil 2026 di sentra Jawa berkisar Rp6.800 – Rp7.400.
           </p>
         </Card>
 
-        <Card className="p-6 bg-card border border-border/80 space-y-2">
-          <span className="font-display text-3xl sm:text-4xl font-extrabold text-foreground">
+        <Card className="p-6 bg-card border border-border shadow-xs hover:border-slate-300 dark:hover:border-slate-700 transition-all rounded-2xl space-y-3">
+          <div className="flex items-center justify-between">
+            <span className="text-xs font-bold uppercase tracking-wider text-muted-foreground">Faktor Anomali Cuaca</span>
+            <span className="p-1.5 rounded-lg bg-blue-50 text-blue-700 dark:bg-blue-950 dark:text-blue-300">
+              <Database className="w-4 h-4" />
+            </span>
+          </div>
+          <span className="font-display text-4xl font-black text-foreground tracking-tight tabular-nums block">
             73%
           </span>
           <p className="text-xs text-muted-foreground leading-relaxed">
-            Wilayah diprakirakan berhujan rendah pada November 2026 - Januari 2027 akibat El Niño kuat (BMKG).
+            Wilayah sentra diprakirakan mengalami curah hujan di bawah normal pada fase tanam akhir tahun berdasarkan observasi BMKG.
           </p>
         </Card>
       </section>
 
       {/* 3. Papan Harga 2 Sisi Section (#papan-harga) with in-place table toggle */}
-      <section id="papan-harga" className="space-y-6 pt-4 scroll-mt-20">
+      <section id="papan-harga" className="space-y-6 pt-4 scroll-mt-24">
         <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4">
-          <div className="space-y-2 max-w-2xl">
-            <h2 className="text-2xl sm:text-3xl font-display font-bold text-foreground tracking-tight">
+          <div className="space-y-1.5 max-w-2xl">
+            <span className="text-xs font-bold uppercase tracking-wider text-primary">Transparansi Rantai Pasok</span>
+            <h2 className="text-3xl sm:text-4xl font-display font-black text-foreground tracking-tight">
               Papan Rantai Harga 2 Sisi
             </h2>
             <p className="text-sm text-muted-foreground leading-relaxed">
-              Transparansi harga dari gabah di tangan petani hingga beras di piring konsumen. Pantau farmer's share secara terbuka.
+              Ikuti pembentukan nilai dari gabah basah di tangan petani hingga beras di piring konsumen. Pantau farmer's share secara terbuka tanpa perantara tersembunyi.
             </p>
           </div>
 
-          {/* Toggle Table in place - stays on landing page without navigating away */}
           <Button
-            size="sm"
+            size="default"
             variant="outline"
             onClick={() => setShowPriceTable(!showPriceTable)}
-            className="self-start sm:self-auto gap-1.5 text-xs cursor-pointer"
+            className="self-start sm:self-auto gap-2 text-xs font-semibold cursor-pointer"
           >
             {showPriceTable ? (
               <>
                 <Check className="w-3.5 h-3.5 text-primary" />
-                <span>Tampilkan Alur Ringkas</span>
+                <span>Tampilkan Alur Kartu</span>
               </>
             ) : (
               <>
@@ -348,13 +393,13 @@ export function HomePage({ onNavigate }: HomePageProps) {
 
         {/* Conditional View: Detailed Table vs 4-Stage Cards */}
         {showPriceTable ? (
-          <Card className="p-5 sm:p-6 bg-card border border-border/80 space-y-4 animate-in fade-in duration-200">
-            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-3 border-b border-border/60">
+          <Card className="p-6 sm:p-7 bg-card border border-border shadow-xs space-y-5 rounded-2xl animate-in fade-in duration-200">
+            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-4 border-b border-border">
               <div>
-                <h3 className="text-sm font-bold text-foreground">
+                <h3 className="text-base font-bold text-foreground font-display">
                   Tabel Komparasi Rantai Pasok Beras Nasional
                 </h3>
-                <p className="text-xs text-muted-foreground">
+                <p className="text-xs text-muted-foreground mt-0.5">
                   Data simulasi marjin harga dari tingkat hulu (petani) hingga hilir (pasar eceran konsumen).
                 </p>
               </div>
@@ -362,45 +407,49 @@ export function HomePage({ onNavigate }: HomePageProps) {
                 size="sm"
                 variant="outline"
                 onClick={handleDownloadCSV}
-                className="self-start sm:self-auto gap-1.5 text-xs cursor-pointer"
+                className="self-start sm:self-auto gap-2 text-xs font-semibold cursor-pointer"
               >
                 <Download className="w-3.5 h-3.5" />
-                <span>Unduh CSV</span>
+                <span>Unduh CSV Lengkap</span>
               </Button>
             </div>
 
-            <div className="overflow-x-auto">
+            <div className="overflow-x-auto rounded-xl border border-border">
               <table className="w-full text-xs text-left">
-                <thead>
-                  <tr className="border-b border-border/80 text-muted-foreground uppercase tracking-wider text-[11px]">
-                    <th className="py-2.5 px-3 font-semibold">Tingkat Rantai Pasok</th>
-                    <th className="py-2.5 px-3 font-semibold">Komoditas Acuan</th>
-                    <th className="py-2.5 px-3 font-semibold text-right">Harga Acuan</th>
-                    <th className="py-2.5 px-3 font-semibold">Keterangan Marjin</th>
-                    <th className="py-2.5 px-3 font-semibold text-right">Porsi Nilai</th>
+                <thead className="bg-muted/70">
+                  <tr className="border-b border-border text-muted-foreground uppercase tracking-wider text-[11px]">
+                    <th className="py-3 px-4 font-bold">Tingkat Rantai Pasok</th>
+                    <th className="py-3 px-4 font-bold">Komoditas Acuan</th>
+                    <th className="py-3 px-4 font-bold text-right">Harga Acuan</th>
+                    <th className="py-3 px-4 font-bold">Keterangan Marjin</th>
+                    <th className="py-3 px-4 font-bold text-right">Porsi Nilai</th>
                   </tr>
                 </thead>
-                <tbody className="divide-y divide-border/60">
+                <tbody className="divide-y divide-border/80">
                   {CHAIN_TABLE_DATA.map((row, idx) => (
                     <tr key={idx} className="hover:bg-muted/40 transition-colors">
-                      <td className="py-2.5 px-3 font-medium text-foreground">{row.level}</td>
-                      <td className="py-2.5 px-3 text-muted-foreground">{row.commodity}</td>
-                      <td className="py-2.5 px-3 text-right font-bold font-display text-foreground">{row.price}</td>
-                      <td className="py-2.5 px-3 text-muted-foreground">{row.note}</td>
-                      <td className="py-2.5 px-3 text-right font-semibold text-primary">{row.share}</td>
+                      <td className="py-3 px-4 font-bold text-foreground">{row.level}</td>
+                      <td className="py-3 px-4 text-muted-foreground">{row.commodity}</td>
+                      <td className="py-3 px-4 text-right font-black font-display text-foreground tabular-nums text-sm">{row.price}</td>
+                      <td className="py-3 px-4 text-muted-foreground">{row.note}</td>
+                      <td className="py-3 px-4 text-right font-bold text-primary font-mono">{row.share}</td>
                     </tr>
                   ))}
                 </tbody>
               </table>
             </div>
 
-            <div className="p-3.5 rounded-lg bg-muted/60 border border-border/60 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 text-xs">
+            <div className="p-4 rounded-xl bg-emerald-50/70 dark:bg-emerald-950/40 border border-emerald-200 dark:border-emerald-800/80 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 text-xs">
               <div className="space-y-0.5">
-                <span className="font-semibold text-foreground">Farmer's Share: 82,9% · Total Selisih Rantai Pasok: Rp2.620/kg (17,1%)</span>
-                <p className="text-[11px] text-muted-foreground">Harga gabah petani mencerminkan porsi yang sehat terhadap harga beras akhir di tingkat konsumen.</p>
+                <span className="font-bold text-emerald-950 dark:text-emerald-200">
+                  Farmer's Share: 82,9% · Total Selisih Rantai Pasok: Rp2.620/kg (17,1%)
+                </span>
+                <p className="text-[11px] text-emerald-800 dark:text-emerald-300">
+                  Harga gabah petani mencerminkan porsi yang sangat sehat terhadap harga beras akhir di tingkat konsumen.
+                </p>
               </div>
-              <span className="px-2.5 py-1 rounded-full text-[11px] font-semibold bg-primary/10 text-primary dark:bg-primary/20 dark:text-primary border border-primary/20 shrink-0">
-                Rentang Wajar
+              <span className="px-3 py-1 rounded-full text-xs font-bold bg-emerald-600 text-white shrink-0 shadow-2xs">
+                Kondisi Sehat
               </span>
             </div>
           </Card>
@@ -408,95 +457,95 @@ export function HomePage({ onNavigate }: HomePageProps) {
           <>
             {/* 4-Stage Value Chain Cards */}
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-              <Card className="p-5 bg-card border border-border/80 space-y-3">
+              <Card className="p-6 bg-card border border-border shadow-xs space-y-4 rounded-2xl relative group hover:border-slate-300 dark:hover:border-slate-700 transition-all">
                 <div className="flex items-center justify-between">
                   <span className="text-[11px] font-bold uppercase tracking-wider text-muted-foreground">
                     1. Gabah Petani (GKP)
                   </span>
-                  <div className="p-1.5 rounded-md bg-primary/10 text-primary">
+                  <div className="w-8 h-8 rounded-xl bg-emerald-100 text-emerald-800 dark:bg-emerald-950 dark:text-emerald-300 flex items-center justify-center">
                     <Sprout className="w-4 h-4" />
                   </div>
                 </div>
                 <div>
-                  <p className="text-2xl font-bold font-display text-foreground">Rp7.000</p>
-                  <span className="text-xs text-muted-foreground">per kg gabah panen</span>
+                  <p className="text-3xl font-black font-display text-foreground tabular-nums">Rp7.000</p>
+                  <span className="text-xs text-muted-foreground font-medium">per kg gabah panen basah</span>
                 </div>
-                <div className="pt-2 border-t border-border/60 text-[11px] text-muted-foreground">
-                  HPP resmi pemerintah Rp6.500/kg
+                <div className="pt-3 border-t border-border text-xs text-muted-foreground">
+                  HPP resmi pemerintah <span className="font-semibold text-foreground">Rp6.500/kg</span>
                 </div>
               </Card>
 
-              <Card className="p-5 bg-card border border-border/80 space-y-3">
+              <Card className="p-6 bg-card border border-border shadow-xs space-y-4 rounded-2xl relative group hover:border-slate-300 dark:hover:border-slate-700 transition-all">
                 <div className="flex items-center justify-between">
                   <span className="text-[11px] font-bold uppercase tracking-wider text-muted-foreground">
                     2. Beras Petani (Konversi)
                   </span>
-                  <div className="p-1.5 rounded-md bg-muted text-foreground">
+                  <div className="w-8 h-8 rounded-xl bg-muted text-foreground flex items-center justify-center">
                     <Percent className="w-4 h-4" />
                   </div>
                 </div>
                 <div>
-                  <p className="text-2xl font-bold font-display text-foreground">Rp12.730</p>
-                  <span className="text-xs text-muted-foreground">per kg setara beras</span>
+                  <p className="text-3xl font-black font-display text-foreground tabular-nums">Rp12.730</p>
+                  <span className="text-xs text-muted-foreground font-medium">per kg setara beras giling</span>
                 </div>
-                <div className="pt-2 border-t border-border/60 text-[11px] text-muted-foreground">
-                  Estimasi rendemen giling gabah ~55%
+                <div className="pt-3 border-t border-border text-xs text-muted-foreground">
+                  Rendemen giling standar <span className="font-semibold text-foreground">~55%</span>
                 </div>
               </Card>
 
-              <Card className="p-5 bg-card border border-border/80 space-y-3">
+              <Card className="p-6 bg-card border border-border shadow-xs space-y-4 rounded-2xl relative group hover:border-slate-300 dark:hover:border-slate-700 transition-all">
                 <div className="flex items-center justify-between">
                   <span className="text-[11px] font-bold uppercase tracking-wider text-muted-foreground">
                     3. Penggilingan (Produsen)
                   </span>
-                  <div className="p-1.5 rounded-md bg-muted text-foreground">
+                  <div className="w-8 h-8 rounded-xl bg-muted text-foreground flex items-center justify-center">
                     <Building2 className="w-4 h-4" />
                   </div>
                 </div>
                 <div>
-                  <p className="text-2xl font-bold font-display text-foreground">Rp14.380</p>
-                  <span className="text-xs text-muted-foreground">per kg beras giling</span>
+                  <p className="text-3xl font-black font-display text-foreground tabular-nums">Rp14.380</p>
+                  <span className="text-xs text-muted-foreground font-medium">per kg beras grosir giling</span>
                 </div>
-                <div className="pt-2 border-t border-border/60 text-[11px] text-muted-foreground">
-                  Marjin proses & pengeringan +Rp1.650
+                <div className="pt-3 border-t border-border text-xs text-muted-foreground">
+                  Marjin pengeringan & olah <span className="font-semibold text-foreground">+Rp1.650</span>
                 </div>
               </Card>
 
-              <Card className="p-5 bg-card border border-border/80 space-y-3">
+              <Card className="p-6 bg-card border border-border shadow-xs space-y-4 rounded-2xl relative group hover:border-slate-300 dark:hover:border-slate-700 transition-all">
                 <div className="flex items-center justify-between">
                   <span className="text-[11px] font-bold uppercase tracking-wider text-muted-foreground">
                     4. Eceran Konsumen
                   </span>
-                  <div className="p-1.5 rounded-md bg-muted text-foreground">
+                  <div className="w-8 h-8 rounded-xl bg-muted text-foreground flex items-center justify-center">
                     <Store className="w-4 h-4" />
                   </div>
                 </div>
                 <div>
-                  <p className="text-2xl font-bold font-display text-foreground">Rp15.350</p>
-                  <span className="text-xs text-muted-foreground">per kg eceran pasar</span>
+                  <p className="text-3xl font-black font-display text-foreground tabular-nums">Rp15.350</p>
+                  <span className="text-xs text-muted-foreground font-medium">per kg eceran pasar rakyat</span>
                 </div>
-                <div className="pt-2 border-t border-border/60 text-[11px] text-muted-foreground">
-                  Harga rata-rata nasional PIHPS
+                <div className="pt-3 border-t border-border text-xs text-muted-foreground">
+                  Rata-rata nasional PIHPS <span className="font-semibold text-foreground">+Rp970</span>
                 </div>
               </Card>
             </div>
 
             {/* Farmer Share Highlight Banner */}
-            <div className="p-5 rounded-xl border border-border/80 bg-card/60 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
-              <div className="flex items-center gap-3">
-                <div className="w-10 h-10 rounded-lg bg-primary/10 text-primary dark:bg-primary/20 dark:text-primary flex items-center justify-center shrink-0">
-                  <CheckCircle2 className="w-5 h-5" />
+            <div className="p-5 sm:p-6 rounded-2xl border border-emerald-200 dark:border-emerald-800/80 bg-emerald-50/50 dark:bg-emerald-950/30 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 shadow-2xs">
+              <div className="flex items-center gap-4">
+                <div className="w-11 h-11 rounded-2xl bg-emerald-600 text-white flex items-center justify-center shrink-0 shadow-xs">
+                  <CheckCircle2 className="w-6 h-6" />
                 </div>
                 <div>
-                  <h4 className="text-sm font-bold text-foreground">
+                  <h4 className="text-base font-bold text-foreground font-display">
                     Porsi Petani (Farmer's Share): 83%
                   </h4>
-                  <p className="text-xs text-muted-foreground">
-                    Total selisih harga dari petani ke konsumen adalah Rp2.620/kg (17% marjin rantai distribusi). Berada dalam rentang wajar.
+                  <p className="text-xs text-muted-foreground mt-0.5">
+                    Total selisih harga dari petani ke konsumen adalah Rp2.620/kg (17% marjin rantai distribusi). Berada dalam rentang wajar dan adil.
                   </p>
                 </div>
               </div>
-              <span className="px-3 py-1 rounded-full text-xs font-semibold bg-primary/10 text-primary dark:bg-primary/20 dark:text-primary border border-primary/20 shrink-0">
+              <span className="px-3.5 py-1.5 rounded-full text-xs font-bold bg-emerald-100 text-emerald-800 dark:bg-emerald-900/60 dark:text-emerald-200 border border-emerald-300 dark:border-emerald-700 shrink-0">
                 Kondisi Sehat
               </span>
             </div>
@@ -505,23 +554,23 @@ export function HomePage({ onNavigate }: HomePageProps) {
       </section>
 
       {/* 4. Peta Disparitas Antardaerah Section (#peta-disparitas) with in-place map replacement */}
-      <section id="peta-disparitas" className="space-y-6 pt-4 scroll-mt-20">
+      <section id="peta-disparitas" className="space-y-6 pt-4 scroll-mt-24">
         <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4">
-          <div className="space-y-2 max-w-2xl">
-            <h2 className="text-2xl sm:text-3xl font-display font-bold text-foreground tracking-tight">
-              Peta Disparitas Harga Pangan Antardaerah
+          <div className="space-y-1.5 max-w-2xl">
+            <span className="text-xs font-bold uppercase tracking-wider text-primary">Geospasial Komoditas</span>
+            <h2 className="text-3xl sm:text-4xl font-display font-black text-foreground tracking-tight">
+              Peta Disparitas Harga Antardaerah
             </h2>
             <p className="text-sm text-muted-foreground leading-relaxed">
-              Pilih provinsi untuk melihat harga acuan dan faktor pendorong mengapa harganya berbeda dari wilayah lain. Tanpa perlu daftar akun.
+              Pilih provinsi untuk melihat harga acuan dan faktor pendorong mengapa harganya berbeda dari wilayah lain. Tanpa perlu mendaftar akun.
             </p>
           </div>
 
-          {/* User Requested: "tombol buka peta interaktif diganti jadi tampilkan peta, lalu nanti peta akan muncul sebagai pengganti tabel" */}
           <Button
-            size="sm"
+            size="default"
             variant="outline"
             onClick={() => setShowInteractiveMap(!showInteractiveMap)}
-            className="self-start sm:self-auto gap-1.5 text-xs cursor-pointer"
+            className="self-start sm:self-auto gap-2 text-xs font-semibold cursor-pointer"
           >
             {showInteractiveMap ? (
               <>
@@ -531,7 +580,7 @@ export function HomePage({ onNavigate }: HomePageProps) {
             ) : (
               <>
                 <MapPin className="w-3.5 h-3.5 text-primary" />
-                <span>Tampilkan Peta</span>
+                <span>Tampilkan Peta Spasial</span>
               </>
             )}
           </Button>
@@ -539,36 +588,36 @@ export function HomePage({ onNavigate }: HomePageProps) {
 
         {/* In-place Replacement: Interactive Leaflet Map vs Province Selector & Factors */}
         {showInteractiveMap ? (
-          <Card className="p-5 sm:p-6 bg-card border border-border/80 space-y-4 animate-in fade-in duration-200">
-            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-2 border-b border-border/60">
+          <Card className="p-6 sm:p-7 bg-card border border-border shadow-xs space-y-5 rounded-2xl animate-in fade-in duration-200">
+            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-3 border-b border-border">
               <div>
-                <h3 className="text-sm font-bold text-foreground">
+                <h3 className="text-base font-bold text-foreground font-display">
                   Peta Spasial Disparitas Harga Gabah & Beras
                 </h3>
-                <p className="text-xs text-muted-foreground">
+                <p className="text-xs text-muted-foreground mt-0.5">
                   Klik pada provinsi mana pun untuk memeriksa harga acuan regional dan selisihnya terhadap acuan nasional.
                 </p>
               </div>
 
-              {/* Legend matching LeafletPriceMap styling */}
-              <div className="flex items-center gap-3 text-xs text-muted-foreground flex-wrap">
+              {/* Legend */}
+              <div className="flex items-center gap-3.5 text-xs text-muted-foreground flex-wrap">
                 <div className="flex items-center gap-1.5">
-                  <span className="w-3 h-3 rounded-full bg-emerald-600 inline-block" />
-                  <span>Lebih Murah (&lt; -2%)</span>
+                  <span className="w-3 h-3 rounded-full bg-emerald-600 inline-block shadow-2xs" />
+                  <span className="font-medium">Lebih Murah (&lt; -2%)</span>
                 </div>
                 <div className="flex items-center gap-1.5">
-                  <span className="w-3 h-3 rounded-full bg-amber-500 inline-block" />
-                  <span>Dekat Acuan</span>
+                  <span className="w-3 h-3 rounded-full bg-amber-500 inline-block shadow-2xs" />
+                  <span className="font-medium">Dekat Acuan</span>
                 </div>
                 <div className="flex items-center gap-1.5">
-                  <span className="w-3 h-3 rounded-full bg-rose-600 inline-block" />
-                  <span>Lebih Mahal (&gt; +2%)</span>
+                  <span className="w-3 h-3 rounded-full bg-red-600 inline-block shadow-2xs" />
+                  <span className="font-medium">Lebih Mahal (&gt; +2%)</span>
                 </div>
               </div>
             </div>
 
             {/* Map Container */}
-            <div className="h-[440px] rounded-lg overflow-hidden border border-border/60">
+            <div className="h-[460px] rounded-2xl overflow-hidden border border-border shadow-inner">
               <LeafletPriceMap
                 data={SEED_PROVINCIAL_COMPARISONS}
                 selectedProvince={selectedProvinceName}
@@ -584,33 +633,33 @@ export function HomePage({ onNavigate }: HomePageProps) {
             </div>
 
             {/* Selected Province Quick Bar */}
-            <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 p-3.5 rounded-lg bg-muted/60 border border-border/60 text-xs">
-              <div className="flex items-center gap-2">
+            <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 p-4 rounded-xl bg-muted/60 border border-border text-xs">
+              <div className="flex items-center gap-2.5">
                 <MapPin className="w-4 h-4 text-primary shrink-0" />
-                <span className="font-semibold text-foreground">Wilayah Terpilih: {selectedProvinceName}</span>
+                <span className="font-bold text-foreground">Wilayah Terpilih: {selectedProvinceName}</span>
                 <span className="text-muted-foreground">· Data acuan resmi BPS & PIHPS Bank Indonesia</span>
               </div>
               <button
                 onClick={() => setShowInteractiveMap(false)}
-                className="text-primary hover:underline font-semibold cursor-pointer flex items-center gap-1 shrink-0"
+                className="text-primary hover:underline font-bold cursor-pointer flex items-center gap-1 shrink-0"
               >
                 <span>Lihat rincian faktor pendorong</span>
-                <ChevronRight className="w-3 h-3" />
+                <ChevronRight className="w-3.5 h-3.5" />
               </button>
             </div>
           </Card>
         ) : (
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-5 items-start">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
             {/* Province Buttons Grid */}
-            <Card className="lg:col-span-7 p-5 bg-card border border-border/80 space-y-4">
+            <Card className="lg:col-span-7 p-6 bg-card border border-border shadow-xs space-y-5 rounded-2xl">
               <div className="flex items-center justify-between">
                 <span className="text-xs font-bold uppercase tracking-wider text-muted-foreground">
                   Pilih Provinsi Acuan
                 </span>
-                <span className="text-xs text-muted-foreground">Klik untuk melihat analisis</span>
+                <span className="text-xs text-muted-foreground font-medium">Klik untuk melihat analisis</span>
               </div>
 
-              <div className="grid grid-cols-2 sm:grid-cols-3 gap-2.5">
+              <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
                 {PROVINCE_PREVIEWS.map((prov, idx) => {
                   const isSelected = selectedProvinceIdx === idx
                   return (
@@ -620,84 +669,84 @@ export function HomePage({ onNavigate }: HomePageProps) {
                         setSelectedProvinceIdx(idx)
                         setSelectedProvinceName(prov.name)
                       }}
-                      className={`p-3 rounded-lg border text-left transition-all duration-150 cursor-pointer ${
+                      className={`p-3.5 rounded-xl border text-left transition-all duration-150 cursor-pointer ${
                         isSelected
-                          ? "border-primary bg-primary/10 text-foreground ring-1 ring-primary shadow-xs"
-                          : "border-border/80 bg-card hover:bg-muted/60 text-muted-foreground hover:text-foreground"
+                          ? "border-emerald-600 bg-emerald-50/80 text-foreground ring-2 ring-emerald-500/20 dark:bg-emerald-950/60 shadow-xs"
+                          : "border-border bg-card hover:bg-muted/70 text-muted-foreground hover:text-foreground"
                       }`}
                     >
                       <div className="flex items-center justify-between">
-                        <span className="text-xs font-bold font-display">{prov.code}</span>
-                        {isSelected && <Check className="w-3.5 h-3.5 text-primary" />}
+                        <span className="text-xs font-bold font-display px-1.5 py-0.5 rounded bg-muted text-foreground">{prov.code}</span>
+                        {isSelected && <Check className="w-4 h-4 text-emerald-600 dark:text-emerald-400" />}
                       </div>
-                      <p className="text-xs font-semibold text-foreground mt-1 truncate">{prov.name}</p>
-                      <p className="text-xs font-bold text-primary mt-0.5">{prov.price}</p>
+                      <p className="text-xs font-bold text-foreground mt-2 truncate">{prov.name}</p>
+                      <p className="text-xs font-black text-emerald-700 dark:text-emerald-400 mt-0.5 tabular-nums">{prov.price}</p>
                     </button>
                   )
                 })}
               </div>
 
-              <div className="pt-2 flex items-center justify-between text-xs text-muted-foreground border-t border-border/60">
+              <div className="pt-3 flex items-center justify-between text-xs text-muted-foreground border-t border-border">
                 <span>Sumber: PIHPS Bank Indonesia (Pembaruan Terkini)</span>
                 <button
                   onClick={() => setShowInteractiveMap(true)}
-                  className="hover:text-primary transition-colors cursor-pointer flex items-center gap-1 font-medium"
+                  className="hover:text-primary transition-colors cursor-pointer flex items-center gap-1 font-bold text-primary"
                 >
-                  <span>Tampilkan seluruh provinsi di peta interaktif</span>
-                  <ChevronRight className="w-3 h-3" />
+                  <span>Tampilkan seluruh provinsi di peta</span>
+                  <ChevronRight className="w-3.5 h-3.5" />
                 </button>
               </div>
             </Card>
 
-            {/* Selected Province Analysis & SHAP Factors matching Main.dc.html */}
-            <Card className="lg:col-span-5 p-5 bg-card border border-border/80 space-y-4">
+            {/* Selected Province Analysis & Factors */}
+            <Card className="lg:col-span-5 p-6 bg-card border border-border shadow-xs space-y-5 rounded-2xl">
               <div>
-                <span className="text-[11px] font-medium text-muted-foreground uppercase tracking-wider">
+                <span className="text-[11px] font-bold text-primary uppercase tracking-wider">
                   Analisis Wilayah Terpilih
                 </span>
                 <div className="flex items-baseline justify-between gap-2 mt-1">
-                  <h3 className="text-xl font-bold font-display text-foreground">
+                  <h3 className="text-2xl font-black font-display text-foreground">
                     {activeProvince.name}
                   </h3>
-                  <span className="text-xs font-semibold text-muted-foreground">
+                  <span className="text-xs font-bold text-muted-foreground">
                     {activeProvince.status}
                   </span>
                 </div>
-                <div className="flex items-baseline gap-2 mt-1">
-                  <span className="text-3xl font-extrabold font-display text-foreground">
+                <div className="flex items-baseline gap-2 mt-2">
+                  <span className="text-4xl font-black font-display text-foreground tabular-nums">
                     {activeProvince.price}
                   </span>
-                  <span className="text-xs text-muted-foreground">/kg beras medium</span>
+                  <span className="text-xs font-medium text-muted-foreground">/kg beras medium</span>
                 </div>
-                <p className="text-xs text-primary font-medium mt-0.5">
+                <p className="text-xs text-emerald-700 dark:text-emerald-400 font-bold mt-1">
                   {activeProvince.diff}
                 </p>
               </div>
 
-              <div className="h-px bg-border/80" />
+              <div className="h-px bg-border" />
 
-              <div className="space-y-3">
+              <div className="space-y-3.5">
                 <h4 className="text-xs font-bold uppercase tracking-wider text-muted-foreground">
                   Mengapa harga di sini berbeda?
                 </h4>
 
                 <div className="space-y-3">
                   {activeProvince.factors.map((factor, fIdx) => (
-                    <div key={fIdx} className="space-y-1">
+                    <div key={fIdx} className="space-y-1.5">
                       <div className="flex items-center justify-between text-xs">
                         <span className="text-foreground font-medium">{factor.label}</span>
                         <span
-                          className={`text-[11px] font-semibold ${
+                          className={`text-[11px] font-bold ${
                             factor.type === "up" ? "text-amber-700 dark:text-amber-400" : "text-emerald-700 dark:text-emerald-400"
                           }`}
                         >
                           {factor.impact}
                         </span>
                       </div>
-                      <div className="h-1.5 w-full rounded-full bg-muted overflow-hidden">
+                      <div className="h-2 w-full rounded-full bg-muted overflow-hidden">
                         <div
-                          className={`h-full rounded-full ${
-                            factor.type === "up" ? "bg-amber-600 dark:bg-amber-500" : "bg-emerald-600 dark:bg-emerald-500"
+                          className={`h-full rounded-full transition-all duration-300 ${
+                            factor.type === "up" ? "bg-amber-500" : "bg-emerald-600"
                           }`}
                           style={{ width: factor.width }}
                         />
@@ -715,102 +764,104 @@ export function HomePage({ onNavigate }: HomePageProps) {
         )}
       </section>
 
-      {/* 5. Cara Membaca Lampu Harga matching Main.dc.html (#lampu) */}
-      <section id="lampu" className="space-y-6 pt-4 scroll-mt-20">
-        <div className="space-y-2 max-w-2xl">
-          <h2 className="text-2xl sm:text-3xl font-display font-bold text-foreground tracking-tight">
-            Cara membaca lampu harga
+      {/* 5. Cara Membaca Lampu Harga (#lampu) */}
+      <section id="lampu" className="space-y-6 pt-4 scroll-mt-24">
+        <div className="space-y-1.5 max-w-2xl">
+          <span className="text-xs font-bold uppercase tracking-wider text-primary">Sistem Deteksi Kewajaran</span>
+          <h2 className="text-3xl sm:text-4xl font-display font-black text-foreground tracking-tight">
+            Cara Membaca Lampu Harga
           </h2>
           <p className="text-sm text-muted-foreground leading-relaxed">
             Setiap penawaran dan kontrak di SAMBUNG diperiksa terhadap rentang harga wajar daerahnya. Lampu selalu disertai alasan tertulis.
           </p>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
           {/* Hijau: Wajar */}
-          <Card className="p-6 bg-card border border-border/80 space-y-3">
-            <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-semibold bg-primary/10 text-primary dark:bg-primary/20 dark:text-primary border border-primary/25">
+          <Card className="p-6 bg-card border border-border shadow-xs space-y-3.5 rounded-2xl hover:border-emerald-300 transition-all">
+            <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-xl text-xs font-bold bg-emerald-50 text-emerald-800 dark:bg-emerald-950/60 dark:text-emerald-300 border border-emerald-300 dark:border-emerald-800">
               <CheckCircle2 className="w-3.5 h-3.5" />
-              <span>Wajar</span>
+              <span>Wajar (Hijau)</span>
             </span>
-            <p className="text-xs sm:text-sm text-foreground/90 leading-relaxed">
-              Harga berada di dalam rentang wajar daerah Anda. Transaksi dinilai adil dan aman untuk dilanjutkan.
+            <p className="text-xs sm:text-sm text-foreground/90 leading-relaxed font-medium">
+              Harga berada di dalam rentang wajar daerah Anda. Transaksi dinilai adil, seimbang bagi petani dan penggilingan, serta aman dilanjutkan.
             </p>
           </Card>
 
           {/* Kuning: Perlu dicek */}
-          <Card className="p-6 bg-card border border-border/80 space-y-3">
-            <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-semibold bg-amber-50 text-amber-800 dark:bg-amber-950/40 dark:text-amber-300 border border-amber-200 dark:border-amber-800">
+          <Card className="p-6 bg-card border border-border shadow-xs space-y-3.5 rounded-2xl hover:border-amber-300 transition-all">
+            <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-xl text-xs font-bold bg-amber-50 text-amber-900 dark:bg-amber-950/60 dark:text-amber-200 border border-amber-300 dark:border-amber-800">
               <AlertTriangle className="w-3.5 h-3.5" />
-              <span>Perlu dicek</span>
+              <span>Perlu Perhatian (Kuning)</span>
             </span>
-            <p className="text-xs sm:text-sm text-foreground/90 leading-relaxed">
-              Harga mendekati atau sedikit di luar rentang wajar. Bandingkan dengan acuan pasar dan pembeli lain sebelum sepakat.
+            <p className="text-xs sm:text-sm text-foreground/90 leading-relaxed font-medium">
+              Harga mendekati atau sedikit di luar rentang wajar (toleransi ±3%). Bandingkan dengan acuan pasar daerah sebelum menyepakati kontrak.
             </p>
           </Card>
 
           {/* Merah: Tidak wajar */}
-          <Card className="p-6 bg-card border border-border/80 space-y-3">
-            <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-semibold bg-rose-50 text-rose-800 dark:bg-rose-950/40 dark:text-rose-300 border border-rose-200 dark:border-rose-800">
+          <Card className="p-6 bg-card border border-border shadow-xs space-y-3.5 rounded-2xl hover:border-red-300 transition-all">
+            <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-xl text-xs font-bold bg-red-50 text-red-800 dark:bg-red-950/60 dark:text-red-300 border border-red-300 dark:border-red-800">
               <AlertOctagon className="w-3.5 h-3.5" />
-              <span>Tidak wajar</span>
+              <span>Jauh di Bawah (Merah)</span>
             </span>
-            <p className="text-xs sm:text-sm text-foreground/90 leading-relaxed">
-              Harga jauh di bawah HPP atau jauh melampaui plafon wajar. Sistem menyertakan peringatan risiko kerugian.
+            <p className="text-xs sm:text-sm text-foreground/90 leading-relaxed font-medium">
+              Harga jauh di bawah HPP atau plafon wajar. Sistem menyertakan peringatan risiko kerugian dan mewajibkan konfirmasi sadar sebelum dipublikasi.
             </p>
           </Card>
         </div>
 
-        <p className="text-xs text-muted-foreground">
-          Lampu harga adalah estimasi berdasarkan data historis dan acuan pasar daerah, bukan jaminan harga jual.
+        <p className="text-xs text-muted-foreground font-medium">
+          Lampu harga adalah estimasi berdasarkan data historis dan acuan pasar daerah, bukan jaminan harga jual tunggal.
         </p>
       </section>
 
-      {/* 6. Alur 5 Langkah Transaksi matching Main.dc.html (#alur) */}
-      <section id="alur" className="space-y-6 pt-4 scroll-mt-20">
-        <div className="space-y-2 max-w-2xl">
-          <h2 className="text-2xl sm:text-3xl font-display font-bold text-foreground tracking-tight">
-            Dari panen sampai kontrak, dalam 5 langkah
+      {/* 6. Alur 5 Langkah Transaksi (#alur) */}
+      <section id="alur" className="space-y-6 pt-4 scroll-mt-24">
+        <div className="space-y-1.5 max-w-2xl">
+          <span className="text-xs font-bold uppercase tracking-wider text-primary">Proses Transaksi Praktis</span>
+          <h2 className="text-3xl sm:text-4xl font-display font-black text-foreground tracking-tight">
+            Dari Panen Sampai Kontrak, dalam 5 Langkah
           </h2>
           <p className="text-sm text-muted-foreground leading-relaxed">
-            Alur dibuat pendek dan jelas, ramah bagi petani dan produsen di lapangan.
+            Alur dibuat ringkas dan jelas, dirancang agar ramah digunakan petani di lapangan melalui telepon genggam.
           </p>
         </div>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4">
           {[
             {
-              step: "1",
+              step: "01",
               title: "Daftar Akun",
-              desc: "Isian minimal dan praktis: nama, nomor HP WhatsApp, dan lokasi kecamatan."
+              desc: "Isian minimal: nama, nomor HP WhatsApp aktif, dan lokasi kecamatan."
             },
             {
-              step: "2",
+              step: "02",
               title: "Pasang Panen",
-              desc: "Pilih komoditas GKP/GKG, perkiraan volume tonase, dan harga tawar per kg."
+              desc: "Pilih komoditas GKP/GKG, perkiraan tonase panen, dan harga tawar per kg."
             },
             {
-              step: "3",
+              step: "03",
               title: "Cek Lampu",
               desc: "Rentang harga wajar dan lampu evaluasi muncul seketika sebelum terbit."
             },
             {
-              step: "4",
+              step: "04",
               title: "Terima Pesanan",
-              desc: "Produsen mengajukan pesanan, petani dapat menerima, menawar balik, atau menolak."
+              desc: "Produsen memesan sebagian atau seluruh volume; petani bisa menawar balik."
             },
             {
-              step: "5",
+              step: "05",
               title: "Kontrak Digital",
-              desc: "Kedua pihak menyepakati harga final, nomor kontak terbuka, dan bukti tersimpan."
+              desc: "Kedua pihak sepakat harga, kontak dibuka otomatis, dan struk tercetak."
             }
           ].map((item) => (
-            <Card key={item.step} className="p-5 bg-card border border-border/80 flex flex-col justify-between space-y-3">
+            <Card key={item.step} className="p-5 sm:p-6 bg-card border border-border shadow-xs rounded-2xl flex flex-col justify-between space-y-3 hover:border-slate-300 dark:hover:border-slate-700 transition-all">
               <div>
-                <span className="font-display text-2xl font-extrabold text-primary block mb-2">
+                <span className="font-display text-2xl font-black text-emerald-700 dark:text-emerald-400 block mb-2 font-mono">
                   {item.step}
                 </span>
-                <h3 className="font-bold text-sm text-foreground mb-1">{item.title}</h3>
+                <h3 className="font-bold text-sm text-foreground mb-1 font-display">{item.title}</h3>
                 <p className="text-xs text-muted-foreground leading-relaxed">{item.desc}</p>
               </div>
             </Card>
@@ -818,127 +869,129 @@ export function HomePage({ onNavigate }: HomePageProps) {
         </div>
       </section>
 
-      {/* 7. SAMBUNG Untuk Siapa? matching Main.dc.html (#peran) */}
-      <section id="peran" className="space-y-6 pt-4 scroll-mt-20">
-        <div className="space-y-2 max-w-2xl">
-          <h2 className="text-2xl sm:text-3xl font-display font-bold text-foreground tracking-tight">
-            SAMBUNG untuk siapa?
+      {/* 7. SAMBUNG Untuk Siapa? (#peran) */}
+      <section id="peran" className="space-y-6 pt-4 scroll-mt-24">
+        <div className="space-y-1.5 max-w-2xl">
+          <span className="text-xs font-bold uppercase tracking-wider text-primary">Ekosistem Pengguna</span>
+          <h2 className="text-3xl sm:text-4xl font-display font-black text-foreground tracking-tight">
+            SAMBUNG untuk Siapa?
           </h2>
           <p className="text-sm text-muted-foreground leading-relaxed">
-            Dirancang khusus untuk memberdayakan seluruh mata rantai agrikultur beras nasional.
+            Dirancang khusus untuk memberdayakan seluruh pemangku kepentingan mata rantai agrikultur beras Indonesia.
           </p>
         </div>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
           {/* Card 1: Petani */}
-          <Card className="p-6 bg-card border border-border/80 flex flex-col justify-between space-y-4">
-            <div className="space-y-3">
-              <div className="w-10 h-10 rounded-lg bg-primary/10 text-primary flex items-center justify-center">
+          <Card className="p-6 bg-card border border-border shadow-xs flex flex-col justify-between space-y-5 rounded-2xl hover:border-emerald-300 transition-all">
+            <div className="space-y-3.5">
+              <div className="w-11 h-11 rounded-2xl bg-emerald-100 text-emerald-800 dark:bg-emerald-950 dark:text-emerald-300 flex items-center justify-center shadow-2xs">
                 <Sprout className="w-5 h-5" />
               </div>
-              <h3 className="font-bold text-base text-foreground">Petani & Poktan</h3>
+              <h3 className="font-bold text-lg text-foreground font-display">Petani & Poktan</h3>
               <p className="text-xs text-muted-foreground leading-relaxed">
-                Harga acuan wajar, temukan mitra pembeli alternatif terpercaya, dan simpan bukti kesepakatan transaksi. 100% gratis.
+                Ketahui harga acuan wajar, temukan mitra pembeli alternatif terpercaya, dan simpan bukti kesepakatan transaksi digital. 100% gratis.
               </p>
             </div>
             <Button
-              size="sm"
+              size="default"
               variant="outline"
               onClick={() => handleRoleDirectLogin("petani")}
-              className="w-full text-xs justify-between group cursor-pointer"
+              className="w-full text-xs justify-between group cursor-pointer font-bold"
             >
               <span>Ruang Petani</span>
-              <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-0.5 transition-transform" />
+              <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
             </Button>
           </Card>
 
           {/* Card 2: Produsen */}
-          <Card className="p-6 bg-card border border-border/80 flex flex-col justify-between space-y-4">
-            <div className="space-y-3">
-              <div className="w-10 h-10 rounded-lg bg-primary/10 text-primary flex items-center justify-center">
+          <Card className="p-6 bg-card border border-border shadow-xs flex flex-col justify-between space-y-5 rounded-2xl hover:border-emerald-300 transition-all">
+            <div className="space-y-3.5">
+              <div className="w-11 h-11 rounded-2xl bg-emerald-100 text-emerald-800 dark:bg-emerald-950 dark:text-emerald-300 flex items-center justify-center shadow-2xs">
                 <Factory className="w-5 h-5" />
               </div>
-              <h3 className="font-bold text-base text-foreground">Penggilingan & Produsen</h3>
+              <h3 className="font-bold text-lg text-foreground font-display">Penggilingan Beras</h3>
               <p className="text-xs text-muted-foreground leading-relaxed">
-                Katalog pasokan panen siap angkut, pantau kewajaran harga beli antarkabupaten, dan pesan gabah langsung tanpa komisi.
+                Katalog pasokan panen siap angkut, pantau kewajaran harga beli antarkabupaten, dan pesan gabah langsung tanpa komisi perantara.
               </p>
             </div>
             <Button
-              size="sm"
+              size="default"
               variant="outline"
               onClick={() => handleRoleDirectLogin("pembeli")}
-              className="w-full text-xs justify-between group cursor-pointer"
+              className="w-full text-xs justify-between group cursor-pointer font-bold"
             >
-              <span>Dasbor Produsen</span>
-              <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-0.5 transition-transform" />
+              <span>Dasbor Pembeli</span>
+              <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
             </Button>
           </Card>
 
           {/* Card 3: Admin / Pengawas */}
-          <Card className="p-6 border border-border/80 flex flex-col justify-between space-y-4 bg-card">
-            <div className="space-y-3">
-              <div className="w-10 h-10 rounded-lg bg-primary/10 text-primary flex items-center justify-center">
+          <Card className="p-6 border border-border shadow-xs flex flex-col justify-between space-y-5 bg-card rounded-2xl hover:border-emerald-300 transition-all">
+            <div className="space-y-3.5">
+              <div className="w-11 h-11 rounded-2xl bg-emerald-100 text-emerald-800 dark:bg-emerald-950 dark:text-emerald-300 flex items-center justify-center shadow-2xs">
                 <ShieldCheck className="w-5 h-5" />
               </div>
-              <h3 className="font-bold text-base text-foreground">Dinas Pangan & Pengawas</h3>
+              <h3 className="font-bold text-lg text-foreground font-display">Dinas & Pengawas</h3>
               <p className="text-xs text-muted-foreground leading-relaxed">
                 Kelola parameter acuan harga, verifikasi moderasi tawaran panen, audit log transaksi, dan pantau disparitas regional.
               </p>
             </div>
             <Button
-              size="sm"
+              size="default"
               variant="outline"
               onClick={() => handleRoleDirectLogin("admin")}
-              className="w-full text-xs justify-between group cursor-pointer"
+              className="w-full text-xs justify-between group cursor-pointer font-bold"
             >
-              <span>Panel Admin</span>
-              <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-0.5 transition-transform" />
+              <span>Panel Pengawas</span>
+              <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
             </Button>
           </Card>
 
           {/* Card 4: Warga Publik */}
-          <Card className="p-6 border border-border/80 flex flex-col justify-between space-y-4 bg-card">
-            <div className="space-y-3">
-              <div className="w-10 h-10 rounded-lg bg-primary/10 text-primary flex items-center justify-center">
+          <Card className="p-6 border border-border shadow-xs flex flex-col justify-between space-y-5 bg-card rounded-2xl hover:border-emerald-300 transition-all">
+            <div className="space-y-3.5">
+              <div className="w-11 h-11 rounded-2xl bg-emerald-100 text-emerald-800 dark:bg-emerald-950 dark:text-emerald-300 flex items-center justify-center shadow-2xs">
                 <Globe2 className="w-5 h-5" />
               </div>
-              <h3 className="font-bold text-base text-foreground">Masyarakat & Warga</h3>
+              <h3 className="font-bold text-lg text-foreground font-display">Masyarakat Publik</h3>
               <p className="text-xs text-muted-foreground leading-relaxed">
-                Cukup buka peta harga dan papan harga 2 sisi untuk melihat transparansi marjin petani vs konsumen. Tanpa perlu mendaftar.
+                Buka peta disparitas dan papan harga 2 sisi untuk melihat transparansi marjin petani vs konsumen secara terbuka.
               </p>
             </div>
             <Button
-              size="sm"
+              size="default"
               variant="outline"
               onClick={() => scrollToSection("papan-harga")}
-              className="w-full text-xs justify-between group cursor-pointer"
+              className="w-full text-xs justify-between group cursor-pointer font-bold"
             >
-              <span>Papan Harga & Peta</span>
-              <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-0.5 transition-transform" />
+              <span>Papan & Peta Publik</span>
+              <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
             </Button>
           </Card>
         </div>
       </section>
 
       {/* 8. Pusat Bantuan & Ketentuan (#bantuan) */}
-      <section id="bantuan" className="space-y-8 pt-6 border-t border-border/80 scroll-mt-20">
+      <section id="bantuan" className="space-y-8 pt-8 border-t border-border scroll-mt-24">
         <div className="space-y-2 text-center max-w-2xl mx-auto">
-          <h2 className="text-2xl sm:text-3xl font-display font-bold text-foreground tracking-tight">
+          <span className="text-xs font-bold uppercase tracking-wider text-primary">Tanya Jawab</span>
+          <h2 className="text-3xl sm:text-4xl font-display font-black text-foreground tracking-tight">
             Pertanyaan Umum & Bantuan
           </h2>
           <p className="text-sm text-muted-foreground leading-relaxed">
-            Pertanyaan yang sering diajukan mengenai cara kerja platform SAMBUNG dan transparansi data.
+            Pertanyaan yang sering diajukan mengenai cara kerja platform SAMBUNG dan transparansi data transaksi.
           </p>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-5 max-w-4xl mx-auto">
           {FAQS.map((faq, i) => (
-            <Card key={i} className="p-5 bg-card border border-border/80 space-y-2">
-              <h4 className="text-sm font-bold text-foreground flex items-start gap-2">
-                <span className="text-primary font-display font-extrabold">Q.</span>
+            <Card key={i} className="p-6 bg-card border border-border shadow-xs space-y-2.5 rounded-2xl">
+              <h4 className="text-sm font-bold text-foreground flex items-start gap-2.5 leading-snug">
+                <span className="text-primary font-display font-black text-base shrink-0">Q.</span>
                 <span>{faq.q}</span>
               </h4>
-              <p className="text-xs text-muted-foreground leading-relaxed pl-5">
+              <p className="text-xs text-muted-foreground leading-relaxed pl-6">
                 {faq.a}
               </p>
             </Card>

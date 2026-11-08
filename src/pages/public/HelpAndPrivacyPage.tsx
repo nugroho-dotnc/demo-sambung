@@ -5,44 +5,44 @@ export function HelpAndPrivacyPage() {
   const glossary = [
     {
       term: "GKP (Gabah Kering Panen)",
-      definition: "Gabah hasil panen dengan kadar air berkisar 20% - 25%. Memiliki acuan rendemen konversi standar 52% ke beras."
+      definition: "Gabah hasil panen segar dari sawah dengan kadar air berkisar 20% – 25%. Memiliki acuan rendemen konversi standar 53,38% ke beras medium."
     },
     {
       term: "GKG (Gabah Kering Giling)",
-      definition: "Gabah siap giling dengan kadar air sekitar 14%. Memiliki acuan rendemen konversi standar 63% ke beras."
+      definition: "Gabah siap giling yang telah dikeringkan dengan kadar air sekitar 14%. Memiliki acuan rendemen konversi standar 63% ke beras."
     },
     {
-      term: "Tawaran Panen",
-      definition: "Publikasi volume dan harga gabah oleh petani. Satu tawaran dapat melayani beberapa pesanan pembelian parsial."
+      term: "Tawaran Panen (Offer)",
+      definition: "Publikasi volume dan batas harga gabah oleh kelompok tani. Satu tawaran dapat melayani beberapa pesanan pembelian parsial dari berbagai mitra."
     },
     {
       term: "Kontrak Simulasi",
-      definition: "Catatan kesepakatan transaksi simulasi digital tanpa pembayaran uang riil, bertujuan untuk mengunci komitmen simulasi antara petani dan pembeli."
+      definition: "Catatan kesepakatan transaksi simulasi digital tanpa perantara komersial atau potongan platform, bertujuan mengikat komitmen jadwal dan harga antara petani dan pembeli."
     },
     {
-      term: "Lampu Harga",
-      definition: "Indikator kewajaran harga terhadap acuan pasar: Hijau (Wajar), Kuning (Toleransi 3%), Merah (Peringatan kerugian, wajib konfirmasi sadar)."
+      term: "Lampu Harga (Price Lamp)",
+      definition: "Indikator otomatis kewajaran harga: Hijau (Wajar, dalam rentang acuan), Kuning (Peringatan toleransi batas 3%), Merah (Peringatan harga di bawah acuan wajar, wajib konfirmasi sadar)."
     },
     {
       term: "Reservasi Volume Atomik",
-      definition: "Pencadangan sebagian volume gabah saat pesanan diajukan oleh pembeli untuk mencegah pesanan ganda (overbooking)."
+      definition: "Pencadangan otomatis sebagian volume gabah saat pembeli mengirim pesanan untuk mencegah terjadinya penjualan ganda (overbooking)."
     }
   ]
 
   return (
-    <div className="max-w-6xl mx-auto space-y-6 pb-12">
+    <div className="max-w-6xl mx-auto space-y-7 pb-14">
       {/* Header */}
-      <div className="pt-4 border-b border-border pb-6">
-        <nav aria-label="Breadcrumb" className="flex items-center gap-1.5 text-xs text-muted-foreground mb-2">
-          <span className="font-medium">Sambung</span>
-          <span className="text-muted-foreground/60">/</span>
-          <span className="font-medium text-foreground">Bantuan & Ketentuan Privasi</span>
+      <div className="pb-4 border-b border-border/70">
+        <nav aria-label="Breadcrumb" className="flex items-center gap-1.5 text-[11px] font-semibold uppercase tracking-wider text-muted-foreground mb-1">
+          <span>SAMBUNG</span>
+          <span className="text-muted-foreground/50">/</span>
+          <span className="text-foreground">BANTUAN & KEBIJAKAN DATA</span>
         </nav>
-        <h1 className="text-display-lg font-display font-extrabold text-foreground">
-          Bantuan Layanan, Glosarium & Kebijakan Data
+        <h1 className="text-2xl sm:text-3xl font-display font-bold text-foreground">
+          Pusat Bantuan, Glosarium & Kebijakan Privasi
         </h1>
-        <p className="text-body-base text-muted-foreground mt-1">
-          Pelajari istilah domain SAMBUNG, prinsip transaksi simulasi, dan komitmen perlindungan data pribadi pengguna.
+        <p className="text-sm text-muted-foreground mt-1">
+          Pelajari istilah domain komoditas gabah, batasan transaksi simulasi, dan komitmen perlindungan data privasi petani.
         </p>
       </div>
 
@@ -51,14 +51,14 @@ export function HelpAndPrivacyPage() {
         <div className="lg:col-span-6 space-y-4">
           <div className="flex items-center gap-2">
             <BookOpen className="w-5 h-5 text-primary" />
-            <h2 className="text-xl font-bold font-display text-foreground">Glosarium Istilah Domain</h2>
+            <h2 className="text-lg font-bold font-display text-foreground">Glosarium Istilah Domain Komoditas</h2>
           </div>
 
           <div className="space-y-3">
             {glossary.map((g, idx) => (
-              <Card key={idx} className="p-4 bg-card border border-border">
-                <h3 className="font-bold text-body-base text-foreground text-primary">{g.term}</h3>
-                <p className="text-body-sm text-muted-foreground mt-1 leading-relaxed">
+              <Card key={idx} className="p-4 bg-card border-border/80 shadow-2xs rounded-2xl">
+                <h3 className="font-bold text-sm text-primary">{g.term}</h3>
+                <p className="text-xs text-muted-foreground mt-1.5 leading-relaxed">
                   {g.definition}
                 </p>
               </Card>
@@ -67,49 +67,57 @@ export function HelpAndPrivacyPage() {
         </div>
 
         {/* Privacy Policy Column */}
-        <div className="lg:col-span-6 space-y-6">
+        <div className="lg:col-span-6 space-y-4">
           <div className="flex items-center gap-2">
             <ShieldCheck className="w-5 h-5 text-primary" />
-            <h2 className="text-xl font-bold font-display text-foreground">Kebijakan Privasi & Batasan Layanan</h2>
+            <h2 className="text-lg font-bold font-display text-foreground">Kebijakan Privasi & Batasan Layanan</h2>
           </div>
 
-          <Card className="p-6 bg-card border border-border space-y-4">
-            <div className="flex items-start gap-3">
-              <Lock className="w-5 h-5 text-primary shrink-0 mt-0.5" />
+          <Card className="p-6 bg-card border-border/80 shadow-xs rounded-2xl space-y-5">
+            <div className="flex items-start gap-3.5">
+              <div className="p-2 rounded-xl bg-primary/10 text-primary shrink-0 mt-0.5">
+                <Lock className="w-4 h-4" />
+              </div>
               <div>
-                <h4 className="font-bold text-body-base text-foreground">Perlindungan Nomor Telepon</h4>
-                <p className="text-body-sm text-muted-foreground mt-1 leading-relaxed">
-                  Nomor HP petani dan pembeli <strong>hanya saling terbuka</strong> saat kontrak berada pada status <strong>Disetujui</strong>. Sebelum kesepakatan dan setelah kontrak Batal atau Selesai, nomor kontak langsung disembunyikan kembali.
+                <h4 className="font-bold text-sm text-foreground">Perlindungan Nomor Telepon</h4>
+                <p className="text-xs text-muted-foreground mt-1 leading-relaxed">
+                  Nomor kontak petani dan pembeli <strong>hanya saling terbuka</strong> saat kontrak berada pada status <strong>Disetujui</strong>. Sebelum kesepakatan harga dan setelah kontrak Selesai atau Dibatalkan, nomor kontak langsung ditutup kembali.
                 </p>
               </div>
             </div>
 
-            <div className="flex items-start gap-3 pt-4 border-t border-border">
-              <AlertCircle className="w-5 h-5 text-primary shrink-0 mt-0.5" />
+            <div className="flex items-start gap-3.5 pt-4 border-t border-border/70">
+              <div className="p-2 rounded-xl bg-amber-500/10 text-amber-700 dark:text-amber-400 shrink-0 mt-0.5">
+                <AlertCircle className="w-4 h-4" />
+              </div>
               <div>
-                <h4 className="font-bold text-body-base text-foreground">Privasi Panel Admin</h4>
-                <p className="text-body-sm text-muted-foreground mt-1 leading-relaxed">
-                  Admin operasional hanya melihat nomor telepon dalam bentuk tersamar (contoh: <code>0812-****-7890</code>). Admin tidak memiliki tombol atau hak untuk membuka nomor lengkap.
+                <h4 className="font-bold text-sm text-foreground">Anonimitas pada Panel Pengawas (Admin)</h4>
+                <p className="text-xs text-muted-foreground mt-1 leading-relaxed">
+                  Pengawas operasional hanya dapat melihat nomor telepon dalam bentuk tersamar (contoh: <code>0812-****-7890</code>). Pengawas tidak memiliki tombol atau wewenang untuk membuka nomor kontak lengkap.
                 </p>
               </div>
             </div>
 
-            <div className="flex items-start gap-3 pt-4 border-t border-border">
-              <ShieldCheck className="w-5 h-5 text-primary shrink-0 mt-0.5" />
+            <div className="flex items-start gap-3.5 pt-4 border-t border-border/70">
+              <div className="p-2 rounded-xl bg-primary/10 text-primary shrink-0 mt-0.5">
+                <ShieldCheck className="w-4 h-4" />
+              </div>
               <div>
-                <h4 className="font-bold text-body-base text-foreground">Presisi Lokasi Maksimal Kecamatan</h4>
-                <p className="text-body-sm text-muted-foreground mt-1 leading-relaxed">
-                  Data lokasi panen hanya dibatasi sampai tingkat kecamatan, kabupaten/kota, dan provinsi. Alamat rumah atau titik koordinat presisi tidak pernah dipublikasikan di katalog.
+                <h4 className="font-bold text-sm text-foreground">Presisi Lokasi Maksimal Tingkat Kecamatan</h4>
+                <p className="text-xs text-muted-foreground mt-1 leading-relaxed">
+                  Data lokasi panen pada katalog hanya dibatasi sampai tingkat kecamatan, kabupaten/kota, dan provinsi. Alamat rumah atau titik koordinat GPS presisi tidak pernah dipublikasikan di katalog terbuka.
                 </p>
               </div>
             </div>
 
-            <div className="flex items-start gap-3 pt-4 border-t border-border">
-              <BookOpen className="w-5 h-5 text-primary shrink-0 mt-0.5" />
+            <div className="flex items-start gap-3.5 pt-4 border-t border-border/70">
+              <div className="p-2 rounded-xl bg-secondary text-secondary-foreground shrink-0 mt-0.5 border border-border/60">
+                <BookOpen className="w-4 h-4" />
+              </div>
               <div>
-                <h4 className="font-bold text-body-base text-foreground">Status Transaksi 100% Simulasi</h4>
-                <p className="text-body-sm text-muted-foreground mt-1 leading-relaxed">
-                  Seluruh kontrak dalam platform ini adalah <strong>simulasi</strong> tanpa aliran dana atau komisi komersial. Data kontrak simulasi dilarang dijadikan data latih model AI atau observasi harga resmi.
+                <h4 className="font-bold text-sm text-foreground">Status Transaksi Bersifat Bebas Komisi</h4>
+                <p className="text-xs text-muted-foreground mt-1 leading-relaxed">
+                  Platform SAMBUNG tidak memungut biaya komisi perantara dari petani atau pembeli. Seluruh pembayaran dan logistik diatur langsung secara transparan antar mitra yang bersepakat.
                 </p>
               </div>
             </div>

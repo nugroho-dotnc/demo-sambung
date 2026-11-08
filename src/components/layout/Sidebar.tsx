@@ -192,7 +192,6 @@ export function Sidebar({ activeTab, onNavigate, onCloseMobile }: SidebarProps) 
         ...prev,
         [item.id]: !isCurrentlyExpanded,
       }))
-      // If expanding and current activeTab is not in this cluster, navigate to first child
       const isTabInCluster = item.children.some((c) => c.id === activeTab)
       if (!isCurrentlyExpanded && !isTabInCluster) {
         onNavigate(item.children[0].id)
@@ -210,45 +209,42 @@ export function Sidebar({ activeTab, onNavigate, onCloseMobile }: SidebarProps) 
   }
 
   return (
-    <div className="w-full lg:w-60 h-full flex flex-col justify-between overflow-y-auto select-none bg-card/70 dark:bg-card/40">
-      <div className="p-3.5 space-y-4">
+    <div className="w-full lg:w-60 h-full flex flex-col justify-between overflow-y-auto select-none bg-card/90 dark:bg-[#0D1510]/90 border-r border-border/80">
+      <div className="p-4 space-y-5">
         {/* Mobile close button header */}
-        <div className="flex items-center justify-between lg:hidden pb-2 border-b border-border">
+        <div className="flex items-center justify-between lg:hidden pb-3 border-b border-border">
           <span className="text-xs font-bold text-foreground">Menu Navigasi</span>
           <button
             onClick={onCloseMobile}
-            className="p-1 rounded-md text-muted-foreground hover:text-foreground cursor-pointer"
+            className="p-1.5 rounded-lg text-muted-foreground hover:text-foreground hover:bg-muted cursor-pointer"
           >
             <X className="w-4 h-4" />
           </button>
         </div>
 
-        {/* Mobile Simulation & Region Controls (relocated from Topbar on mobile) */}
-        <div className="lg:hidden pb-3 border-b border-border space-y-2">
-          <p className="px-1 text-[11px] font-bold tracking-wider uppercase text-muted-foreground">
+        {/* Mobile Simulation & Region Controls */}
+        <div className="lg:hidden pb-4 border-b border-border space-y-2.5">
+          <p className="px-1 text-[10px] font-bold tracking-wider uppercase text-muted-foreground">
             Simulasi & Wilayah
           </p>
 
-          <div className="space-y-1.5">
-            {/* Role Switcher Pill */}
+          <div className="space-y-2">
             <div>
               <button
                 onClick={() => {
                   setRoleMenuOpen(!roleMenuOpen)
                   setRegionMenuOpen(false)
                 }}
-                className={`w-full flex items-center justify-between px-2.5 py-2 rounded-lg text-xs font-semibold border transition-colors cursor-pointer ${
+                className={`w-full flex items-center justify-between px-3 py-2.5 rounded-xl text-xs font-semibold border transition-all cursor-pointer ${
                   roleMenuOpen
-                    ? "bg-muted border-primary/40 text-foreground"
-                    : "bg-muted/80 text-foreground hover:bg-muted border-border/80"
+                    ? "bg-muted border-primary text-foreground"
+                    : "bg-muted/70 text-foreground hover:bg-muted border-border"
                 }`}
-                title="Ganti Peran Simulasi"
-                aria-label="Pilih peran simulasi"
               >
                 <div className="flex items-center gap-2 min-w-0">
-                  <CurrentRoleIcon className="w-3.5 h-3.5 text-primary shrink-0" />
+                  <CurrentRoleIcon className="w-4 h-4 text-primary shrink-0" />
                   <span className="font-normal text-muted-foreground">Peran:</span>
-                  <span className="font-semibold truncate">{currentRoleInfo.title.split(" ")[0]}</span>
+                  <span className="font-bold truncate">{currentRoleInfo.title.split(" ")[0]}</span>
                 </div>
                 <ChevronDown
                   className={`w-3.5 h-3.5 text-muted-foreground shrink-0 transition-transform duration-200 ${
@@ -257,9 +253,8 @@ export function Sidebar({ activeTab, onNavigate, onCloseMobile }: SidebarProps) 
                 />
               </button>
 
-              {/* Expandable Role Options */}
               {roleMenuOpen && (
-                <div className="mt-1.5 p-1.5 rounded-lg border border-border bg-card shadow-sm space-y-1 animate-in fade-in slide-in-from-top-1 duration-150">
+                <div className="mt-2 p-2 rounded-xl border border-border bg-card shadow-xl space-y-1 animate-in fade-in slide-in-from-top-1 duration-150">
                   {demoRoles.map((r) => {
                     const isActive = currentRole === r.id
                     const RoleIcon = r.icon
@@ -269,34 +264,34 @@ export function Sidebar({ activeTab, onNavigate, onCloseMobile }: SidebarProps) 
                         onClick={() => handleSwitchRole(r.id)}
                         className={`w-full flex items-center justify-between p-2 rounded-lg text-left transition-colors cursor-pointer min-h-[40px] ${
                           isActive
-                            ? "bg-primary text-white dark:text-[#182117] font-semibold"
+                            ? "bg-primary text-white dark:text-[#05200E] font-semibold"
                             : "text-foreground hover:bg-muted"
                         }`}
                       >
-                        <div className="flex items-center gap-2 min-w-0">
-                          <RoleIcon className="w-3.5 h-3.5 shrink-0" />
+                        <div className="flex items-center gap-2.5 min-w-0">
+                          <RoleIcon className="w-4 h-4 shrink-0" />
                           <div className="truncate">
                             <p className="font-medium text-xs truncate">{r.title}</p>
                             <p
                               className={`text-[10px] truncate ${
-                                isActive ? "text-white/80 dark:text-[#182117]/80" : "text-muted-foreground"
+                                isActive ? "text-white/80 dark:text-[#05200E]/80" : "text-muted-foreground"
                               }`}
                             >
                               {r.subtitle}
                             </p>
                           </div>
                         </div>
-                        {isActive && <Check className="w-3.5 h-3.5 shrink-0 ml-1" />}
+                        {isActive && <Check className="w-4 h-4 shrink-0 ml-1" />}
                       </button>
                     )
                   })}
 
-                  <div className="pt-1.5 mt-1 border-t border-border">
+                  <div className="pt-2 mt-1.5 border-t border-border">
                     <button
                       onClick={handleResetData}
-                      className="w-full flex items-center justify-center gap-1.5 py-1.5 rounded-md text-[11px] text-muted-foreground hover:text-foreground hover:bg-muted transition-colors cursor-pointer"
+                      className="w-full flex items-center justify-center gap-1.5 py-1.5 rounded-lg text-xs text-muted-foreground hover:text-foreground hover:bg-muted transition-colors cursor-pointer font-medium"
                     >
-                      <RotateCcw className="w-3 h-3 text-muted-foreground" />
+                      <RotateCcw className="w-3.5 h-3.5 text-muted-foreground" />
                       <span>Reset Data Simulasi</span>
                     </button>
                   </div>
@@ -304,23 +299,21 @@ export function Sidebar({ activeTab, onNavigate, onCloseMobile }: SidebarProps) 
               )}
             </div>
 
-            {/* Region Selector Pill */}
             <div>
               <button
                 onClick={() => {
                   setRegionMenuOpen(!regionMenuOpen)
                   setRoleMenuOpen(false)
                 }}
-                className={`w-full flex items-center justify-between px-2.5 py-2 rounded-lg text-xs font-medium border transition-colors cursor-pointer ${
+                className={`w-full flex items-center justify-between px-3 py-2.5 rounded-xl text-xs font-semibold border transition-all cursor-pointer ${
                   regionMenuOpen
-                    ? "bg-muted border-primary/40 text-foreground"
-                    : "bg-muted/80 text-foreground hover:bg-muted border-border/80"
+                    ? "bg-muted border-primary text-foreground"
+                    : "bg-muted/70 text-foreground hover:bg-muted border-border"
                 }`}
-                aria-label="Pilih wilayah acuan"
               >
                 <div className="flex items-center gap-2 min-w-0">
-                  <MapPin className="w-3.5 h-3.5 text-primary shrink-0" />
-                  <span className="font-semibold truncate">{selectedRegion}</span>
+                  <MapPin className="w-4 h-4 text-primary shrink-0" />
+                  <span className="font-bold truncate">{selectedRegion}</span>
                 </div>
                 <ChevronDown
                   className={`w-3.5 h-3.5 text-muted-foreground shrink-0 transition-transform duration-200 ${
@@ -329,16 +322,15 @@ export function Sidebar({ activeTab, onNavigate, onCloseMobile }: SidebarProps) 
                 />
               </button>
 
-              {/* Expandable Region Options */}
               {regionMenuOpen && (
-                <div className="mt-1.5 p-1 rounded-lg border border-border bg-card shadow-sm max-h-48 overflow-y-auto space-y-0.5 animate-in fade-in slide-in-from-top-1 duration-150">
+                <div className="mt-2 p-1.5 rounded-xl border border-border bg-card shadow-xl max-h-48 overflow-y-auto space-y-0.5 animate-in fade-in slide-in-from-top-1 duration-150">
                   {provinces.map((prov) => (
                     <button
                       key={prov}
                       onClick={() => handleSelectRegion(prov)}
-                      className={`w-full flex items-center justify-between px-2.5 py-1.5 rounded-md text-xs text-left transition-colors cursor-pointer ${
+                      className={`w-full flex items-center justify-between px-2.5 py-1.5 rounded-lg text-xs text-left transition-colors cursor-pointer ${
                         selectedRegion === prov
-                          ? "bg-primary/10 text-primary font-semibold"
+                          ? "bg-primary/10 text-primary font-bold"
                           : "text-foreground hover:bg-muted"
                       }`}
                     >
@@ -352,19 +344,18 @@ export function Sidebar({ activeTab, onNavigate, onCloseMobile }: SidebarProps) 
           </div>
         </div>
 
-        {/* Workspace Title */}
+        {/* Workspace Nav Rail */}
         <div>
-          <p className="px-3 text-[11px] font-bold tracking-wider uppercase text-muted-foreground">
-            Ruang Kerja
+          <p className="px-2.5 text-[10px] font-bold tracking-wider uppercase text-muted-foreground">
+            Menu Ruang Kerja
           </p>
 
-          <nav className="mt-2 space-y-1">
+          <nav className="mt-2.5 space-y-1">
             {items.map((item) => {
               const Icon = item.icon
               const hasChildren = !!(item.children && item.children.length > 0)
               const isExpanded = !!expandedClusters[item.id]
 
-              // Check if parent or one of its descendants is currently active
               const isDirectActive = activeTab === item.id ||
                 (item.id === "my-offers" && (activeTab === "create-offer" || activeTab === "offer-detail")) ||
                 (item.id === "supply-catalog" && activeTab === "supply-detail") ||
@@ -375,24 +366,18 @@ export function Sidebar({ activeTab, onNavigate, onCloseMobile }: SidebarProps) 
 
               return (
                 <div key={item.id} className="relative">
-                  {/* Parent Item Button */}
                   <button
                     onClick={() => handleParentClick(item)}
-                    className={`w-full relative flex items-center justify-between px-3 py-2 rounded-lg text-sm transition-all duration-150 text-left cursor-pointer ${
+                    className={`w-full flex items-center justify-between px-3 py-2.5 rounded-xl text-xs font-semibold transition-all duration-150 text-left cursor-pointer ${
                       isParentActive
-                        ? "text-foreground font-bold bg-muted/40"
-                        : "text-muted-foreground hover:text-foreground hover:bg-muted/70 font-medium"
+                        ? "bg-emerald-50 text-emerald-900 dark:bg-emerald-950/70 dark:text-emerald-300 font-bold border border-emerald-200/80 dark:border-emerald-800/80 shadow-2xs"
+                        : "text-muted-foreground hover:text-foreground hover:bg-muted/70 border border-transparent font-medium"
                     }`}
                   >
-                    {/* Active Accent Vertical Bar on the far left edge (matching video reference) */}
-                    {isParentActive && (
-                      <span className="absolute left-0 top-1.5 bottom-1.5 w-1 rounded-r-full bg-primary" />
-                    )}
-
                     <div className="flex items-center gap-2.5 min-w-0">
                       <Icon
-                        className={`w-4.5 h-4.5 shrink-0 ${
-                          isParentActive ? "text-primary" : "text-muted-foreground"
+                        className={`w-4 h-4 shrink-0 ${
+                          isParentActive ? "text-emerald-700 dark:text-emerald-400" : "text-muted-foreground"
                         }`}
                       />
                       <span className="truncate">{item.label}</span>
@@ -407,9 +392,9 @@ export function Sidebar({ activeTab, onNavigate, onCloseMobile }: SidebarProps) 
                     )}
                   </button>
 
-                  {/* Sub-menu (Clean Icon + Label, without SVG lines) */}
+                  {/* Sub-menu (Indent with crisp connector line) */}
                   {hasChildren && isExpanded && (
-                    <div className="pl-4 mt-1 space-y-0.5 animate-in fade-in slide-in-from-top-1 duration-150">
+                    <div className="ml-3 pl-3.5 my-1.5 space-y-1 border-l-2 border-border/80 dark:border-border/60 animate-in fade-in slide-in-from-top-1 duration-150">
                       {item.children!.map((sub) => {
                         const SubIcon = sub.icon
                         const isSubActive = activeTab === sub.id
@@ -418,15 +403,15 @@ export function Sidebar({ activeTab, onNavigate, onCloseMobile }: SidebarProps) 
                           <button
                             key={sub.id}
                             onClick={() => handleChildClick(sub.id)}
-                            className={`flex items-center gap-2.5 px-3 py-2 rounded-lg text-xs w-full text-left transition-all duration-150 cursor-pointer min-h-[36px] ${
+                            className={`flex items-center gap-2.5 px-2.5 py-1.5 rounded-lg text-xs w-full text-left transition-all duration-150 cursor-pointer min-h-[34px] ${
                               isSubActive
-                                ? "bg-primary/10 text-primary font-semibold dark:bg-primary/20 dark:text-primary shadow-2xs"
-                                : "text-muted-foreground hover:text-foreground hover:bg-muted/60 font-medium"
+                                ? "bg-primary/10 text-primary font-bold dark:bg-primary/20 dark:text-primary"
+                                : "text-muted-foreground hover:text-foreground hover:bg-muted/50 font-medium"
                             }`}
                           >
                             <SubIcon
-                              className={`w-4 h-4 shrink-0 ${
-                                isSubActive ? "text-primary dark:text-primary" : "text-muted-foreground"
+                              className={`w-3.5 h-3.5 shrink-0 ${
+                                isSubActive ? "text-primary" : "text-muted-foreground"
                               }`}
                             />
                             <span className="truncate">{sub.label}</span>

@@ -10,7 +10,8 @@ import {
   CheckCircle2,
   ChevronRight,
   ShieldCheck,
-  Building2
+  Building2,
+  Check
 } from "lucide-react"
 
 interface PetaniContractsPageProps {
@@ -44,38 +45,38 @@ export function PetaniContractsPage({ onNavigate }: PetaniContractsPageProps) {
   }
 
   return (
-    <div className="max-w-6xl mx-auto space-y-6 pb-12">
+    <div className="max-w-6xl mx-auto space-y-7 pb-14">
       {/* Header & Breadcrumb */}
-      <div>
-        <div className="flex items-center gap-1.5 text-xs font-semibold uppercase tracking-wider text-muted-foreground">
-          <span>RUANG PETANI</span>
-          <span>/</span>
-          <span className="text-foreground">PESANAN & KONTRAK</span>
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-2 border-b border-border/70">
+        <div>
+          <nav aria-label="Breadcrumb" className="flex items-center gap-1.5 text-[11px] font-semibold uppercase tracking-wider text-muted-foreground mb-1">
+            <span>Sambung</span>
+            <span className="text-muted-foreground/50">/</span>
+            <span className="text-primary font-bold">Ruang Petani</span>
+            <span className="text-muted-foreground/50">/</span>
+            <span className="text-foreground">Pesanan & Kontrak</span>
+          </nav>
+
+          <h1 className="font-display text-2xl sm:text-3xl font-bold tracking-tight text-foreground">
+            Pesanan Masuk dan Kontrak Digital
+          </h1>
+          <p className="mt-1 text-sm text-muted-foreground">
+            Semua pesanan diverifikasi otomatis terhadap rentang harga wajar wilayah Anda.
+          </p>
         </div>
 
-        <div className="mt-2 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
-          <div>
-            <h1 className="font-display text-2xl sm:text-3xl font-bold tracking-tight text-foreground">
-              Pesanan masuk dan kontrak digital
-            </h1>
-            <p className="mt-1 text-sm text-muted-foreground">
-              Semua pesanan diperiksa otomatis terhadap rentang harga wajar daerah Anda.
-            </p>
-          </div>
-
-          <div className="flex items-center gap-2">
-            <span className="px-3 py-1.5 rounded-lg text-xs font-semibold bg-primary/10 text-primary border border-primary/20">
-              {pendingOrdersCount} Pesanan Menunggu Respon
-            </span>
-          </div>
+        <div className="flex items-center gap-2">
+          <span className="px-3 py-1.5 rounded-lg text-xs font-semibold bg-primary/10 text-primary border border-primary/20">
+            {pendingOrdersCount} Pesanan Menunggu Respon
+          </span>
         </div>
       </div>
 
-      {/* Filter Tabs matching Petani.dc.html */}
-      <div className="flex items-center gap-2 overflow-x-auto pb-1 border-b border-border/80">
+      {/* Filter Tabs */}
+      <div className="flex items-center gap-2 overflow-x-auto pb-1 border-b border-border/70">
         <button
           onClick={() => setFilterTab("semua")}
-          className={`px-3 py-1.5 rounded-lg text-xs font-semibold transition-all cursor-pointer ${
+          className={`px-3.5 py-1.5 rounded-lg text-xs font-semibold transition-all cursor-pointer ${
             filterTab === "semua"
               ? "bg-primary text-white dark:text-[#182117] shadow-xs"
               : "text-muted-foreground hover:text-foreground hover:bg-muted"
@@ -85,17 +86,22 @@ export function PetaniContractsPage({ onNavigate }: PetaniContractsPageProps) {
         </button>
         <button
           onClick={() => setFilterTab("pesanan")}
-          className={`px-3 py-1.5 rounded-lg text-xs font-semibold transition-all cursor-pointer ${
+          className={`px-3.5 py-1.5 rounded-lg text-xs font-semibold transition-all cursor-pointer flex items-center gap-1.5 ${
             filterTab === "pesanan"
               ? "bg-primary text-white dark:text-[#182117] shadow-xs"
               : "text-muted-foreground hover:text-foreground hover:bg-muted"
           }`}
         >
-          Pesanan Masuk ({pendingOrdersCount})
+          <span>Pesanan Masuk</span>
+          {pendingOrdersCount > 0 && (
+            <span className="px-1.5 py-0.2 rounded-full text-[10px] bg-amber-400 text-black font-bold">
+              {pendingOrdersCount}
+            </span>
+          )}
         </button>
         <button
           onClick={() => setFilterTab("disetujui")}
-          className={`px-3 py-1.5 rounded-lg text-xs font-semibold transition-all cursor-pointer ${
+          className={`px-3.5 py-1.5 rounded-lg text-xs font-semibold transition-all cursor-pointer ${
             filterTab === "disetujui"
               ? "bg-primary text-white dark:text-[#182117] shadow-xs"
               : "text-muted-foreground hover:text-foreground hover:bg-muted"
@@ -105,7 +111,7 @@ export function PetaniContractsPage({ onNavigate }: PetaniContractsPageProps) {
         </button>
         <button
           onClick={() => setFilterTab("selesai")}
-          className={`px-3 py-1.5 rounded-lg text-xs font-semibold transition-all cursor-pointer ${
+          className={`px-3.5 py-1.5 rounded-lg text-xs font-semibold transition-all cursor-pointer ${
             filterTab === "selesai"
               ? "bg-primary text-white dark:text-[#182117] shadow-xs"
               : "text-muted-foreground hover:text-foreground hover:bg-muted"
@@ -118,8 +124,8 @@ export function PetaniContractsPage({ onNavigate }: PetaniContractsPageProps) {
       {/* Contracts / Orders List */}
       <div className="space-y-4">
         {filteredContracts.length === 0 ? (
-          <Card className="p-10 text-center space-y-3 bg-card border border-border/80">
-            <ScrollText className="w-10 h-10 text-muted-foreground mx-auto stroke-1" />
+          <Card className="p-12 text-center space-y-3 bg-card border border-border/80 rounded-2xl shadow-xs">
+            <ScrollText className="w-10 h-10 text-muted-foreground/60 mx-auto stroke-1" />
             <h3 className="text-base font-bold text-foreground">Belum ada dokumen pada tab ini</h3>
             <p className="text-xs text-muted-foreground max-w-md mx-auto">
               Saat ada pembeli mengajukan pesanan terhadap hasil panen Anda, rincian pesanan akan otomatis muncul di sini.
@@ -133,25 +139,25 @@ export function PetaniContractsPage({ onNavigate }: PetaniContractsPageProps) {
             return (
               <Card
                 key={contract.id}
-                className="p-5 sm:p-6 bg-card border border-border/80 hover:border-primary/40 transition-colors space-y-4"
+                className="p-5 sm:p-6 bg-card border-border/80 hover:border-primary/40 transition-all rounded-2xl shadow-xs space-y-4"
               >
                 {/* Header row */}
                 <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
-                  <div className="flex items-center gap-2.5">
-                    <div className="w-9 h-9 rounded-lg bg-muted text-foreground flex items-center justify-center shrink-0">
-                      <Building2 className="w-4.5 h-4.5 text-primary" />
+                  <div className="flex items-center gap-3">
+                    <div className="w-10 h-10 rounded-xl bg-primary/10 text-primary flex items-center justify-center shrink-0">
+                      <Building2 className="w-5 h-5" />
                     </div>
                     <div>
                       <div className="flex items-center gap-2">
                         <strong className="text-sm font-bold text-foreground">
                           {contract.buyerName}
                         </strong>
-                        <span className="px-1.5 py-0.5 rounded text-[10px] font-semibold bg-primary/10 text-primary border border-primary/20 flex items-center gap-1">
+                        <span className="px-2 py-0.5 rounded text-[10px] font-semibold bg-primary/10 text-primary border border-primary/20 flex items-center gap-1">
                           <ShieldCheck className="w-3 h-3" />
                           <span>Terverifikasi</span>
                         </span>
                       </div>
-                      <p className="text-xs text-muted-foreground mt-0.5">
+                      <p className="text-xs text-muted-foreground mt-0.5 font-mono">
                         Kontrak #{contract.id} · ID Pasokan {contract.offerId}
                       </p>
                     </div>
@@ -159,14 +165,14 @@ export function PetaniContractsPage({ onNavigate }: PetaniContractsPageProps) {
 
                   <div className="flex items-center gap-2">
                     <span
-                      className={`px-2.5 py-1 rounded-md text-xs font-semibold ${
+                      className={`px-3 py-1 rounded-md text-xs font-semibold ${
                         contract.status === "Disetujui"
-                          ? "bg-emerald-50 text-emerald-800 dark:bg-emerald-950/40 dark:text-emerald-300 border border-emerald-200 dark:border-emerald-800"
+                          ? "bg-emerald-500/10 text-emerald-800 dark:text-emerald-300 border border-emerald-500/30"
                           : contract.status === "Menunggu Kesepakatan"
-                          ? "bg-amber-50 text-amber-800 dark:bg-amber-950/40 dark:text-amber-300 border border-amber-200 dark:border-amber-800"
+                          ? "bg-amber-500/10 text-amber-800 dark:text-amber-300 border border-amber-500/30"
                           : contract.status === "Selesai"
                           ? "bg-muted text-muted-foreground border border-border"
-                          : "bg-rose-50 text-rose-800 dark:bg-rose-950/40 dark:text-rose-300"
+                          : "bg-rose-500/10 text-rose-800 dark:text-rose-300"
                       }`}
                     >
                       {contract.status === "Menunggu Kesepakatan" ? "Menunggu Kesepakatan" : contract.status}
@@ -175,28 +181,28 @@ export function PetaniContractsPage({ onNavigate }: PetaniContractsPageProps) {
                 </div>
 
                 {/* Details row */}
-                <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 py-3 border-y border-border/60 text-xs">
+                <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 py-3.5 border-y border-border/70 text-xs">
                   <div>
-                    <span className="text-muted-foreground block text-[11px]">Komoditas & Volume</span>
-                    <strong className="font-semibold text-foreground text-sm">
-                      {contract.volume.toLocaleString("id-ID")} kg ({contract.grainType})
+                    <span className="text-muted-foreground block text-[11px] font-medium">Komoditas & Volume</span>
+                    <strong className="font-semibold text-foreground text-sm font-mono mt-0.5 block">
+                      {contract.volume.toLocaleString("id-ID")} kg <span className="font-sans text-xs text-muted-foreground">({contract.grainType})</span>
                     </strong>
                   </div>
                   <div>
-                    <span className="text-muted-foreground block text-[11px]">Harga Tawar Aktif</span>
-                    <strong className="font-semibold text-foreground text-sm font-mono">
+                    <span className="text-muted-foreground block text-[11px] font-medium">Harga Tawar Aktif</span>
+                    <strong className="font-semibold text-primary text-sm font-mono mt-0.5 block">
                       {formatRupiah(contract.activePrice)}/kg
                     </strong>
                   </div>
                   <div>
-                    <span className="text-muted-foreground block text-[11px]">Total Nilai Pesanan</span>
-                    <strong className="font-bold text-foreground text-sm font-mono">
+                    <span className="text-muted-foreground block text-[11px] font-medium">Total Nilai Pesanan</span>
+                    <strong className="font-bold text-foreground text-sm font-mono mt-0.5 block">
                       {formatRupiah(totalVal)}
                     </strong>
                   </div>
                   <div>
-                    <span className="text-muted-foreground block text-[11px]">Evaluasi Lampu Harga</span>
-                    <div className="mt-0.5">
+                    <span className="text-muted-foreground block text-[11px] font-medium">Evaluasi Lampu Harga</span>
+                    <div className="mt-1">
                       {(() => {
                         const rend = contract.grainType === "GKP" ? 0.5338 : 0.63
                         const bench = calculateFairPrice(contract.grainType, "Jawa Timur", 13500, rend)
@@ -211,12 +217,13 @@ export function PetaniContractsPage({ onNavigate }: PetaniContractsPageProps) {
                 <div className="flex flex-wrap items-center justify-between gap-3 pt-1">
                   <div className="text-[11px] text-muted-foreground">
                     {isWaitingFarmer ? (
-                      <span className="text-amber-700 dark:text-amber-400 font-medium">
-                        Pembeli mengajukan harga ini. Silakan terima atau tawar balik.
+                      <span className="text-amber-700 dark:text-amber-400 font-semibold">
+                        Pembeli mengajukan harga ini. Silakan terima atau ajukan tawar balik.
                       </span>
                     ) : contract.status === "Disetujui" ? (
-                      <span className="text-emerald-700 dark:text-emerald-400 font-medium">
-                        Kontrak disetujui. Nomor kontak terbuka untuk koordinasi pengiriman.
+                      <span className="text-emerald-700 dark:text-emerald-400 font-semibold flex items-center gap-1">
+                        <Check className="w-3.5 h-3.5" />
+                        <span>Kontrak disetujui. Nomor kontak terbuka untuk koordinasi pengiriman.</span>
                       </span>
                     ) : (
                       <span>Tercatat pada buku transaksi digital SAMBUNG.</span>
@@ -228,7 +235,7 @@ export function PetaniContractsPage({ onNavigate }: PetaniContractsPageProps) {
                       <Button
                         size="sm"
                         onClick={() => handleQuickAccept(contract.id)}
-                        className="text-xs font-semibold shadow-xs"
+                        className="text-xs font-semibold shadow-xs gap-1.5"
                       >
                         <CheckCircle2 className="w-3.5 h-3.5" />
                         <span>Terima Harga</span>
@@ -238,7 +245,7 @@ export function PetaniContractsPage({ onNavigate }: PetaniContractsPageProps) {
                       size="sm"
                       variant="outline"
                       onClick={() => onNavigate("contract-detail", contract.id)}
-                      className="text-xs gap-1.5"
+                      className="text-xs gap-1.5 border-border/80"
                     >
                       <span>Buka Kontrak & Negosiasi</span>
                       <ChevronRight className="w-3.5 h-3.5" />

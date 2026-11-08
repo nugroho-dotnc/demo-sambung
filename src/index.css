@@ -6,136 +6,163 @@
 
 :root {
   color-scheme: light;
-  --brand-forest: #3E5A3A;
-  --brand-olive: #8A9A3A;
-  --brand-sunflower: #FFD55A;
-  --brand-honey: #F4A62A;
-  --brand-terracotta: #C86B3C;
-  --brand-cream: #FFF3D6;
+  
+  /* Brand Core - Agrarian Forest & Harvest Amber */
+  --brand-forest: #1B4D2E;
+  --brand-forest-light: #2A6A3B;
+  --brand-olive: #657D28;
+  --brand-sunflower: #F59E0B;
+  --brand-honey: #D97706;
+  --brand-terracotta: #C2410C;
+  --brand-cream: #FEF9EE;
 
-  /* Baseline tokens §2.1 */
-  --background: oklch(1 0 0);
-  --foreground: oklch(0.145 0 0);
-  --card: oklch(1 0 0);
-  --card-foreground: oklch(0.145 0 0);
-  --popover: oklch(1 0 0);
-  --popover-foreground: oklch(0.145 0 0);
-  --canvas: oklch(0.97 0 0);
-  --muted: oklch(0.97 0 0);
-  --muted-foreground: oklch(0.49 0 0);
-  --secondary: oklch(0.967 0.001 286.375);
-  --secondary-foreground: oklch(0.21 0.006 285.885);
-  --accent: oklch(0.97 0 0);
-  --accent-foreground: oklch(0.205 0 0);
-  --highlight: #FFD55A;
-  --highlight-foreground: oklch(0.145 0 0);
-  --border: oklch(0.922 0 0);
-  --input: #7A7A7A;
-  --ring: #3E5A3A;
-  --primary: #3E5A3A;
+  /* Surfaces & Canvas */
+  --background: #F8FAFC;
+  --foreground: #0F172A;
+  --card: #FFFFFF;
+  --card-foreground: #0F172A;
+  --popover: #FFFFFF;
+  --popover-foreground: #0F172A;
+  --canvas: #F1F5F9;
+  --muted: #F1F5F9;
+  --muted-foreground: #64748B;
+  --secondary: #F1F5F9;
+  --secondary-foreground: #1E293B;
+  --accent: #F1F5F9;
+  --accent-foreground: #0F172A;
+  --highlight: #F59E0B;
+  --highlight-foreground: #0F172A;
+  --border: #E2E8F0;
+  --input: #64748B;
+  --ring: #1B4D2E;
+
+  /* Primary Interactive */
+  --primary: #1B4D2E;
   --primary-foreground: #FFFFFF;
-  --primary-hover: #31492F;
-  --destructive: #9B3529;
+  --primary-hover: #153E24;
+
+  /* Destructive */
+  --destructive: #DC2626;
   --destructive-foreground: #FFFFFF;
-  --destructive-surface: #FBE5DD;
+  --destructive-surface: #FEF2F2;
 
-  /* Domain Price & Lamp tokens §2.1 */
-  --price-within: #246447;
-  --price-within-surface: #E8F2E4;
-  --price-caution: #775000;
-  --price-caution-surface: #FFF0C2;
-  --price-low: #9B3529;
-  --price-low-surface: #FBE5DD;
-  --review: #7A4B21;
-  --review-surface: #FFF0D2;
+  /* Domain Price & Lamp tokens */
+  --price-within: #15803D;
+  --price-within-surface: #F0FDF4;
+  --price-caution: #B45309;
+  --price-caution-surface: #FFFBEB;
+  --price-low: #B91C1C;
+  --price-low-surface: #FEF2F2;
+  --review: #92400E;
+  --review-surface: #FEF3C7;
 
-  --chart-1: #3E5A3A;
-  --chart-2: #9B5A2B;
-  --chart-3: #6D7227;
-  --chart-4: #654E2B;
-  --chart-5: #7C3A32;
-  --interval: #E8ECD8;
-  --map-low: #3E5A3A;
-  --map-mid: oklch(0.97 0 0);
-  --map-high: #9B3529;
-  --map-missing: oklch(0.97 0 0);
+  /* Charts & Map */
+  --chart-1: #1B4D2E;
+  --chart-2: #D97706;
+  --chart-3: #657D28;
+  --chart-4: #0284C7;
+  --chart-5: #C2410C;
+  --interval: #E2E8F0;
+  --map-low: #15803D;
+  --map-mid: #F8FAFC;
+  --map-high: #B91C1C;
+  --map-missing: #CBD5E1;
 
-  --sidebar: oklch(0.985 0 0);
-  --sidebar-foreground: oklch(0.145 0 0);
-  --sidebar-primary: var(--primary);
-  --sidebar-primary-foreground: var(--primary-foreground);
-  --sidebar-accent: #EAF1E7;
-  --sidebar-accent-foreground: #3E5A3A;
-  --sidebar-border: var(--border);
-  --sidebar-ring: var(--ring);
+  /* Sidebar */
+  --sidebar: #FFFFFF;
+  --sidebar-foreground: #0F172A;
+  --sidebar-primary: #1B4D2E;
+  --sidebar-primary-foreground: #FFFFFF;
+  --sidebar-accent: #ECFDF5;
+  --sidebar-accent-foreground: #15803D;
+  --sidebar-border: #E2E8F0;
+  --sidebar-ring: #1B4D2E;
 
   --contract: var(--secondary-foreground);
   --contract-surface: var(--secondary);
 
-  --radius: 0.5rem;
-  --layout-max: 76rem;
-  --layout-form: 42rem;
+  --radius: 0.75rem;
+  --layout-max: 78rem;
+  --layout-form: 44rem;
   --control-min: 2.75rem;
   --focus-width: 2px;
   --focus-offset: 2px;
-  --motion-feedback: 150ms;
+  --motion-feedback: 160ms;
 }
 
 .dark {
   color-scheme: dark;
-  --background: oklch(0.145 0 0);
-  --foreground: oklch(0.985 0 0);
-  --card: oklch(0.205 0 0);
-  --card-foreground: oklch(0.985 0 0);
-  --popover: oklch(0.205 0 0);
-  --popover-foreground: oklch(0.985 0 0);
-  --canvas: oklch(0.269 0 0);
-  --muted: oklch(0.269 0 0);
-  --muted-foreground: oklch(0.708 0 0);
-  --secondary: oklch(0.274 0.006 286.033);
-  --secondary-foreground: oklch(0.985 0 0);
-  --accent: oklch(0.269 0 0);
-  --accent-foreground: oklch(0.985 0 0);
-  --highlight: #FFD55A;
-  --highlight-foreground: oklch(0.145 0 0);
-  --border: oklch(1 0 0 / 10%);
-  --input: #8C8C8C;
-  --ring: #B7D2A5;
-  --primary: #B7D2A5;
-  --primary-foreground: oklch(0.145 0 0);
-  --primary-hover: #C7DEB8;
-  --destructive: #F1AA8C;
-  --destructive-foreground: #311A12;
-  --destructive-surface: #45251D;
 
-  --price-within: #A9D6B0;
-  --price-within-surface: #203E2B;
-  --price-caution: #FFD55A;
-  --price-caution-surface: #453819;
-  --price-low: #FFC0AB;
-  --price-low-surface: #4A2922;
-  --review: #E9C78D;
-  --review-surface: #3F3220;
+  /* Dark Brand Core */
+  --brand-forest: #4ADE80;
+  --brand-forest-light: #22C55E;
+  --brand-olive: #A3E635;
+  --brand-sunflower: #FBBF24;
+  --brand-honey: #F59E0B;
+  --brand-terracotta: #FB923C;
+  --brand-cream: #292015;
 
-  --chart-1: #B7D2A5;
-  --chart-2: #F1AA8C;
-  --chart-3: #D7DC9B;
-  --chart-4: #E6C995;
-  --chart-5: #F2B6AE;
-  --interval: #34442D;
-  --map-low: #A9D6B0;
-  --map-mid: oklch(0.269 0 0);
-  --map-high: #F1AA8C;
-  --map-missing: oklch(0.269 0 0);
+  /* Dark Surfaces & Canvas */
+  --background: #09100C;
+  --foreground: #F8FAFC;
+  --card: #111A14;
+  --card-foreground: #F8FAFC;
+  --popover: #111A14;
+  --popover-foreground: #F8FAFC;
+  --canvas: #17231B;
+  --muted: #17231B;
+  --muted-foreground: #94A3B8;
+  --secondary: #17231B;
+  --secondary-foreground: #F1F5F9;
+  --accent: #17231B;
+  --accent-foreground: #F8FAFC;
+  --highlight: #FBBF24;
+  --highlight-foreground: #09100C;
+  --border: #1E3125;
+  --input: #64748B;
+  --ring: #4ADE80;
 
-  --sidebar: oklch(0.205 0 0);
-  --sidebar-foreground: oklch(0.985 0 0);
-  --sidebar-primary: var(--primary);
-  --sidebar-primary-foreground: var(--primary-foreground);
-  --sidebar-accent: #2B3826;
-  --sidebar-accent-foreground: #B7D2A5;
-  --sidebar-border: var(--border);
-  --sidebar-ring: var(--ring);
+  /* Dark Primary Interactive */
+  --primary: #4ADE80;
+  --primary-foreground: #05200E;
+  --primary-hover: #38C46E;
+
+  /* Dark Destructive */
+  --destructive: #F87171;
+  --destructive-foreground: #2A0808;
+  --destructive-surface: #380E0E;
+
+  /* Dark Domain Price & Lamp tokens */
+  --price-within: #4ADE80;
+  --price-within-surface: #072B15;
+  --price-caution: #FBBF24;
+  --price-caution-surface: #332007;
+  --price-low: #F87171;
+  --price-low-surface: #380E0E;
+  --review: #FCD34D;
+  --review-surface: #2E1F09;
+
+  /* Dark Charts & Map */
+  --chart-1: #4ADE80;
+  --chart-2: #FBBF24;
+  --chart-3: #A3E635;
+  --chart-4: #38BDF8;
+  --chart-5: #FB923C;
+  --interval: #1E3125;
+  --map-low: #4ADE80;
+  --map-mid: #17231B;
+  --map-high: #F87171;
+  --map-missing: #334155;
+
+  /* Dark Sidebar */
+  --sidebar: #0C140F;
+  --sidebar-foreground: #F8FAFC;
+  --sidebar-primary: #4ADE80;
+  --sidebar-primary-foreground: #05200E;
+  --sidebar-accent: #162E1F;
+  --sidebar-accent-foreground: #4ADE80;
+  --sidebar-border: #1E3125;
+  --sidebar-ring: #4ADE80;
 
   --contract: var(--secondary-foreground);
   --contract-surface: var(--secondary);
