@@ -61,14 +61,11 @@ export function PetaniDashboard({ onNavigate }: PetaniDashboardProps) {
           <div className="lg:col-span-7 space-y-3">
             <div className="flex items-center gap-2.5">
               <span className="text-xs font-bold uppercase tracking-wider text-primary">Estimasi Acuan Wajar GKP</span>
-              <span className="px-2.5 py-0.5 rounded-full text-xs font-bold bg-emerald-100 text-emerald-800 dark:bg-emerald-950 dark:text-emerald-300 border border-emerald-300/60 dark:border-emerald-800">
-                {currentUser.province || "Jawa Timur"}
-              </span>
             </div>
 
             <div className="flex items-baseline gap-2">
               <span className="font-display text-4xl sm:text-5xl font-black text-emerald-800 dark:text-emerald-400 tracking-tight tabular-nums">
-                Rp6.650 – Rp6.940
+                Rp6.650 - Rp6.940
               </span>
               <span className="text-sm font-semibold text-muted-foreground">/kg</span>
             </div>
@@ -107,7 +104,7 @@ export function PetaniDashboard({ onNavigate }: PetaniDashboardProps) {
             <div className="flex items-start justify-between gap-4 pb-3 border-b border-border">
               <div>
                 <span className="text-xs font-bold uppercase tracking-wider text-primary">Arah Pasar Mendatang</span>
-                <h3 className="font-display font-black text-xl text-foreground mt-0.5">Prakiraan Tren Harga 3 – 4 Pekan</h3>
+                <h3 className="font-display font-black text-xl text-foreground mt-0.5">Prakiraan Tren Harga 3 - 4 Pekan</h3>
                 <p className="text-xs text-muted-foreground mt-0.5">
                   Proyeksi arah dari model transmisi harga · rentang ketidakpastian 90%
                 </p>

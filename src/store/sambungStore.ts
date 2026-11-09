@@ -31,7 +31,7 @@ interface SambungState {
   auditLogs: AuditLogItem[]
 }
 
-const STORAGE_KEY = "sambung_app_state_v1"
+const STORAGE_KEY = "sambung_app_state_v2"
 
 function loadInitialState(): SambungState {
   const saved = localStorage.getItem(STORAGE_KEY)

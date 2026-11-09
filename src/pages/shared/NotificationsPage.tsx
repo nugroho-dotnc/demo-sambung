@@ -50,7 +50,7 @@ const INITIAL_NOTIFICATIONS: NotificationItem[] = [
   {
     id: "notif-03",
     title: "Pembaruan Acuan Harga Mingguan",
-    description: "Acuan harga gabah GKP Jawa Timur diperbarui ke rentang Rp6.650 – Rp6.940/kg.",
+    description: "Acuan harga gabah GKP Jawa Timur diperbarui ke rentang Rp6.650 - Rp6.940/kg.",
     timestamp: "Kemarin",
     isRead: true,
     targetTab: "price-board",

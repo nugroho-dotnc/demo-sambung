@@ -316,7 +316,7 @@ export function ContractDetailPage({ contractId, onBack }: ContractDetailPagePro
                 <span className="text-muted-foreground">Periode Pelaksanaan</span>
                 <span className="font-semibold text-foreground flex items-center gap-1.5">
                   <Calendar className="w-3.5 h-3.5 text-primary" />
-                  <span>12 Okt – 9 Nov 2026</span>
+                  <span>12 Okt - 9 Nov 2026</span>
                 </span>
               </div>
               <div className="flex justify-between items-center py-3">
@@ -445,7 +445,7 @@ export function ContractDetailPage({ contractId, onBack }: ContractDetailPagePro
             <div className="pt-3 border-t border-border/70 space-y-1.5">
               <p className="text-[11px] text-muted-foreground font-semibold">Rentang Acuan Model GKP (Jawa Timur)</p>
               <p className="font-mono font-bold text-sm text-foreground">
-                {formatRupiah(benchmark.lowerBound)} – {formatRupiah(benchmark.upperBound)} /kg
+                {formatRupiah(benchmark.lowerBound)} - {formatRupiah(benchmark.upperBound)} /kg
               </p>
               <p className="text-[11px] text-muted-foreground pt-1 leading-relaxed">
                 Harga kontrak berada dalam batas toleransi acuan resmi BPS & Badan Pangan Nasional.

@@ -48,12 +48,6 @@ export function FairPriceDetailPage({ onNavigate }: FairPriceDetailPageProps) {
               Estimasi berbasis formula konversi rendemen beras produsen, bukan jaminan harga transaksi mutlak.
             </p>
           </div>
-
-          <div className="flex items-center gap-2 self-start sm:self-auto">
-            <span className="px-3 py-1.5 rounded-xl bg-emerald-50 dark:bg-emerald-950/60 text-emerald-800 dark:text-emerald-300 border border-emerald-200 dark:border-emerald-800 text-xs font-bold shadow-2xs">
-              Formula Operasional v0.2
-            </span>
-          </div>
         </div>
       </div>
 
@@ -114,10 +108,10 @@ export function FairPriceDetailPage({ onNavigate }: FairPriceDetailPageProps) {
           <Card className="p-6 sm:p-7 space-y-6 bg-gradient-to-b from-card to-emerald-50/20 dark:to-emerald-950/20 border border-border rounded-2xl shadow-xs">
             <div>
               <span className="text-xs font-bold uppercase tracking-wider text-primary">
-                Rentang Estimasi Wajar [L – U]
+                Rentang Estimasi Wajar [L - U]
               </span>
               <p className="font-display text-3xl sm:text-4xl font-black text-emerald-800 dark:text-emerald-400 mt-1 tabular-nums">
-                Rp{estimate.lowerBound.toLocaleString("id-ID")} – Rp{estimate.upperBound.toLocaleString("id-ID")}
+                Rp{estimate.lowerBound.toLocaleString("id-ID")} - Rp{estimate.upperBound.toLocaleString("id-ID")}
               </p>
               <p className="text-xs text-muted-foreground mt-1">
                 Rupiah per kilogram gabah bersih pada acuan wilayah {province}.

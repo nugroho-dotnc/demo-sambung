@@ -10,7 +10,6 @@ import {
   Map as MapIcon,
   Table as TableIcon,
   ChevronDown,
-  Info,
   AlertTriangle,
   Cpu,
   ArrowRight
@@ -270,11 +269,6 @@ export function PriceMapPage({ onNavigate }: PriceMapPageProps) {
               Konteks Harga & Analisis Disparitas {selectedProvince}
             </h3>
           </div>
-
-          <div className="flex items-center gap-2 text-xs">
-            <span className="w-2.5 h-2.5 rounded-full bg-emerald-500" />
-            <span className="font-bold text-emerald-800 dark:text-emerald-300">Tervalidasi Data Resmi Bapanas</span>
-          </div>
         </div>
 
         {/* 8:4 Grid */}
@@ -377,15 +371,6 @@ export function PriceMapPage({ onNavigate }: PriceMapPageProps) {
           </div>
         </div>
       </Card>
-
-      {/* Info Banner */}
-      <div className="p-4.5 rounded-2xl bg-muted/60 border border-border flex items-start gap-3.5 text-xs shadow-2xs">
-        <Info className="w-5 h-5 text-primary shrink-0 mt-0.5" />
-        <div className="leading-relaxed text-muted-foreground">
-          <span className="font-bold text-foreground">Mengapa harga bisa berbeda? </span>
-          Jarak transportasi, ketersediaan pasokan, rendemen giling lokal, serta biaya pengeringan memengaruhi selisih antarprovinsi. Peta berfungsi sebagai alat pantau transparansi, bukan rekomendasi harga sepihak.
-        </div>
-      </div>
     </div>
   )
 }

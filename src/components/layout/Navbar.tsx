@@ -43,7 +43,6 @@ export function Navbar({ activeTab, setActiveTab }: NavbarProps) {
       case "admin":
         return [
           { id: "admin-dashboard", label: "Ringkasan" },
-          { id: "admin-moderation", label: "Moderasi Tawaran" },
           { id: "admin-parameters", label: "Parameter" },
           { id: "admin-users", label: "Pengguna" },
           { id: "admin-audit", label: "Audit Log" },

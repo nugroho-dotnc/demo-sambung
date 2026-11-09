@@ -2,7 +2,6 @@ import { useSambungStore } from "@/store/sambungStore"
 import { Card } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import {
-  ShieldAlert,
   Users,
   Cpu,
   ArrowRight,
@@ -17,9 +16,8 @@ interface AdminDashboardProps {
 }
 
 export function AdminDashboard({ onNavigate }: AdminDashboardProps) {
-  const { offers, contracts, auditLogs } = useSambungStore()
+  const { offers, contracts, auditLogs, observations } = useSambungStore()
 
-  const pendingModeration = offers.filter((o) => o.moderationStatus === "Sedang diminta perbaikan")
   const activeContracts = contracts.filter((c) => c.status === "Menunggu Kesepakatan" || c.status === "Disetujui")
 
   return (
@@ -39,7 +37,7 @@ export function AdminDashboard({ onNavigate }: AdminDashboardProps) {
             Pusat Pengawasan & Tata Kelola
           </h1>
           <p className="mt-1 text-sm text-muted-foreground">
-            Pemantauan integritas transaksi simulasi, konfigurasi parameter harga, dan supervisi kualitas tawaran panen.
+            Pemantauan integritas transaksi simulasi, konfigurasi parameter harga, dan audit tata kelola platform.
           </p>
         </div>
 
@@ -83,16 +81,16 @@ export function AdminDashboard({ onNavigate }: AdminDashboardProps) {
 
         <Card className="p-5 bg-card border-border/80 shadow-xs space-y-2 rounded-2xl">
           <div className="flex items-center justify-between text-muted-foreground">
-            <span className="text-[11px] font-bold uppercase tracking-wider text-amber-800 dark:text-amber-300">Temuan Moderasi</span>
-            <div className="w-7 h-7 rounded-lg bg-amber-500/10 text-amber-700 dark:text-amber-400 flex items-center justify-center">
-              <ShieldAlert className="w-3.5 h-3.5" />
+            <span className="text-[11px] font-bold uppercase tracking-wider text-foreground">Titik Observasi Harga</span>
+            <div className="w-7 h-7 rounded-lg bg-primary/10 text-primary flex items-center justify-center">
+              <Database className="w-3.5 h-3.5" />
             </div>
           </div>
-          <p className={`font-display font-mono text-3xl font-bold tabular-nums ${pendingModeration.length > 0 ? "text-amber-600 dark:text-amber-400" : "text-foreground"}`}>
-            {pendingModeration.length}
+          <p className="font-display font-mono text-3xl font-bold text-foreground tabular-nums">
+            {observations.length}
           </p>
           <p className="text-[11px] text-muted-foreground">
-            {pendingModeration.length > 0 ? "Perlu tindak lanjut supervisi" : "Seluruh data tawaran bersih"}
+            Data harga pasar regional aktif
           </p>
         </Card>
 
@@ -112,25 +110,25 @@ export function AdminDashboard({ onNavigate }: AdminDashboardProps) {
 
       {/* Navigation Quick Panels */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-        {/* Moderasi */}
+        {/* Data & Parameter Harga */}
         <Card className="p-6 bg-card border-border/80 shadow-xs rounded-2xl flex flex-col justify-between space-y-4">
           <div className="space-y-2.5">
             <div className="flex items-center gap-2 text-foreground font-bold">
-              <ShieldAlert className="w-5 h-5 text-amber-600 dark:text-amber-400" />
-              <h3 className="text-base font-bold">Moderasi Tawaran</h3>
+              <Database className="w-5 h-5 text-primary" />
+              <h3 className="text-base font-bold">Data & Parameter Harga</h3>
             </div>
             <p className="text-xs text-muted-foreground leading-relaxed">
-              Tinjau tawaran harga anomali atau data mencurigakan. Petani diberi catatan perbaikan tanpa memblokir akses secara sepihak.
+              Observasi data harga pasar lintas provinsi dan konfigurasi ambang batas toleransi HPP pemerintah.
             </p>
           </div>
 
           <Button
             variant="outline"
             size="sm"
-            onClick={() => onNavigate("admin-moderation")}
+            onClick={() => onNavigate("admin-price-data")}
             className="w-full justify-between text-xs font-semibold border-border/80"
           >
-            <span>Buka Meja Moderasi</span>
+            <span>Buka Observasi Harga</span>
             <ArrowRight className="w-3.5 h-3.5" />
           </Button>
         </Card>

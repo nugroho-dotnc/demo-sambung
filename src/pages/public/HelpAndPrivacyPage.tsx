@@ -5,7 +5,7 @@ export function HelpAndPrivacyPage() {
   const glossary = [
     {
       term: "GKP (Gabah Kering Panen)",
-      definition: "Gabah hasil panen segar dari sawah dengan kadar air berkisar 20% – 25%. Memiliki acuan rendemen konversi standar 53,38% ke beras medium."
+      definition: "Gabah hasil panen segar dari sawah dengan kadar air berkisar 20% - 25%. Memiliki acuan rendemen konversi standar 53,38% ke beras medium."
     },
     {
       term: "GKG (Gabah Kering Giling)",

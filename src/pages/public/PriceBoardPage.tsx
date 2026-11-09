@@ -4,7 +4,6 @@ import { Button } from "@/components/ui/button"
 import {
   Download,
   ChevronDown,
-  Info,
   Sprout,
   Building2,
   Truck,
@@ -306,15 +305,6 @@ export function PriceBoardPage() {
           </div>
         </div>
       </Card>
-
-      {/* Info Banner: Bandingkan Setara */}
-      <div className="p-4.5 rounded-2xl bg-muted/60 border border-border flex items-start gap-3.5 text-xs shadow-2xs">
-        <Info className="w-5 h-5 text-primary shrink-0 mt-0.5" />
-        <div className="leading-relaxed text-muted-foreground">
-          <span className="font-bold text-foreground">Bandingkan Setara: </span>
-          Harga beras tidak dapat langsung disamakan dengan harga gabah mentah tanpa memperhitungkan faktor rendemen konversi giling (~55%), kadar air panen, dan biaya penyusutan.
-        </div>
-      </div>
     </div>
   )
 }

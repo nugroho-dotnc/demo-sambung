@@ -36,7 +36,6 @@ import { ProfilePage } from "@/pages/shared/ProfilePage"
 import { AdminDashboard } from "@/pages/admin/AdminDashboard"
 import { AdminPriceDataPage } from "@/pages/admin/AdminPriceDataPage"
 import { AdminParametersPage } from "@/pages/admin/AdminParametersPage"
-import { AdminModerationPage } from "@/pages/admin/AdminModerationPage"
 import { AdminUsersPage } from "@/pages/admin/AdminUsersPage"
 import { AdminAuditLogPage } from "@/pages/admin/AdminAuditLogPage"
 import { AdminModelEvalPage } from "@/pages/admin/AdminModelEvalPage"
@@ -77,7 +76,6 @@ const ROLE_PERMITTED_TABS: Record<UserRole, string[]> = {
     "admin-dashboard",
     "admin-price-data",
     "admin-parameters",
-    "admin-moderation",
     "admin-governance",
     "admin-users",
     "admin-audit",
@@ -324,9 +322,6 @@ export function App() {
                 )}
                 {activeTab === "admin-parameters" && (
                   <AdminParametersPage onBack={() => handleNavigate("admin-dashboard")} />
-                )}
-                {activeTab === "admin-moderation" && (
-                  <AdminModerationPage onBack={() => handleNavigate("admin-dashboard")} />
                 )}
                 {activeTab === "admin-governance" && (
                   <AdminUsersPage onBack={() => handleNavigate("admin-dashboard")} />

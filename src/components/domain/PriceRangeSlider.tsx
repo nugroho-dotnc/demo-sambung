@@ -97,7 +97,7 @@ export function PriceRangeSlider({
         <span>Rp{min.toLocaleString("id-ID")}</span>
         <span className="text-center font-sans font-semibold text-foreground/80">
           Acuan Rentang Wajar<br />
-          <span className="font-mono text-emerald-700 dark:text-emerald-400">Rp{lowerBound.toLocaleString("id-ID")} – Rp{upperBound.toLocaleString("id-ID")}</span>
+          <span className="font-mono text-emerald-700 dark:text-emerald-400">Rp{lowerBound.toLocaleString("id-ID")} - Rp{upperBound.toLocaleString("id-ID")}</span>
         </span>
         <span className="text-right">Rp{max.toLocaleString("id-ID")}</span>
       </div>

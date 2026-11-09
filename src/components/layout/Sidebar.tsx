@@ -10,7 +10,6 @@ import {
   Map,
   LayoutGrid,
   ShoppingBag,
-  ShieldAlert,
   BarChart3,
   HelpCircle,
   X,
@@ -136,7 +135,6 @@ export function Sidebar({ activeTab, onNavigate, onCloseMobile }: SidebarProps) 
               { id: "admin-parameters", label: "Parameter Toleransi & HPP", icon: SlidersHorizontal },
             ],
           },
-          { id: "admin-moderation", label: "Moderasi Tawaran", icon: ShieldAlert },
           {
             id: "governance-cluster",
             label: "Tata Kelola & Audit",

@@ -15,7 +15,6 @@ import {
   ShieldCheck,
   Globe2,
   ArrowRight,
-  Database,
   Building2,
   Store,
   MapPin,
@@ -187,12 +186,6 @@ export function HomePage({ onNavigate }: HomePageProps) {
       <section id="beranda" className="flex flex-col lg:flex-row items-center gap-12 lg:gap-16 pt-4 scroll-mt-24">
         {/* Left Copy */}
         <div className="flex-1 space-y-6 text-center lg:text-left">
-          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full text-xs font-semibold bg-emerald-50 text-emerald-800 dark:bg-emerald-950/60 dark:text-emerald-300 border border-emerald-200 dark:border-emerald-800/80 shadow-2xs">
-            <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
-            <Database className="w-3.5 h-3.5 text-emerald-700 dark:text-emerald-400" />
-            <span>Data PIHPS & BPS Nasional · Pembaruan Mingguan</span>
-          </div>
-
           <h1 className="text-4xl sm:text-5xl lg:text-6xl font-display font-black text-foreground tracking-tight leading-[1.12]">
             Harga gabah yang wajar,{" "}
             <span className="text-emerald-800 dark:text-emerald-400">terbuka untuk semua.</span>
@@ -221,20 +214,6 @@ export function HomePage({ onNavigate }: HomePageProps) {
               <span>Masuk Petani & Pembeli</span>
             </Button>
           </div>
-
-          <div className="pt-1 flex items-center justify-center lg:justify-start gap-4 text-xs text-muted-foreground font-medium">
-            <span className="flex items-center gap-1.5">
-              <CheckCircle2 className="w-3.5 h-3.5 text-emerald-600 shrink-0" />
-              100% Gratis Petani
-            </span>
-            <span>·</span>
-            <span className="flex items-center gap-1.5">
-              <CheckCircle2 className="w-3.5 h-3.5 text-emerald-600 shrink-0" />
-              Tanpa Potongan Komisi
-            </span>
-            <span>·</span>
-            <span className="text-muted-foreground/80">Acuan Berbasis Data</span>
-          </div>
         </div>
 
         {/* Right Benchmark Card */}
@@ -244,9 +223,6 @@ export function HomePage({ onNavigate }: HomePageProps) {
           <div className="flex items-center justify-between gap-2">
             <span className="text-xs font-bold uppercase tracking-wider text-muted-foreground">
               Harga Acuan Gabah (GKP) · Nasional
-            </span>
-            <span className="px-2.5 py-1 rounded-lg text-[11px] font-bold bg-emerald-100 text-emerald-900 dark:bg-emerald-950 dark:text-emerald-300 border border-emerald-300/60 dark:border-emerald-800">
-              Data Resmi Bapanas
             </span>
           </div>
 
@@ -299,62 +275,14 @@ export function HomePage({ onNavigate }: HomePageProps) {
             <div className="p-3.5 rounded-2xl bg-muted/50 border border-border/80 space-y-1">
               <span className="text-[11px] font-semibold text-muted-foreground uppercase tracking-wider">Prakiraan 2 Pekan</span>
               <p className="text-xl font-black text-foreground font-display tabular-nums">Rp7.150</p>
-              <span className="text-[11px] text-muted-foreground block font-mono">Rentang 80%: 6.950 – 7.350</span>
+              <span className="text-[11px] text-muted-foreground block font-mono">Rentang 80%: 6.950 - 7.350</span>
             </div>
             <div className="p-3.5 rounded-2xl bg-muted/50 border border-border/80 space-y-1">
               <span className="text-[11px] font-semibold text-muted-foreground uppercase tracking-wider">Prakiraan 4 Pekan</span>
               <p className="text-xl font-black text-foreground font-display tabular-nums">Rp7.300</p>
-              <span className="text-[11px] text-muted-foreground block font-mono">Rentang 80%: 6.900 – 7.700</span>
+              <span className="text-[11px] text-muted-foreground block font-mono">Rentang 80%: 6.900 - 7.700</span>
             </div>
           </div>
-        </Card>
-      </section>
-
-      {/* 2. Three Contextual Fact Cards */}
-      <section className="grid grid-cols-1 md:grid-cols-3 gap-6">
-        <Card className="p-6 bg-card border border-border shadow-xs hover:border-slate-300 dark:hover:border-slate-700 transition-all rounded-2xl space-y-3">
-          <div className="flex items-center justify-between">
-            <span className="text-xs font-bold uppercase tracking-wider text-muted-foreground">Disparitas Antarprovinsi</span>
-            <span className="p-1.5 rounded-lg bg-amber-50 text-amber-700 dark:bg-amber-950 dark:text-amber-300">
-              <TrendingUp className="w-4 h-4" />
-            </span>
-          </div>
-          <span className="font-display text-4xl font-black text-foreground tracking-tight tabular-nums block">
-            45%
-          </span>
-          <p className="text-xs text-muted-foreground leading-relaxed">
-            Selisih harga beras antara provinsi sentra produksi terendah dan provinsi kepulauan konsumen tertinggi pekan Oktober 2026 (PIHPS).
-          </p>
-        </Card>
-
-        <Card className="p-6 bg-card border border-border shadow-xs hover:border-slate-300 dark:hover:border-slate-700 transition-all rounded-2xl space-y-3">
-          <div className="flex items-center justify-between">
-            <span className="text-xs font-bold uppercase tracking-wider text-muted-foreground">Jaminan HPP Gabah</span>
-            <span className="p-1.5 rounded-lg bg-emerald-50 text-emerald-700 dark:bg-emerald-950 dark:text-emerald-300">
-              <ShieldCheck className="w-4 h-4" />
-            </span>
-          </div>
-          <span className="font-display text-4xl font-black text-foreground tracking-tight tabular-nums block">
-            Rp6.500
-          </span>
-          <p className="text-xs text-muted-foreground leading-relaxed">
-            HPP resmi gabah GKP per kg yang ditetapkan pemerintah, sementara transaksi riil 2026 di sentra Jawa berkisar Rp6.800 – Rp7.400.
-          </p>
-        </Card>
-
-        <Card className="p-6 bg-card border border-border shadow-xs hover:border-slate-300 dark:hover:border-slate-700 transition-all rounded-2xl space-y-3">
-          <div className="flex items-center justify-between">
-            <span className="text-xs font-bold uppercase tracking-wider text-muted-foreground">Faktor Anomali Cuaca</span>
-            <span className="p-1.5 rounded-lg bg-blue-50 text-blue-700 dark:bg-blue-950 dark:text-blue-300">
-              <Database className="w-4 h-4" />
-            </span>
-          </div>
-          <span className="font-display text-4xl font-black text-foreground tracking-tight tabular-nums block">
-            73%
-          </span>
-          <p className="text-xs text-muted-foreground leading-relaxed">
-            Wilayah sentra diprakirakan mengalami curah hujan di bawah normal pada fase tanam akhir tahun berdasarkan observasi BMKG.
-          </p>
         </Card>
       </section>
 
@@ -528,26 +456,6 @@ export function HomePage({ onNavigate }: HomePageProps) {
                   Rata-rata nasional PIHPS <span className="font-semibold text-foreground">+Rp970</span>
                 </div>
               </Card>
-            </div>
-
-            {/* Farmer Share Highlight Banner */}
-            <div className="p-5 sm:p-6 rounded-2xl border border-emerald-200 dark:border-emerald-800/80 bg-emerald-50/50 dark:bg-emerald-950/30 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 shadow-2xs">
-              <div className="flex items-center gap-4">
-                <div className="w-11 h-11 rounded-2xl bg-emerald-600 text-white flex items-center justify-center shrink-0 shadow-xs">
-                  <CheckCircle2 className="w-6 h-6" />
-                </div>
-                <div>
-                  <h4 className="text-base font-bold text-foreground font-display">
-                    Porsi Petani (Farmer's Share): 83%
-                  </h4>
-                  <p className="text-xs text-muted-foreground mt-0.5">
-                    Total selisih harga dari petani ke konsumen adalah Rp2.620/kg (17% marjin rantai distribusi). Berada dalam rentang wajar dan adil.
-                  </p>
-                </div>
-              </div>
-              <span className="px-3.5 py-1.5 rounded-full text-xs font-bold bg-emerald-100 text-emerald-800 dark:bg-emerald-900/60 dark:text-emerald-200 border border-emerald-300 dark:border-emerald-700 shrink-0">
-                Kondisi Sehat
-              </span>
             </div>
           </>
         )}
@@ -769,7 +677,7 @@ export function HomePage({ onNavigate }: HomePageProps) {
         <div className="space-y-1.5 max-w-2xl">
           <span className="text-xs font-bold uppercase tracking-wider text-primary">Sistem Deteksi Kewajaran</span>
           <h2 className="text-3xl sm:text-4xl font-display font-black text-foreground tracking-tight">
-            Cara Membaca Lampu Harga
+            Cara Membaca Warna Indikator Harga
           </h2>
           <p className="text-sm text-muted-foreground leading-relaxed">
             Setiap penawaran dan kontrak di SAMBUNG diperiksa terhadap rentang harga wajar daerahnya. Lampu selalu disertai alasan tertulis.
@@ -934,7 +842,7 @@ export function HomePage({ onNavigate }: HomePageProps) {
               </div>
               <h3 className="font-bold text-lg text-foreground font-display">Dinas & Pengawas</h3>
               <p className="text-xs text-muted-foreground leading-relaxed">
-                Kelola parameter acuan harga, verifikasi moderasi tawaran panen, audit log transaksi, dan pantau disparitas regional.
+                Kelola parameter acuan harga, audit log transaksi, evaluasi model prediksi, dan pantau disparitas regional.
               </p>
             </div>
             <Button

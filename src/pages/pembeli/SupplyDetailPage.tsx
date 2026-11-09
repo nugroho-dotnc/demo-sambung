@@ -340,7 +340,7 @@ export function SupplyDetailPage({ offerId, onBack, onSuccess }: SupplyDetailPag
       <ConfirmationModal
         isOpen={showRedPriceConfirm}
         title="Konfirmasi Pengajuan Harga di Bawah Wajar"
-        description={`Harga penawaran Anda (${formatRupiah(proposedPrice)}/kg) berada di bawah batas kewajaran acuan (${formatRupiah(estimate.lowerBound)} – ${formatRupiah(estimate.upperBound)}). Apakah Anda yakin ingin mengajukan harga penawaran ini ke petani?`}
+        description={`Harga penawaran Anda (${formatRupiah(proposedPrice)}/kg) berada di bawah batas kewajaran acuan (${formatRupiah(estimate.lowerBound)} - ${formatRupiah(estimate.upperBound)}). Apakah Anda yakin ingin mengajukan harga penawaran ini ke petani?`}
         confirmText="Tetap Ajukan Tawaran"
         cancelText="Ubah Harga"
         variant="warning"

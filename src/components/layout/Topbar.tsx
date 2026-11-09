@@ -63,7 +63,7 @@ export const demoRoles: { id: UserRole; title: string; subtitle: string; icon: t
   {
     id: "admin",
     title: "Admin Operasional",
-    subtitle: "Pengawasan, moderasi, audit & model",
+    subtitle: "Pengawasan, parameter, audit & model",
     icon: ShieldCheck,
   },
 ]
@@ -152,13 +152,7 @@ export function Topbar({ onToggleSidebar, sidebarOpen, activeTab, onNavigate, on
                 <span className="font-display font-black text-xl text-foreground tracking-tight">
                   SAMBUNG
                 </span>
-                <span className="text-[10px] font-bold uppercase tracking-wider px-1.5 py-0.5 rounded-md bg-emerald-100 text-emerald-800 dark:bg-emerald-950 dark:text-emerald-300 border border-emerald-200 dark:border-emerald-800/80">
-                  Gabah
-                </span>
               </div>
-              <span className="hidden sm:inline text-[11px] text-muted-foreground font-medium -mt-0.5">
-                Sistem Nilai & Kontrak Gabah Terbuka
-              </span>
             </div>
           </button>
         </div>

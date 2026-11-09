@@ -338,7 +338,7 @@ export function PetaniOfferDetailPage({ offerId, onBack, onNavigate }: PetaniOff
                 <div className="flex justify-between">
                   <span>Rentang Acuan Wajar:</span>
                   <span className="font-semibold text-foreground font-mono">
-                    {formatRupiah(benchmark.lowerBound)} – {formatRupiah(benchmark.upperBound)}
+                    {formatRupiah(benchmark.lowerBound)} - {formatRupiah(benchmark.upperBound)}
                   </span>
                 </div>
                 <div className="flex justify-between items-center">

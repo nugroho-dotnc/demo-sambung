@@ -21,7 +21,6 @@ interface PembeliDashboardProps {
 
 export function PembeliDashboard({ onNavigate }: PembeliDashboardProps) {
   const { currentUser, offers, contracts } = useSambungStore()
-  const [activeTab, setActiveTab] = useState<"pasokan" | "rentang" | "kontrak">("pasokan")
   const [selectedCommodity, setSelectedCommodity] = useState("Gabah Kering Panen (GKP)")
   const [selectedRegion, setSelectedRegion] = useState("Jawa Timur")
 
@@ -60,40 +59,6 @@ export function PembeliDashboard({ onNavigate }: PembeliDashboardProps) {
         </Button>
       </div>
 
-      {/* Workspace Tabs */}
-      <div className="border-b border-border/70 flex items-center gap-6 text-sm font-medium">
-        <button
-          onClick={() => setActiveTab("pasokan")}
-          className={`pb-3 transition-colors relative cursor-pointer text-xs font-bold uppercase tracking-wider ${
-            activeTab === "pasokan"
-              ? "text-primary border-b-2 border-primary -mb-px"
-              : "text-muted-foreground hover:text-foreground"
-          }`}
-        >
-          Pasokan Sekitar
-        </button>
-        <button
-          onClick={() => setActiveTab("rentang")}
-          className={`pb-3 transition-colors relative cursor-pointer text-xs font-bold uppercase tracking-wider ${
-            activeTab === "rentang"
-              ? "text-primary border-b-2 border-primary -mb-px"
-              : "text-muted-foreground hover:text-foreground"
-          }`}
-        >
-          Rentang Harga Beli Wajar
-        </button>
-        <button
-          onClick={() => setActiveTab("kontrak")}
-          className={`pb-3 transition-colors relative cursor-pointer text-xs font-bold uppercase tracking-wider ${
-            activeTab === "kontrak"
-              ? "text-primary border-b-2 border-primary -mb-px"
-              : "text-muted-foreground hover:text-foreground"
-          }`}
-        >
-          Ringkasan Kontrak Aktif
-        </button>
-      </div>
-
       {/* Top 3 Summary Cards */}
       <div className="grid grid-cols-1 sm:grid-cols-3 gap-5">
         {/* Card 1: Benchmark Price */}
@@ -107,7 +72,7 @@ export function PembeliDashboard({ onNavigate }: PembeliDashboardProps) {
           </div>
 
           <p className="font-mono text-2xl sm:text-3xl font-bold text-primary tracking-tight tabular-nums">
-            Rp6.650 – 6.940
+            Rp6.650 - 6.940
           </p>
           <div className="flex items-center justify-between text-xs text-muted-foreground pt-1 border-t border-border/60">
             <span>per kg · Jawa Timur</span>

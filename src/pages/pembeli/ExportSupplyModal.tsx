@@ -125,7 +125,7 @@ export function ExportSupplyModal({ isOpen, onClose }: ExportSupplyModalProps) {
                   <td className="p-3 text-right tabular-nums text-foreground">{g.count}</td>
                   <td className="p-3 text-right tabular-nums text-foreground">{g.totalAvailableVolume.toLocaleString("id-ID")}</td>
                   <td className="p-3 text-right tabular-nums text-primary font-bold">
-                    Rp{g.minPrice.toLocaleString("id-ID")} – Rp{g.maxPrice.toLocaleString("id-ID")}
+                    Rp{g.minPrice.toLocaleString("id-ID")} - Rp{g.maxPrice.toLocaleString("id-ID")}
                   </td>
                 </tr>
               ))}

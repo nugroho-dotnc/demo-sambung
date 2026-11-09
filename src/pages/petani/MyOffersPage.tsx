@@ -228,7 +228,7 @@ export function MyOffersPage({ onNavigate }: MyOffersPageProps) {
                         <div className="flex justify-between text-muted-foreground">
                           <span>Acuan Rentang Wajar:</span>
                           <span className="font-semibold text-foreground font-mono">
-                            {formatRupiah(estimate.lowerBound)} – {formatRupiah(estimate.upperBound)}
+                            {formatRupiah(estimate.lowerBound)} - {formatRupiah(estimate.upperBound)}
                           </span>
                         </div>
                         <div className="flex justify-between items-center text-muted-foreground pt-1 border-t border-border/60">

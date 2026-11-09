@@ -317,7 +317,7 @@ export function CreateOfferPage({ onSuccess }: CreateOfferPageProps) {
 
               <div className="space-y-1">
                 <p className="font-display text-3xl font-black text-emerald-800 dark:text-emerald-400 tabular-nums">
-                  Rp{estimate.lowerBound.toLocaleString("id-ID")} – Rp{estimate.upperBound.toLocaleString("id-ID")}
+                  Rp{estimate.lowerBound.toLocaleString("id-ID")} - Rp{estimate.upperBound.toLocaleString("id-ID")}
                 </p>
                 <p className="text-xs text-muted-foreground">
                   per kg: rentang harga wajar resmi pada acuan

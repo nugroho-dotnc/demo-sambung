@@ -4,7 +4,7 @@ import { formatRupiah } from "@/lib/utils"
 import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
-import { Calendar, HelpCircle, ShieldAlert, Cpu, Sparkles } from "lucide-react"
+import { Calendar, ShieldAlert, Cpu } from "lucide-react"
 
 export function ForecastPage() {
   const [selectedHorizon, setSelectedHorizon] = useState<2 | 4>(2)
@@ -115,8 +115,7 @@ export function ForecastPage() {
                 <div className="p-6 rounded-2xl bg-gradient-to-br from-card via-card to-emerald-50/30 dark:to-emerald-950/20 border border-border shadow-2xs space-y-3">
                   <div className="flex items-center justify-between">
                     <span className="text-xs font-bold text-muted-foreground uppercase tracking-wider flex items-center gap-1.5">
-                      <Sparkles className="w-3.5 h-3.5 text-primary" />
-                      Prediksi Langsung Model AI:
+                      Prediksi  Model AI:
                     </span>
                     <span className="text-xs font-bold text-emerald-700 dark:text-emerald-400">Pita Keyakinan 80%</span>
                   </div>
@@ -126,7 +125,7 @@ export function ForecastPage() {
                       <span className="text-sm font-semibold text-muted-foreground ml-1.5">/kg Beras Produsen</span>
                     </p>
                     <span className="font-mono text-xs font-bold text-foreground bg-muted px-3 py-1.5 rounded-xl border border-border">
-                      {formatRupiah(activeForecast.confidenceInterval80[0])} – {formatRupiah(activeForecast.confidenceInterval80[1])}
+                      {formatRupiah(activeForecast.confidenceInterval80[0])} - {formatRupiah(activeForecast.confidenceInterval80[1])}
                     </span>
                   </div>
                 </div>
@@ -215,14 +214,6 @@ export function ForecastPage() {
           Data prakiraan untuk wilayah ini belum tersedia.
         </div>
       )}
-
-      {/* Note on Evaluated Targets */}
-      <div className="p-5 rounded-2xl bg-card border border-border flex items-start gap-3.5 text-xs text-muted-foreground shadow-2xs">
-        <HelpCircle className="w-5 h-5 text-primary shrink-0 mt-0.5" />
-        <p className="leading-relaxed">
-          <strong className="text-foreground">Target Evaluasi Akurasi:</strong> Target akurasi proposal mensyaratkan MASE ≤ 0,9 terhadap baseline pekan lalu, dengan cakupan empiris pita 80% berada di rentang 75% – 85%. Nilai prediksi merupakan acuan analitis dan tidak menjamin harga transaksi riil di masa depan.
-        </p>
-      </div>
     </div>
   )
 }

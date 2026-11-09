@@ -365,8 +365,7 @@ export const SEED_OFFERS: TawaranPanen[] = [
     impurityPercent: 1.5,
     readyDate: "2026-11-12",
     publicationStatus: "Terbit",
-    moderationStatus: "Sedang diminta perbaikan", // Temuan moderasi
-    moderationIssue: "Data lokasi panen perlu dilengkapi dengan keterangan akses jalan truk penggilingan.",
+    moderationStatus: "Bersih",
     createdAt: "2026-11-06T06:15:00Z",
     updatedAt: "2026-11-06T06:15:00Z"
   },
